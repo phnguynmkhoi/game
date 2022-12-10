@@ -36,8 +36,6 @@ class Car:
         self.car_y = car_y
         self.velocity = velocity
         self.destination = destination
-    def location(self, car_x):
-        return car_x + 1
 #create Car
 CAR1 = pygame.image.load('0_blue_formulaOne.png')
 CAR2 = pygame.image.load('0_pink_formulaOne.png')
@@ -102,6 +100,7 @@ while running:
     draw(player4_car)
     draw(player5_car)
 
+    #check if the car have finish the race
     if player1_car.car_x<=player1_car.destination:
         player1_car.car_x += player1_car.velocity
 
@@ -128,15 +127,6 @@ while running:
             
             screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
             background = pygame.transform.scale(background,(event.w,event.h))
-            des = int(event.w/1.25)
-
-            #RESIZE CAR
-            CAR1 = pygame.transform.scale(CAR1,(event.w/12.5,event.h/12))
-            CAR2 = pygame.transform.scale(CAR2,(event.w/12.5,event.h/12))
-            CAR3 = pygame.transform.scale(CAR3,(event.w/12.5,event.h/12))
-            CAR4 = pygame.transform.scale(CAR4,(event.w/12.5,event.h/12))
-            CAR5 = pygame.transform.scale(CAR5,(event.w/12.5,event.h/12))
-            player1_car = Car(CAR1, int(event.w/8), int(event.h/1.65), 1.3, des)
 
     pygame.display.update()
 
