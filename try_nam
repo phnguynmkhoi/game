@@ -20,7 +20,7 @@ HEIGHT=600
 screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.RESIZABLE)
 
 #set caption and icon
-pygame.display.set_caption("Game cua Khoi")
+pygame.display.set_caption("Dua xe ca do")
 icon = pygame.image.load('car.png')
 pygame.display.set_icon(icon)
 
@@ -28,7 +28,7 @@ pygame.display.set_icon(icon)
 background = pygame.image.load('background-levels-city.png')
 background = pygame.transform.scale(background,(WIDTH,HEIGHT))
 
-class game:
+class Game:
     def __init__(self):
         '''Initialize the game'''
         pass
@@ -60,7 +60,7 @@ class game:
     def pause_game(self):
         pass
 
-class Player():
+class Player(pygame.sprite.Sprite()):
     def __init__(self):
         '''Initialize the game'''
         pass
@@ -68,13 +68,21 @@ class Player():
     def update(self):
         pass
 
-class Item():
+class Item(pygame.sprite.Sprite()):
     def __init__(self):
         '''Initialize the game'''
         pass
     def update(self):
         pass
 
+#Create Car Group
+car_group = pygame.sprite.Group()
+
+#Create Item Group
+item_group = pygame.sprite.Group()
+
+#Create game
+my_game = game()
 
 
 
@@ -136,12 +144,10 @@ def draw(player_car):
     
 #game Loop
 clock = pygame.time.Clock()
-fps = 60
+FPS = 60
 
 running=True
-while running:
-
-    clock.tick(fps)     
+while running:     
 
     screen.blit(background,(0,0))
 
@@ -181,6 +187,8 @@ while running:
             screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
             background = pygame.transform.scale(background,(event.w,event.h))
 
+    #Update the display and tick the clock
     pygame.display.update()
+    clock.tick(FPS)
 
 pygame.quit()
