@@ -45,7 +45,8 @@ CAR4 = pygame.image.load('0_pink_formulaOne.png')
 CAR5 = pygame.image.load('0_white_formulaOne.png')
 
 #create item
-ITEM = pygame.image.load('Box.png')
+ITEM = pygame.image.load('coin.png')
+ITEM = pygame.transform.scale(ITEM,(WIDTH/12.5,HEIGHT/12))
 
 #RESIZE CAR
 CAR1 = pygame.transform.scale(CAR1,(WIDTH/12.5,HEIGHT/12))
@@ -63,7 +64,7 @@ h = int(HEIGHT/1.65)
 player1_car = Car(CAR1, w, h, random.uniform(1,1.5), des)
 
 #setting item
-item1 = Car(ITEM, w*2, h, 0, des)
+item1 = Car(ITEM, w*5, h, 0, des)
 
 #setting CAR2
 w = int(WIDTH/9)
