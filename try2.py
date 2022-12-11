@@ -36,12 +36,16 @@ class Car:
         self.car_y = car_y
         self.velocity = velocity
         self.destination = destination
+
 #create Car
-CAR1 = pygame.image.load('0_blue_formulaOne.png')
-CAR2 = pygame.image.load('0_pink_formulaOne.png')
-CAR3 = pygame.image.load('0_red_formulaOne.png')
-CAR4 = pygame.image.load('0_white_formulaOne.png')
-CAR5 = pygame.image.load('0_yellow_formulaOne.png')
+CAR1 = pygame.image.load('0_red_formulaOne.png')
+CAR2 = pygame.image.load('0_yellow_formulaOne.png')
+CAR3 = pygame.image.load('0_blue_formulaOne.png')
+CAR4 = pygame.image.load('0_pink_formulaOne.png')
+CAR5 = pygame.image.load('0_white_formulaOne.png')
+
+#create item
+ITEM = pygame.image.load('Box.png')
 
 #RESIZE CAR
 CAR1 = pygame.transform.scale(CAR1,(WIDTH/12.5,HEIGHT/12))
@@ -56,27 +60,29 @@ des = int(WIDTH/1.25)
 #setting CAR1
 w = int(WIDTH/8)
 h = int(HEIGHT/1.65)
-player1_car = Car(CAR1, w, h, 1.3, des)
+player1_car = Car(CAR1, w, h, random.uniform(1,1.5), des)
 
 #setting CAR2
 w = int(WIDTH/9)
 h = int(HEIGHT/1.47)
-player2_car = Car(CAR2, w, h, 1.5, des)
+player2_car = Car(CAR2, w, h, random.uniform(1,1.5), des)
 
 #setting CAR3
 w = int(WIDTH/9)
 h = int(HEIGHT/1.31)
-player3_car = Car(CAR3, w, h, 1.8, des)
+player3_car = Car(CAR3, w, h, random.uniform(1,1.5), des)
 
 #setting CAR4
 w = int(WIDTH/9)
 h = int(HEIGHT/1.19)
-player4_car = Car(CAR4, w, h, 1.4, des)
+player4_car = Car(CAR4, w, h, random.uniform(1,1.5), des)
 
 #setting CAR5
 w = int(WIDTH/9)
 h = int(HEIGHT/1.1)
-player5_car = Car(CAR5, w, h, 1.8, des)
+player5_car = Car(CAR5, w, h, random.randrange(1,2), des)
+
+#setting
 
 #setting run
 def draw(player_car):
