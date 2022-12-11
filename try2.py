@@ -81,7 +81,7 @@ player4_car = Car(CAR4, w, h, random.uniform(1,1.5), des)
 #setting CAR5
 w = int(WIDTH/9)
 h = int(HEIGHT/1.1)
-player5_car = Car(CAR5, w, h, random.randrange(1,2), des)
+player5_car = Car(CAR5, w, h, random.uniform(1,1.5), des)
 
 #win
 font = pygame.font.SysFont.('consolas',30)
