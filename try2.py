@@ -62,6 +62,9 @@ w = int(WIDTH/8)
 h = int(HEIGHT/1.65)
 player1_car = Car(CAR1, w, h, random.uniform(1,1.5), des)
 
+#setting item
+item1 = Car(ITEM, w*2, h, 0, des)
+
 #setting CAR2
 w = int(WIDTH/9)
 h = int(HEIGHT/1.47)
@@ -82,7 +85,7 @@ w = int(WIDTH/9)
 h = int(HEIGHT/1.1)
 player5_car = Car(CAR5, w, h, random.randrange(1,2), des)
 
-#setting
+#setting item
 
 #setting run
 def draw(player_car):
@@ -105,6 +108,7 @@ while running:
     draw(player3_car)
     draw(player4_car)
     draw(player5_car)
+    draw(item1)
 
     #check if the car have finish the race
     if player1_car.car_x<=player1_car.destination:
