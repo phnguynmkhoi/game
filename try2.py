@@ -63,9 +63,6 @@ w = int(WIDTH/8)
 h = int(HEIGHT/1.65)
 player1_car = Car(CAR1, w, h, random.uniform(1,1.5), des)
 
-#setting item
-item1 = Car(ITEM, w*5, h, 0, des)
-
 #setting CAR2
 w = int(WIDTH/9)
 h = int(HEIGHT/1.47)
@@ -86,7 +83,8 @@ w = int(WIDTH/9)
 h = int(HEIGHT/1.1)
 player5_car = Car(CAR5, w, h, random.randrange(1,2), des)
 
-#setting item
+#win
+font = pygame.font.SysFont.('consolas',30)
 
 #setting run
 def draw(player_car):
@@ -95,6 +93,7 @@ def draw(player_car):
 #game Loop
 clock = pygame.time.Clock()
 fps = 60
+count = 0
 
 running=True
 while running:
@@ -109,7 +108,6 @@ while running:
     draw(player3_car)
     draw(player4_car)
     draw(player5_car)
-    draw(item1)
 
     #check if the car have finish the race
     if player1_car.car_x<=player1_car.destination:
@@ -138,6 +136,53 @@ while running:
             
             screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
             background = pygame.transform.scale(background,(event.w,event.h))
+
+            #resize Car
+            CAR1 = pygame.transform.scale(CAR1,(event.w/12.5,event.h/12))
+            CAR2 = pygame.transform.scale(CAR2,(event.w/12.5,event.h/12))
+            CAR3 = pygame.transform.scale(CAR3,(event.w/12.5,event.h/12))
+            CAR4 = pygame.transform.scale(CAR4,(event.w/12.5,event.h/12))
+            CAR5 = pygame.transform.scale(CAR5,(event.w/12.5,event.h/12))
+            des = int(event.w/1.25)
+            count+=1 
+            if count % 2 == 1:
+                player1_car.velocity = player1_car.velocity * 3060 / WIDTH 
+                player2_car.velocity = player2_car.velocity * 3060 / WIDTH 
+                player3_car.velocity = player3_car.velocity * 3060 / WIDTH 
+                player4_car.velocity = player4_car.velocity * 3060 / WIDTH 
+                player5_car.velocity = player5_car.velocity * 3060 / WIDTH
+            else:
+                player1_car.velocity = player1_car.velocity * WIDTH / 3060
+                player2_car.velocity = player2_car.velocity * WIDTH / 3060 
+                player3_car.velocity = player3_car.velocity * WIDTH / 3060 
+                player4_car.velocity = player4_car.velocity * WIDTH / 3060 
+                player5_car.velocity = player5_car.velocity * WIDTH / 3060
+
+            #resize Car1
+            w = int(event.w/8)
+            h = int(event.h/1.65)
+            player1_car = Car(CAR1, w, h, player1_car.velocity, des)
+            
+            #resize Car2
+            w = int(event.w/9)
+            h = int(event.h/1.47)
+            player2_car = Car(CAR2, w, h, player2_car.velocity, des)
+            
+            #resize Car3
+            w = int(event.w/9)
+            h = int(event.h/1.31)
+            player3_car = Car(CAR3, w, h, player3_car.velocity, des)
+            
+            #resize Car4
+            w = int(event.w/9)
+            h = int(event.h/1.19)
+            player4_car = Car(CAR4, w, h, player4_car.velocity, des)
+            
+            #resize Car5
+            w = int(event.w/9)
+            h = int(event.h/1.1)
+            player5_car = Car(CAR5, w, h, player5_car.velocity, des)
+
 
     pygame.display.update()
 
