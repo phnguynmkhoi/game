@@ -68,7 +68,8 @@ class Car(pygame.sprite.Sprite):
     def __init__(self, image, x:float, y:float, velocity:float):
         '''Initialize the game'''
         super().__init__()
-        self.image = pygame.image.load(image)
+        self.sprites = []
+        self.image = pygame.image.load(image[0])
         self.image = pygame.transform.scale(self.image,(WIDTH/12.5,HEIGHT/12))
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
@@ -103,7 +104,7 @@ car_group = pygame.sprite.Group()
 w = int(WIDTH/8)
 h = int(HEIGHT/1.65)
 vel = random.uniform(1,1.5)
-player1_car = Car('0_red_formulaOne.png', w, h, vel)
+player1_car = Car(['./formulaones/0_red_formulaOne.png'], w, h, vel)
 car_group.add(player1_car)
 
 #setting CAR2
