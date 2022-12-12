@@ -15,8 +15,8 @@ yellow = (255,232,0)
 white = (255,255,255)
 
 #set screen
-WIDTH=1000
-HEIGHT=600  
+WIDTH=1500
+HEIGHT=800  
 screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.RESIZABLE)
 
 #set caption and icon
@@ -24,12 +24,21 @@ pygame.display.set_caption("Dua xe ca do")
 icon = pygame.image.load('car.png')
 pygame.display.set_icon(icon)
 
-#Background
-background = pygame.image.load('background-levels-city.png')
-background = pygame.transform.scale(background,(WIDTH,HEIGHT))
+class Background(pygame.sprite.Sprite):
+    def __init__(self, image, x, y):
+        super().__init__()
+        self.image = pygame.image.load(image)
+        self.image = pygame.transform.scale(self.image,(x, y))
+
+    def update(self):
+        screen.blit(self.image, (0,0))
+
+#Create background group
+background_group = pygame.sprite.Group()
+background1 = Background("./background levels/background-city.png", WIDTH, HEIGHT)
 
 #setting destination
-des = int(WIDTH/1.25)
+des = 1380
 
 #Define Classes
 class Game:
@@ -92,6 +101,7 @@ class Car(pygame.sprite.Sprite):
             self.image = self.sprite[self.current_image]
             self.position += self.velocity
             self.rect.x = self.position
+        
 
     def check_collisions(self):
         pass
@@ -108,38 +118,38 @@ class Item(pygame.sprite.Sprite):
 car_group = pygame.sprite.Group()
 
 #setting CAR1
-w = int(WIDTH/8)
-h = int(HEIGHT/1.65)
+w = 16
+h = 402
 vel = random.uniform(1,1.5)
-player1_car = Car(['./formulaones/0_red_formulaOne.png', './formulaones/1_red_formulaOne.png', './formulaones/2_red_formulaOne.png'], w, h, vel)
+player1_car = Car(['./formula ones/0_red_formulaOne.png', './formula ones/1_red_formulaOne.png', './formula ones/2_red_formulaOne.png'], w, h, vel)
 car_group.add(player1_car)
 
 #setting CAR2
-w = int(WIDTH/9)
-h = int(HEIGHT/1.47)
+w = 16
+h = 485
 vel = random.uniform(1,1.5)
-player2_car = Car(['./formulaones/0_yellow_formulaOne.png', './formulaones/1_yellow_formulaOne.png', './formulaones/2_yellow_formulaOne.png'], w, h, vel)
+player2_car = Car(['./formula ones/0_yellow_formulaOne.png', './formula ones/1_yellow_formulaOne.png', './formula ones/2_yellow_formulaOne.png'], w, h, vel)
 car_group.add(player2_car)
 
 #setting CAR3
-w = int(WIDTH/9)
-h = int(HEIGHT/1.31)
+w = 16
+h = 568
 vel = random.uniform(1,1.5)
-player3_car = Car(['./formulaones/0_blue_formulaOne.png', './formulaones/1_blue_formulaOne.png', './formulaones/2_blue_formulaOne.png'], w, h, vel)
+player3_car = Car(['./formula ones/0_blue_formulaOne.png', './formula ones/1_blue_formulaOne.png', './formula ones/2_blue_formulaOne.png'], w, h, vel)
 car_group.add(player3_car)
 
 #setting CAR4
-w = int(WIDTH/9)
-h = int(HEIGHT/1.19)
+w = 16
+h = 648
 vel = random.uniform(1,1.5)
-player4_car = Car(['./formulaones/0_pink_formulaOne.png', './formulaones/1_pink_formulaOne.png', './formulaones/2_pink_formulaOne.png'], w, h, vel)
+player4_car = Car(['./formula ones/0_pink_formulaOne.png', './formula ones/1_pink_formulaOne.png', './formula ones/2_pink_formulaOne.png'], w, h, vel)
 car_group.add(player4_car)
 
 #setting CAR5
-w = int(WIDTH/9)
-h = int(HEIGHT/1.1)
+w = 16
+h = 727
 vel = random.uniform(1,1.5)
-player5_car = Car(['./formulaones/0_white_formulaOne.png', './formulaones/1_white_formulaOne.png', './formulaones/2_white_formulaOne.png'], w, h, vel)
+player5_car = Car(['./formula ones/0_green_formulaOne.png', './formula ones/1_green_formulaOne.png', './formula ones/2_green_formulaOne.png'], w, h, vel)
 car_group.add(player5_car)
 
     
@@ -152,13 +162,14 @@ while running:
 
     clock.tick(FPS) 
 
-    screen.blit(background,(0,0))
+    Background.update(background1)
 
     #draw 5 car
     car_group.draw(screen)
     car_group.update()
     
     for event in pygame.event.get():
+        print (event)
         if event.type == pygame.QUIT:
             running = False
             pygame.quit()
