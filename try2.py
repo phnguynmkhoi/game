@@ -88,7 +88,7 @@ gold = 0
 font = pygame.font.Font('freesansbold.ttf',30)
 text = font.render(str(gold), True, white)
 textPosition = text.get_rect()
-textPosition.center = (WIDTH/20, HEIGHT/25)
+textPosition.center = (WIDTH/22, HEIGHT/25)
 coin_image = pygame.image.load('coin.png')
 coin_image = pygame.transform.scale(coin_image, (WIDTH/30, HEIGHT/15))
 
