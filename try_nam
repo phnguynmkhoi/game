@@ -68,8 +68,12 @@ class Car(pygame.sprite.Sprite):
     def __init__(self, image, x:float, y:float, velocity:float):
         '''Initialize the game'''
         super().__init__()
-        self.image = pygame.image.load(image)
-        self.image = pygame.transform.scale(self.image,(WIDTH/12.5,HEIGHT/12))
+        self.sprite = [] 
+        i = 0
+        for i in range(0,3):
+            self.sprite.append(pygame.transform.scale(pygame.image.load(image[i]) ,(WIDTH/12.5,HEIGHT/12)))
+        self.current_image = 0
+        self.image = self.sprite[self.current_image]
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
         self.velocity = velocity
@@ -82,6 +86,10 @@ class Car(pygame.sprite.Sprite):
     def move(self):
         """Move the car"""
         if self.rect.x <= des:
+            self.current_image+=1
+            if self.current_image >= len(self.sprite):
+                self.current_image=0
+            self.image = self.sprite[self.current_image]
             self.position += self.velocity
             self.rect.x = self.position
 
@@ -103,35 +111,35 @@ car_group = pygame.sprite.Group()
 w = int(WIDTH/8)
 h = int(HEIGHT/1.65)
 vel = random.uniform(1,1.5)
-player1_car = Car('0_red_formulaOne.png', w, h, vel)
+player1_car = Car(['./formulaones/0_red_formulaOne.png', './formulaones/1_red_formulaOne.png', './formulaones/2_red_formulaOne.png'], w, h, vel)
 car_group.add(player1_car)
 
 #setting CAR2
 w = int(WIDTH/9)
 h = int(HEIGHT/1.47)
 vel = random.uniform(1,1.5)
-player2_car = Car('0_yellow_formulaOne.png', w, h, vel)
+player2_car = Car(['./formulaones/0_yellow_formulaOne.png', './formulaones/1_yellow_formulaOne.png', './formulaones/2_yellow_formulaOne.png'], w, h, vel)
 car_group.add(player2_car)
 
 #setting CAR3
 w = int(WIDTH/9)
 h = int(HEIGHT/1.31)
 vel = random.uniform(1,1.5)
-player3_car = Car('0_blue_formulaOne.png', w, h, vel)
+player3_car = Car(['./formulaones/0_blue_formulaOne.png', './formulaones/1_blue_formulaOne.png', './formulaones/2_blue_formulaOne.png'], w, h, vel)
 car_group.add(player3_car)
 
 #setting CAR4
 w = int(WIDTH/9)
 h = int(HEIGHT/1.19)
 vel = random.uniform(1,1.5)
-player4_car = Car('0_pink_formulaOne.png', w, h, vel)
+player4_car = Car(['./formulaones/0_pink_formulaOne.png', './formulaones/1_pink_formulaOne.png', './formulaones/2_pink_formulaOne.png'], w, h, vel)
 car_group.add(player4_car)
 
 #setting CAR5
 w = int(WIDTH/9)
 h = int(HEIGHT/1.1)
 vel = random.uniform(1,1.5)
-player5_car = Car('0_white_formulaOne.png', w, h, vel)
+player5_car = Car(['./formulaones/0_white_formulaOne.png', './formulaones/1_white_formulaOne.png', './formulaones/2_white_formulaOne.png'], w, h, vel)
 car_group.add(player5_car)
 
     
