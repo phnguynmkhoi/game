@@ -83,11 +83,17 @@ w = int(WIDTH/9)
 h = int(HEIGHT/1.1)
 player5_car = Car(CAR5, w, h, random.uniform(1,1.5), des)
 
-#win
-font = pygame.font.SysFont.('consolas',30)
+#gold
+gold = 0
+font = pygame.font.Font('freesansbold.ttf',30)
+text = font.render(str(gold), True, white)
+textPosition = text.get_rect()
+textPosition.center = (WIDTH/20, HEIGHT/25)
+coin_image = pygame.image.load('coin.png')
+coin_image = pygame.transform.scale(coin_image, (WIDTH/30, HEIGHT/15))
 
 #setting run
-def draw(player_car):
+def draw(player_car):   
     screen.blit(player_car.img,(player_car.car_x, player_car.car_y))
     
 #game Loop
@@ -101,6 +107,8 @@ while running:
     clock.tick(fps)     
 
     screen.blit(background,(0,0))
+    screen.blit(text, textPosition)
+    screen.blit(coin_image, (0,0))
 
     #draw 5 car
     draw(player1_car)
