@@ -15,189 +15,120 @@ yellow = (255,232,0)
 white = (255,255,255)
 
 #set screen
-WIDTH=1500
-HEIGHT=800  
+WIDTH=1000
+HEIGHT=600  
 screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.RESIZABLE)
 
-#set caption and icon
-pygame.display.set_caption("Dua xe ca do")
+#set caption and icon and image
+pygame.display.set_caption("Game cua Khoi")
 icon = pygame.image.load('car.png')
 pygame.display.set_icon(icon)
+arrow = pygame.image.load('arrow.png')
 
-class Background(pygame.sprite.Sprite):
-    def __init__(self, image, x, y):
-        super().__init__()
-        self.image = pygame.image.load(image)
-        self.image = pygame.transform.scale(self.image,(x, y))
+#Background
+class BACKGROUND:
+    def __init__(self,img, start,end) :
+        self.img=img
+        self.start=start
+        self.end=end
+        self.car=[]
 
-    def update(self):
-        screen.blit(self.image, (0,0))
+bg=[] 
+bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('./background levels/background-city.png'),(WIDTH,HEIGHT)),200,1000))
+bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('./background levels/background-code.png'),(WIDTH,HEIGHT)),0,1000))
+bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('./background levels/background-lake.png'),(WIDTH,HEIGHT)),0,1000))
+bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('./background levels/background-desert.png'),(WIDTH,HEIGHT)),0,800))
 
-#Create background group
-background_group = pygame.sprite.Group()
-background1 = Background("./background levels/background-city.png", WIDTH, HEIGHT)
-
-#setting destination
-des = 1380
-
-#Define Classes
-class Game:
-    def __init__(self):
-        '''Initialize the game'''
-        pass
-
-    def update(self):
-        """Update the game"""
-        pass
-
-    def draw(self):
-        """Draw the Hud and other information to display"""
-        pass
-
-    def car(self):
-        """Car"""
-        pass
-
-    def check_collisions(self):
-        """Check collisions between car and item"""
-        pass
-
-    def check_who_win(self):
-        """Check who is the winner"""
-        pass
-
-    def start_new_game(self):
-        """Like the name"""
-        pass
-
-    def pause_game(self):
-        pass
-
-class Car(pygame.sprite.Sprite):
-    def __init__(self, image, x:float, y:float, velocity:float):
-        '''Initialize the game'''
-        super().__init__()
-        self.sprite = [] 
-        i = 0
-        for i in range(0,3):
-            self.sprite.append(pygame.transform.scale(pygame.image.load(image[i]) ,(WIDTH/11,HEIGHT/9)))
-        self.current_image = 0
-        self.image = self.sprite[self.current_image]
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (x, y)
+#Car
+class CAR:
+    def __init__(self, img, car_y ,velocity,curRound):
+        self.img = pygame.transform.scale(img,(WIDTH/12.5,HEIGHT/12))
+        self.x = 0
+        self.y = car_y
         self.velocity = velocity
-        self.position = x
+        self.destination = 0
+        self.curRound=curRound
 
-        car_group.add(self)
-
-    def update(self):
-        self.move()
-        self.check_collisions()
-
-    def move(self):
-        """Move the car"""
-        if self.rect.x <= des:
-            self.current_image+=1
-            if self.current_image >= len(self.sprite):
-                self.current_image=0
-            self.image = self.sprite[self.current_image]
-            self.position += self.velocity
-            self.rect.x = self.position
-        
-
-    def check_collisions(self):
-        pass
-
-        
-
-class Item(pygame.sprite.Sprite):
-    def __init__(self, y):
-        super().__init__()
-        self.image = pygame.transform.scale(pygame.image.load('./mics/mystery box.png') ,(WIDTH/24,HEIGHT/20))
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (random.uniform(200, des-50),y)
-        item_group.add(self)
-
-    def update(self):
-        pass
-
-#Create Car Group
-car_group = pygame.sprite.Group()
-
-#Create Item Group
-item_group = pygame.sprite.Group()
-
-#Create Game
-my_game = Game(car_group, item_group)
-
-#setting CAR1
-w = 16
-h = 402
-vel = random.uniform(1,1.5)
-player1_car = Car(['./formula ones/0_red_formulaOne.png', './formula ones/1_red_formulaOne.png', './formula ones/2_red_formulaOne.png'], w, h, vel)
-item1 = Item(h+14)
-
-#setting CAR2
-w = 16
-h = 485
-vel = random.uniform(1,1.5)
-player2_car = Car(['./formula ones/0_yellow_formulaOne.png', './formula ones/1_yellow_formulaOne.png', './formula ones/2_yellow_formulaOne.png'], w, h, vel)
-item1 = Item(h+12)
+        # self.ratio=ratio
+    def run(self):
+        self.x += self.velocity
+    
+car=[]
+des = int(WIDTH/1.25)
+car.append(CAR(pygame.image.load('./formula ones/0_red_formulaOne.png'), int(HEIGHT/1.65), random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('./formula ones/0_yellow_formulaOne.png'), int(HEIGHT/1.47), random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('./formula ones/0_blue_formulaOne.png'), int(HEIGHT/1.32), random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('./formula ones/0_pink_formulaOne.png'), int(HEIGHT/1.19), random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('./formula ones/0_white_formulaOne.png'), int(HEIGHT/1.1),random.uniform(2,3), 0))
 
 
-#setting CAR3
-w = 16
-h = 568
-vel = random.uniform(1,1.5)
-player3_car = Car(['./formula ones/0_blue_formulaOne.png', './formula ones/1_blue_formulaOne.png', './formula ones/2_blue_formulaOne.png'], w, h, vel)
-item1 = Item(h+10)
-
-#setting CAR4
-w = 16
-h = 648
-vel = random.uniform(1,1.5)
-player4_car = Car(['./formula ones/0_pink_formulaOne.png', './formula ones/1_pink_formulaOne.png', './formula ones/2_pink_formulaOne.png'], w, h, vel)
-item1 = Item(h+10)
-
-#setting CAR5
-w = 16
-h = 727
-vel = random.uniform(1,1.5)
-player5_car = Car(['./formula ones/0_green_formulaOne.png', './formula ones/1_green_formulaOne.png', './formula ones/2_green_formulaOne.png'], w, h, vel)
-item1 = Item(h+10)
-
+#setting run
+def draw(player_car,x,y):
+    screen.blit(player_car,(x, y))
     
 #game Loop
 clock = pygame.time.Clock()
-FPS = 60
+fps = 60
+
+#Initalize
+r=0
+selected=0
+pressed=0
+for i in range (5):
+    bg[r].car.append(i)
+    car[i].x=bg[r].start
+    car[i].curRound=r
 
 running=True
-while running:    
+while running:
 
-    clock.tick(FPS) 
-
-    Background.update(background1)
-
-    #draw item
-    item_group.draw(screen)
-
-    #draw 5 car
-    car_group.draw(screen)
-    car_group.update()
-    
+    clock.tick(fps)     
+    screen.blit(bg[car[selected].curRound].img,(0,0))
+    #Events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
             pygame.quit()
             exit()
+        if event.type == pygame.KEYDOWN:
+            pressed=1
+            if event.key==pygame.K_F1:
+                selected=0
+            if event.key==pygame.K_F2:
+                selected=1
+            if event.key==pygame.K_F3:
+                selected=2
+            if event.key==pygame.K_F4:
+                selected=3
+            if event.key==pygame.K_F5:
+                selected=4
+        if event.type == pygame.KEYUP:
+            pressed=0
 
+    #draw 5 car
+    for i in bg[car[selected].curRound].car:
+        draw(car[i].img,car[i].x,car[i].y)
+
+    if pressed ==1:
+        for i in bg[car[selected].curRound].car:
+            if i==selected :
+                draw(arrow,car[i].x+10,car[i].y-45)
+    #check if the car have finish the race
+    for i in range (5):
+        if car[i].x<=bg[car[i].curRound].end:
+            car[i].run()
+        elif car[i].curRound<3: 
+            bg[car[i].curRound].car.remove(i)
+            car[i].curRound+=1
+            bg[car[i].curRound].car.append(i)
+            car[i].x=bg[car[i].curRound].start-100
+
+    
         #resize display
-        if event.type == VIDEORESIZE:
+        # if event.type == VIDEORESIZE:
             
-            screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
-            background = pygame.transform.scale(background,(event.w,event.h))
+        #     screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
+        #     background = pygame.transform.scale(background,(event.w,event.h))
 
-    #Update the display and tick the clock
     pygame.display.update()
-
 pygame.quit()
