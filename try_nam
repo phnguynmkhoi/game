@@ -108,11 +108,11 @@ class Car(pygame.sprite.Sprite):
         
 
 class Item(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self, y):
         super().__init__()
         self.image = pygame.transform.scale(pygame.image.load('./mics/mystery box.png') ,(WIDTH/24,HEIGHT/20))
         self.rect = self.image.get_rect()
-        self.rect.topleft = (x,y)
+        self.rect.topleft = (random.uniform(200, des-50),y)
 
     def update(self):
         pass
@@ -128,7 +128,7 @@ w = 16
 h = 402
 vel = random.uniform(1,1.5)
 player1_car = Car(['./formula ones/0_red_formulaOne.png', './formula ones/1_red_formulaOne.png', './formula ones/2_red_formulaOne.png'], w, h, vel)
-item1 = Item(random.uniform(100, des-50), h)
+item1 = Item(h+14)
 car_group.add(player1_car)
 item_group.add(item1)
 
@@ -137,7 +137,7 @@ w = 16
 h = 485
 vel = random.uniform(1,1.5)
 player2_car = Car(['./formula ones/0_yellow_formulaOne.png', './formula ones/1_yellow_formulaOne.png', './formula ones/2_yellow_formulaOne.png'], w, h, vel)
-item1 = Item(random.uniform(100, des-100), h)
+item1 = Item(h+12)
 car_group.add(item1)
 car_group.add(player2_car)
 
@@ -147,7 +147,7 @@ h = 568
 vel = random.uniform(1,1.5)
 player3_car = Car(['./formula ones/0_blue_formulaOne.png', './formula ones/1_blue_formulaOne.png', './formula ones/2_blue_formulaOne.png'], w, h, vel)
 car_group.add(player3_car)
-item1 = Item(random.uniform(100, des-100), h)
+item1 = Item(h+10)
 car_group.add(item1)
 
 #setting CAR4
@@ -156,7 +156,7 @@ h = 648
 vel = random.uniform(1,1.5)
 player4_car = Car(['./formula ones/0_pink_formulaOne.png', './formula ones/1_pink_formulaOne.png', './formula ones/2_pink_formulaOne.png'], w, h, vel)
 car_group.add(player4_car)
-item1 = Item(random.uniform(100, des-100), h)
+item1 = Item(h+10)
 car_group.add(item1)
 
 #setting CAR5
@@ -165,7 +165,7 @@ h = 727
 vel = random.uniform(1,1.5)
 player5_car = Car(['./formula ones/0_green_formulaOne.png', './formula ones/1_green_formulaOne.png', './formula ones/2_green_formulaOne.png'], w, h, vel)
 car_group.add(player5_car)
-item1 = Item(random.uniform(100, des-100), h)
+item1 = Item(h+10)
 car_group.add(item1)
 
     
