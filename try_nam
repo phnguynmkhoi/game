@@ -60,7 +60,7 @@ car.append(CAR(pygame.image.load('./formula ones/0_red_formulaOne.png'), int(HEI
 car.append(CAR(pygame.image.load('./formula ones/0_yellow_formulaOne.png'), int(HEIGHT/1.7), random.uniform(2,3), 0))
 car.append(CAR(pygame.image.load('./formula ones/0_blue_formulaOne.png'), int(HEIGHT/1.45), random.uniform(2,3), 0))
 car.append(CAR(pygame.image.load('./formula ones/0_pink_formulaOne.png'), int(HEIGHT/1.27), random.uniform(2,3), 0))
-car.append(CAR(pygame.image.load('./formula ones/0_green_formulaOne.png'), int(HEIGHT/1.1),random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('./formula ones/0_green_formulaOne.png'), int(HEIGHT/1.12),random.uniform(2,3), 0))
 
 
 #setting run
