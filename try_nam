@@ -52,14 +52,15 @@ class CAR:
         # self.ratio=ratio
     def run(self):
         self.x += self.velocity
+        pass
     
 car=[]
 des = int(WIDTH/1.25)
-car.append(CAR(pygame.image.load('./formula ones/0_red_formulaOne.png'), int(HEIGHT/1.65), random.uniform(2,3), 0))
-car.append(CAR(pygame.image.load('./formula ones/0_yellow_formulaOne.png'), int(HEIGHT/1.47), random.uniform(2,3), 0))
-car.append(CAR(pygame.image.load('./formula ones/0_blue_formulaOne.png'), int(HEIGHT/1.32), random.uniform(2,3), 0))
-car.append(CAR(pygame.image.load('./formula ones/0_pink_formulaOne.png'), int(HEIGHT/1.19), random.uniform(2,3), 0))
-car.append(CAR(pygame.image.load('./formula ones/0_white_formulaOne.png'), int(HEIGHT/1.1),random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('./formula ones/0_red_formulaOne.png'), int(HEIGHT/2.05), random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('./formula ones/0_yellow_formulaOne.png'), int(HEIGHT/1.7), random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('./formula ones/0_blue_formulaOne.png'), int(HEIGHT/1.45), random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('./formula ones/0_pink_formulaOne.png'), int(HEIGHT/1.27), random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('./formula ones/0_green_formulaOne.png'), int(HEIGHT/1.1),random.uniform(2,3), 0))
 
 
 #setting run
@@ -113,6 +114,7 @@ while running:
         for i in bg[car[selected].curRound].car:
             if i==selected :
                 draw(arrow,car[i].x+10,car[i].y-45)
+
     #check if the car have finish the race
     for i in range (5):
         if car[i].x<=bg[car[i].curRound].end:
