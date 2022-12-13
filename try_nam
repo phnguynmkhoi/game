@@ -107,6 +107,7 @@ class Car(pygame.sprite.Sprite):
 
     def check_collisions(self):
         pass
+
         
 
 class Item(pygame.sprite.Sprite):
@@ -125,6 +126,9 @@ car_group = pygame.sprite.Group()
 
 #Create Item Group
 item_group = pygame.sprite.Group()
+
+#Create Game
+my_game = Game(car_group, item_group)
 
 #setting CAR1
 w = 16
