@@ -80,7 +80,7 @@ class Car(pygame.sprite.Sprite):
         self.sprite = [] 
         i = 0
         for i in range(0,3):
-            self.sprite.append(pygame.transform.scale(pygame.image.load(image[i]) ,(WIDTH/12.5,HEIGHT/12)))
+            self.sprite.append(pygame.transform.scale(pygame.image.load(image[i]) ,(WIDTH/11,HEIGHT/9)))
         self.current_image = 0
         self.image = self.sprite[self.current_image]
         self.rect = self.image.get_rect()
