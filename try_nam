@@ -15,8 +15,8 @@ yellow = (255,232,0)
 white = (255,255,255)
 
 #set screen
-WIDTH=1500
-HEIGHT=800  
+WIDTH=960
+HEIGHT=540
 screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.RESIZABLE)
 
 #set caption and icon
@@ -38,7 +38,7 @@ background_group = pygame.sprite.Group()
 background1 = Background("./background levels/background-city.png", WIDTH, HEIGHT)
 
 #setting destination
-des = 1380
+des = WIDTH/1.1
 
 #Define Classes
 class Game:
@@ -80,7 +80,7 @@ class Car(pygame.sprite.Sprite):
         self.sprite = [] 
         i = 0
         for i in range(0,3):
-            self.sprite.append(pygame.transform.scale(pygame.image.load(image[i]) ,(WIDTH/11,HEIGHT/9)))
+            self.sprite.append(pygame.transform.scale(pygame.image.load(image[i]) ,(WIDTH/14,HEIGHT/12)))
         self.current_image = 0
         self.image = self.sprite[self.current_image]
         self.rect = self.image.get_rect()
@@ -128,17 +128,16 @@ car_group = pygame.sprite.Group()
 item_group = pygame.sprite.Group()
 
 #Create Game
-my_game = Game(car_group, item_group)
 
 #setting CAR1
-w = 16
+w = 0
 h = 402
 vel = random.uniform(1,1.5)
 player1_car = Car(['./formula ones/0_red_formulaOne.png', './formula ones/1_red_formulaOne.png', './formula ones/2_red_formulaOne.png'], w, h, vel)
 item1 = Item(h+14)
 
 #setting CAR2
-w = 16
+w = 0
 h = 485
 vel = random.uniform(1,1.5)
 player2_car = Car(['./formula ones/0_yellow_formulaOne.png', './formula ones/1_yellow_formulaOne.png', './formula ones/2_yellow_formulaOne.png'], w, h, vel)
@@ -146,21 +145,21 @@ item1 = Item(h+12)
 
 
 #setting CAR3
-w = 16
+w = 0
 h = 568
 vel = random.uniform(1,1.5)
 player3_car = Car(['./formula ones/0_blue_formulaOne.png', './formula ones/1_blue_formulaOne.png', './formula ones/2_blue_formulaOne.png'], w, h, vel)
 item1 = Item(h+10)
 
 #setting CAR4
-w = 16
+w = 0
 h = 648
 vel = random.uniform(1,1.5)
 player4_car = Car(['./formula ones/0_pink_formulaOne.png', './formula ones/1_pink_formulaOne.png', './formula ones/2_pink_formulaOne.png'], w, h, vel)
 item1 = Item(h+10)
 
 #setting CAR5
-w = 16
+w = 0
 h = 727
 vel = random.uniform(1,1.5)
 player5_car = Car(['./formula ones/0_green_formulaOne.png', './formula ones/1_green_formulaOne.png', './formula ones/2_green_formulaOne.png'], w, h, vel)
@@ -195,7 +194,7 @@ while running:
         if event.type == VIDEORESIZE:
             
             screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
-            background = pygame.transform.scale(background,(event.w,event.h))
+            background1.image = pygame.transform.scale(background1.image,(event.w,event.h))
 
     #Update the display and tick the clock
     pygame.display.update()
