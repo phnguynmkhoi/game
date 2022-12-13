@@ -21,11 +21,11 @@ screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.RESIZABLE)
 
 #set caption and icon
 pygame.display.set_caption("Game cua Khoi")
-icon = pygame.image.load('car.png')
+icon = pygame.image.load('img/car.png')
 pygame.display.set_icon(icon)
 
 #Background
-background = pygame.image.load('background-levels-city.png')
+background = pygame.image.load('img/background-levels-city.png')
 background = pygame.transform.scale(background,(WIDTH,HEIGHT))
 
 class game:
@@ -80,14 +80,14 @@ class Item():
 
 
 #create Car
-CAR1 = pygame.image.load('0_red_formulaOne.png')
-CAR2 = pygame.image.load('0_yellow_formulaOne.png')
-CAR3 = pygame.image.load('0_blue_formulaOne.png')
-CAR4 = pygame.image.load('0_pink_formulaOne.png')
-CAR5 = pygame.image.load('0_white_formulaOne.png')
+CAR1 = pygame.image.load('img/0_red_formulaOne.png')
+CAR2 = pygame.image.load('img/0_yellow_formulaOne.png')
+CAR3 = pygame.image.load('img/0_blue_formulaOne.png')
+CAR4 = pygame.image.load('img/0_pink_formulaOne.png')
+CAR5 = pygame.image.load('img/0_white_formulaOne.png')
 
 #create item
-ITEM = pygame.image.load('coin.png')
+ITEM = pygame.image.load('img/coin.png')
 ITEM = pygame.transform.scale(ITEM,(WIDTH/12.5,HEIGHT/12))
 
 #RESIZE CAR
