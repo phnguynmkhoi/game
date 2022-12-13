@@ -15,8 +15,8 @@ yellow = (255,232,0)
 white = (255,255,255)
 
 #set screen
-WIDTH=960
-HEIGHT=540
+WIDTH=1000
+HEIGHT=600
 screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.RESIZABLE)
 
 #set caption and icon and image
@@ -129,8 +129,8 @@ while running:
         #resize display
         # if event.type == VIDEORESIZE:
             
-            screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
-            background1.image = pygame.transform.scale(background1.image,(event.w,event.h))
+            # screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
+            # background1.image = pygame.transform.scale(background1.image,(event.w,event.h))
 
     pygame.display.update()
 pygame.quit()
