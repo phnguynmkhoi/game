@@ -88,6 +88,8 @@ class Car(pygame.sprite.Sprite):
         self.velocity = velocity
         self.position = x
 
+        car_group.add(self)
+
     def update(self):
         self.move()
         self.check_collisions()
@@ -113,6 +115,7 @@ class Item(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(pygame.image.load('./mics/mystery box.png') ,(WIDTH/24,HEIGHT/20))
         self.rect = self.image.get_rect()
         self.rect.topleft = (random.uniform(200, des-50),y)
+        item_group.add(self)
 
     def update(self):
         pass
@@ -129,8 +132,6 @@ h = 402
 vel = random.uniform(1,1.5)
 player1_car = Car(['./formula ones/0_red_formulaOne.png', './formula ones/1_red_formulaOne.png', './formula ones/2_red_formulaOne.png'], w, h, vel)
 item1 = Item(h+14)
-car_group.add(player1_car)
-item_group.add(item1)
 
 #setting CAR2
 w = 16
@@ -138,35 +139,28 @@ h = 485
 vel = random.uniform(1,1.5)
 player2_car = Car(['./formula ones/0_yellow_formulaOne.png', './formula ones/1_yellow_formulaOne.png', './formula ones/2_yellow_formulaOne.png'], w, h, vel)
 item1 = Item(h+12)
-car_group.add(item1)
-car_group.add(player2_car)
+
 
 #setting CAR3
 w = 16
 h = 568
 vel = random.uniform(1,1.5)
 player3_car = Car(['./formula ones/0_blue_formulaOne.png', './formula ones/1_blue_formulaOne.png', './formula ones/2_blue_formulaOne.png'], w, h, vel)
-car_group.add(player3_car)
 item1 = Item(h+10)
-car_group.add(item1)
 
 #setting CAR4
 w = 16
 h = 648
 vel = random.uniform(1,1.5)
 player4_car = Car(['./formula ones/0_pink_formulaOne.png', './formula ones/1_pink_formulaOne.png', './formula ones/2_pink_formulaOne.png'], w, h, vel)
-car_group.add(player4_car)
 item1 = Item(h+10)
-car_group.add(item1)
 
 #setting CAR5
 w = 16
 h = 727
 vel = random.uniform(1,1.5)
 player5_car = Car(['./formula ones/0_green_formulaOne.png', './formula ones/1_green_formulaOne.png', './formula ones/2_green_formulaOne.png'], w, h, vel)
-car_group.add(player5_car)
 item1 = Item(h+10)
-car_group.add(item1)
 
     
 #game Loop
