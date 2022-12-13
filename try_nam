@@ -108,27 +108,37 @@ class Car(pygame.sprite.Sprite):
         
 
 class Item(pygame.sprite.Sprite):
-    def __init__(self):
-        '''Initialize the game'''
-        pass
+    def __init__(self, x, y):
+        super().__init__()
+        self.image = pygame.transform.scale(pygame.image.load('./mics/mystery box.png') ,(WIDTH/20,HEIGHT/19.5))
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (x,y)
+
     def update(self):
         pass
 
 #Create Car Group
 car_group = pygame.sprite.Group()
 
+#Create Item Group
+item_group = pygame.sprite.Group()
+
 #setting CAR1
 w = 16
 h = 402
 vel = random.uniform(1,1.5)
 player1_car = Car(['./formula ones/0_red_formulaOne.png', './formula ones/1_red_formulaOne.png', './formula ones/2_red_formulaOne.png'], w, h, vel)
+item1 = Item(random.uniform(100, des-50), h)
 car_group.add(player1_car)
+item_group.add(item1)
 
 #setting CAR2
 w = 16
 h = 485
 vel = random.uniform(1,1.5)
 player2_car = Car(['./formula ones/0_yellow_formulaOne.png', './formula ones/1_yellow_formulaOne.png', './formula ones/2_yellow_formulaOne.png'], w, h, vel)
+item1 = Item(random.uniform(100, des-50), h)
+car_group.add(item1)
 car_group.add(player2_car)
 
 #setting CAR3
@@ -137,6 +147,8 @@ h = 568
 vel = random.uniform(1,1.5)
 player3_car = Car(['./formula ones/0_blue_formulaOne.png', './formula ones/1_blue_formulaOne.png', './formula ones/2_blue_formulaOne.png'], w, h, vel)
 car_group.add(player3_car)
+item1 = Item(random.uniform(100, des-50), h)
+car_group.add(item1)
 
 #setting CAR4
 w = 16
@@ -144,6 +156,8 @@ h = 648
 vel = random.uniform(1,1.5)
 player4_car = Car(['./formula ones/0_pink_formulaOne.png', './formula ones/1_pink_formulaOne.png', './formula ones/2_pink_formulaOne.png'], w, h, vel)
 car_group.add(player4_car)
+item1 = Item(random.uniform(100, des-50), h)
+car_group.add(item1)
 
 #setting CAR5
 w = 16
@@ -151,6 +165,8 @@ h = 727
 vel = random.uniform(1,1.5)
 player5_car = Car(['./formula ones/0_green_formulaOne.png', './formula ones/1_green_formulaOne.png', './formula ones/2_green_formulaOne.png'], w, h, vel)
 car_group.add(player5_car)
+item1 = Item(random.uniform(100, des-50), h)
+car_group.add(item1)
 
     
 #game Loop
@@ -164,12 +180,14 @@ while running:
 
     Background.update(background1)
 
+    #draw item
+    item_group.draw(screen)
+
     #draw 5 car
     car_group.draw(screen)
     car_group.update()
     
     for event in pygame.event.get():
-        print (event)
         if event.type == pygame.QUIT:
             running = False
             pygame.quit()
