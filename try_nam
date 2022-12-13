@@ -37,7 +37,7 @@ bg=[]
 bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('./background levels/background-city.png'),(WIDTH,HEIGHT)),200,1000))
 bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('./background levels/background-code.png'),(WIDTH,HEIGHT)),0,1000))
 bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('./background levels/background-lake.png'),(WIDTH,HEIGHT)),0,1000))
-bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('./background levels/background-desert.png'),(WIDTH,HEIGHT)),0,800))
+bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('./background levels/background-desert.png'),(WIDTH,HEIGHT)),0,900))
 
 #Car
 class CAR:
