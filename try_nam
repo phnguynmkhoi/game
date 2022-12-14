@@ -33,7 +33,7 @@ class BACKGROUND:
         self.car=[]
 
 bg=[] 
-bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('./background levels/background-city.png'),(WIDTH,HEIGHT)),200,1000))
+bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('./background levels/background-city.png'),(WIDTH,HEIGHT)),0,1000))
 bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('./background levels/background-code.png'),(WIDTH,HEIGHT)),0,1000))
 bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('./background levels/background-lake.png'),(WIDTH,HEIGHT)),0,1000))
 bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('./background levels/background-desert.png'),(WIDTH,HEIGHT)),0,900))
@@ -55,11 +55,11 @@ class CAR:
     
 car=[]
 des = int(WIDTH/1.25)
-car.append(CAR(pygame.image.load('./formula ones/0_red_formulaOne.png'), int(HEIGHT/2.05), random.uniform(10,11), 0))
-car.append(CAR(pygame.image.load('./formula ones/0_yellow_formulaOne.png'), int(HEIGHT/1.7), random.uniform(10,11), 0))
-car.append(CAR(pygame.image.load('./formula ones/0_blue_formulaOne.png'), int(HEIGHT/1.45), random.uniform(10,11), 0))
-car.append(CAR(pygame.image.load('./formula ones/0_pink_formulaOne.png'), int(HEIGHT/1.27), random.uniform(10,11), 0))
-car.append(CAR(pygame.image.load('./formula ones/0_green_formulaOne.png'), int(HEIGHT/1.12),random.uniform(10,11), 0))
+car.append(CAR(pygame.image.load('./formula ones/0_red_formulaOne.png'), int(HEIGHT/2.05), random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('./formula ones/0_yellow_formulaOne.png'), int(HEIGHT/1.7), random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('./formula ones/0_blue_formulaOne.png'), int(HEIGHT/1.45), random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('./formula ones/0_pink_formulaOne.png'), int(HEIGHT/1.27), random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('./formula ones/0_green_formulaOne.png'), int(HEIGHT/1.12),random.uniform(2,3), 0))
 
 
 #setting run
