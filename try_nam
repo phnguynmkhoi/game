@@ -107,6 +107,8 @@ while running:
                 selected=4
         if event.type == pygame.KEYUP:
             pressed=0
+
+        #resize screen
         if event.type == VIDEORESIZE:
 
             count += 1
