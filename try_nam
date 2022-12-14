@@ -234,7 +234,7 @@ while running:
     #check if the car have finish the race
     for i in range (5):
         if car[i].x<=bg[car[i].curRound].end:
-            car[i].run
+            car[i].run()
         elif car[i].curRound<3: 
             bg[car[i].curRound].car.remove(i)
             car[i].curRound+=1
