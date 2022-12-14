@@ -62,36 +62,30 @@ car.append(CAR(pygame.image.load('img/0_blue_formulaOne.png'), int(HEIGHT/1.32),
 car.append(CAR(pygame.image.load('img/0_pink_formulaOne.png'), int(HEIGHT/1.19), random.uniform(2,3), 0))
 car.append(CAR(pygame.image.load('img/0_white_formulaOne.png'), int(HEIGHT/1.1),random.uniform(2,3), 0))
 
-<<<<<<< HEAD
-
-#setting run
-def draw(player_car,x,y):
-    screen.blit(player_car,(x, y))
-=======
 #setting CAR1
 w = int(WIDTH/8)
 h = int(HEIGHT/1.65)
-player1_car = Car(CAR1, w, h, random.uniform(1,1.5), des)
+player1_car = CAR(CAR1, w, h, random.uniform(1,1.5), des)
 
 #setting CAR2
 w = int(WIDTH/9)
 h = int(HEIGHT/1.47)
-player2_car = Car(CAR2, w, h, random.uniform(1,1.5), des)
+player2_car = CAR(CAR2, w, h, random.uniform(1,1.5), des)
 
 #setting CAR3
 w = int(WIDTH/9)
 h = int(HEIGHT/1.31)
-player3_car = Car(CAR3, w, h, random.uniform(1,1.5), des)
+player3_car = CAR(CAR3, w, h, random.uniform(1,1.5), des)
 
 #setting CAR4
 w = int(WIDTH/9)
 h = int(HEIGHT/1.19)
-player4_car = Car(CAR4, w, h, random.uniform(1,1.5), des)
+player4_car = CAR(CAR4, w, h, random.uniform(1,1.5), des)
 
 #setting CAR5
 w = int(WIDTH/9)
 h = int(HEIGHT/1.1)
-player5_car = Car(CAR5, w, h, random.uniform(1,1.5), des)
+player5_car = CAR(CAR5, w, h, random.uniform(1,1.5), des)
 
 #gold
 gold = 0
@@ -105,7 +99,6 @@ coin_image = pygame.transform.scale(coin_image, (WIDTH/30, HEIGHT/15))
 #setting run
 def draw(player_car):   
     screen.blit(player_car.img,(player_car.car_x, player_car.car_y))
->>>>>>> 29423119ed4924932a2cc81cfe3fa74b16b1ec1a
     
 #game Loop
 clock = pygame.time.Clock()
@@ -125,10 +118,6 @@ running=True
 while running:
 
     clock.tick(fps)     
-<<<<<<< HEAD
-    screen.blit(bg[car[selected].curRound].img,(0,0))
-    #Events
-=======
 
     screen.blit(background,(0,0))
     screen.blit(text, textPosition)
@@ -157,7 +146,6 @@ while running:
     if player5_car.car_x<=player5_car.destination:
         player5_car.car_x += player5_car.velocity
 
->>>>>>> 29423119ed4924932a2cc81cfe3fa74b16b1ec1a
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
