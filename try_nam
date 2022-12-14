@@ -1,9 +1,9 @@
 from turtle import width
 import pygame
 from pygame.locals import *
-import math
 import random
 import time
+import math
 
 pygame.init()
 
@@ -83,7 +83,7 @@ class BACKGROUND:
         self.car=[]
 
 bg=[] 
-bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('./background levels/background-city.png'),(WIDTH,HEIGHT)),200,1000))
+bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('./background levels/background-city.png'),(WIDTH,HEIGHT)),0,1000))
 bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('./background levels/background-code.png'),(WIDTH,HEIGHT)),0,1000))
 bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('./background levels/background-lake.png'),(WIDTH,HEIGHT)),0,1000))
 bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('./background levels/background-desert.png'),(WIDTH,HEIGHT)),0,900))
@@ -138,6 +138,8 @@ for i in range (5):
 #System Time
 curTime=0
 pivotTime=0
+#resize count
+count = 0
 
 running=True
 while running:
@@ -171,6 +173,41 @@ while running:
             if item[i].appRound[j] == car[selected].curRound and item[i].visible[j]==1:
                 draw(mysbox,item[i].x[j],item[i].y)
             
+        #resize screen
+        if event.type == VIDEORESIZE:
+
+            count += 1
+            screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
+            bg[0].img = pygame.transform.scale(pygame.image.load('./background levels/background-city.png'),(screen.get_width(),screen.get_height()))
+            bg[0].end = screen.get_width()
+            bg[1].img = pygame.transform.scale(pygame.image.load('./background levels/background-code.png'),(screen.get_width(),screen.get_height()))
+            bg[1].end = screen.get_width()
+            bg[2].img = pygame.transform.scale(pygame.image.load('./background levels/background-lake.png'),(screen.get_width(),screen.get_height()))
+            bg[2].end = screen.get_width()
+            bg[3].img = pygame.transform.scale(pygame.image.load('./background levels/background-desert.png'),(screen.get_width(),screen.get_height()))
+            w = screen.get_width()
+            bg[3].end = w/1.1
+
+            h = screen.get_height()
+            for i in range(5):
+                car[i].img = pygame.transform.scale(car[i].img,(w/12.5, h/12))
+
+            car[0].y = h/2.07
+
+            car[1].y = h/1.7
+
+            car[2].y = h/1.45
+
+            car[3].y = h/1.27
+
+            car[4].y = h/1.12
+
+            if count % 2 == 1:
+                for i in range(5):
+                    car[i].velocity = car[i].velocity * w / 1000
+            if count % 2 == 0:
+                for i in range(5):
+                    car[i].velocity = car[i].velocity * 1000 / w
 
     #draw 5 car
     for i in bg[car[selected].curRound].car:
@@ -206,10 +243,7 @@ while running:
 
     
         #resize display
-        # if event.type == VIDEORESIZE:
-            
-            # screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
-            # background1.image = pygame.transform.scale(background1.image,(event.w,event.h))
+    
 
     pygame.display.update()
 pygame.quit()
