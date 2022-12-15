@@ -15,8 +15,8 @@ yellow = (255,232,0)
 white = (255,255,255)
 
 #set screen
-WIDTH=1000
-HEIGHT=600
+WIDTH=1200
+HEIGHT=600  
 screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.RESIZABLE)
 
 #set caption and icon and image
@@ -97,11 +97,20 @@ class CAR:
         self.velocity = velocity
         self.destination = 0
         self.curRound=curRound
+        self.oldWidth = 1000 
+        self.count = 0
         # self.ratio=ratio
     def run(self):
         self.x += self.velocity
         pass
-    
+    def resize(self):
+        w = screen.get_width()
+        h = screen.get_height()
+        self.count 
+        self.img = pygame.transform.scale(self.img,(w/12.5,h/12))
+        self.velocity = self.velocity * w * 10   / self.oldWidth
+        self.oldWidth = w
+
 car=[]
 des = int(WIDTH/1.25)
 car.append(CAR(pygame.image.load('./formula ones/0_red_formulaOne.png'), int(HEIGHT/2.05), random.uniform(2,3), 0))
@@ -124,7 +133,7 @@ def isCollide(a,b,x,y):
     return (math.sqrt((a-x)*(a-x)+(b-y)*(b-y))<80)
 #game Loop
 clock = pygame.time.Clock()
-fps = 60
+fps = 120
 
 #Initalize
 r=0
@@ -169,7 +178,6 @@ while running:
         #resize screen
         if event.type == VIDEORESIZE:
 
-            count = count + 1
             screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
             bg[0].img = pygame.transform.scale(pygame.image.load('./background levels/background-city.png'),(screen.get_width(),screen.get_height()))
             bg[0].end = screen.get_width()
@@ -183,24 +191,13 @@ while running:
 
             h = screen.get_height()
             for i in range(5):
-                car[i].img = pygame.transform.scale(car[i].img,(w/12.5, h/12))
-
+                car[i].resize()
             car[0].y = h/2.07
-
             car[1].y = h/1.7
-
             car[2].y = h/1.45
-
             car[3].y = h/1.27
-
             car[4].y = h/1.12
 
-            if count % 2 == 1:
-                for i in range(5):
-                    car[i].velocity = car[i].velocity * w / 1000
-            if count % 2 == 0:
-                for i in range(5):
-                    car[i].velocity = car[i].velocity * 1000 / w
 
     #draw items
     for i in range(5):
