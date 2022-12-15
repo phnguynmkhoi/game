@@ -168,17 +168,10 @@ while running:
                 selected=4
         if event.type == pygame.KEYUP and pressed:
             pressed=0
-
-    #draw items
-    for i in range(5):
-        for j in range (2):
-            if item[i].appRound[j] == car[selected].curRound and item[i].visible[j]==1:
-                draw(mysbox,item[i].x[j],item[i].y)
-            
         #resize screen
         if event.type == VIDEORESIZE:
 
-            count += 1
+            count = count + 1
             screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
             bg[0].img = pygame.transform.scale(pygame.image.load('./background levels/background-city.png'),(screen.get_width(),screen.get_height()))
             bg[0].end = screen.get_width()
@@ -210,6 +203,12 @@ while running:
             if count % 2 == 0:
                 for i in range(5):
                     car[i].velocity = car[i].velocity * 1000 / w
+
+    #draw items
+    for i in range(5):
+        for j in range (2):
+            if item[i].appRound[j] == car[selected].curRound and item[i].visible[j]==1:
+                draw(mysbox,item[i].x[j],item[i].y)
 
     #draw 5 car
     for i in bg[car[selected].curRound].car:
