@@ -43,6 +43,7 @@ def rand():
 #Note
 #0 : Faster
 #1 : Slower
+#2 : win
 class ITEM :
     def __init__(self,y,velocity):
         self.img=mysbox
@@ -65,6 +66,9 @@ class ITEM :
         car[i].velocity= 4
         self.pivotTime= pygame.time.get_ticks()
 
+    def win(self,i):
+        pass
+
     def backToNormal(self, i): 
         global curTime
         if curTime-self.pivotTime> self.duration:
@@ -73,20 +77,18 @@ class ITEM :
         return 1
         
 
-
-
 class BACKGROUND:
     def __init__(self,img, start,end) :
-        self.img=img
+        self.img=pygame.transform.scale(img,(WIDTH,HEIGHT))
         self.start=start
         self.end=end
         self.car=[]
 
 bg=[] 
-bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('./background levels/background-city.png'),(WIDTH,HEIGHT)),0,1000))
-bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('./background levels/background-code.png'),(WIDTH,HEIGHT)),0,1000))
-bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('./background levels/background-lake.png'),(WIDTH,HEIGHT)),0,1000))
-bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('./background levels/background-desert.png'),(WIDTH,HEIGHT)),0,900))
+bg.append (BACKGROUND(pygame.image.load('./background levels/background-desert-0.png'),0,1000))
+bg.append (BACKGROUND(pygame.image.load('./background levels/background-desert-1.png'),0,1000))
+bg.append (BACKGROUND(pygame.image.load('./background levels/background-desert-2.png'),0,1000))
+bg.append (BACKGROUND(pygame.image.load('./background levels/background-desert-3.png'),0,900))
 
 #Car
 class CAR:
