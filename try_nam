@@ -84,40 +84,43 @@ class BACKGROUND:
         self.end=end
         self.car=[]
 
-bg=[] 
-bg.append (BACKGROUND(pygame.image.load('./background levels/background-desert-0.png'),0,1000))
-bg.append (BACKGROUND(pygame.image.load('./background levels/background-desert-1.png'),0,1000))
-bg.append (BACKGROUND(pygame.image.load('./background levels/background-desert-2.png'),0,1000))
-bg.append (BACKGROUND(pygame.image.load('./background levels/background-desert-3.png'),0,900))
+bg=[]
+for i in range (1):
+    bg.append([])
+    for j in range(4):
+        start,end=0,1000
+        if j==0:
+            start= 30
+        if j==3:
+            end =900
+        img=(f"./background levels/background-{i}-{j}.png")
+        bg[i].append(BACKGROUND(pygame.image.load(img),start,end))
 
 #Car
 class CAR:
-    def __init__(self, img, car_y ,velocity,curRound):
+    def __init__(self, img, car_y,ratio ,velocity,curRound):
         self.img = pygame.transform.scale(img,(WIDTH/12.5,HEIGHT/12))
         self.x = 0
-        self.y = car_y
+        self.y = int(car_y/ratio)
         self.velocity = velocity
         self.destination = 0
         self.curRound=curRound
-        # self.ratio=ratio
+        self.ratio=ratio
     def run(self):
         self.x += self.velocity
         pass
     
 car=[]
 des = int(WIDTH/1.25)
-car.append(CAR(pygame.image.load('./formula ones/0_red_formulaOne.png'), int(HEIGHT/2.05), random.uniform(2,3), 0))
-car.append(CAR(pygame.image.load('./formula ones/0_yellow_formulaOne.png'), int(HEIGHT/1.7), random.uniform(2,3), 0))
-car.append(CAR(pygame.image.load('./formula ones/0_blue_formulaOne.png'), int(HEIGHT/1.45), random.uniform(2,3), 0))
-car.append(CAR(pygame.image.load('./formula ones/0_pink_formulaOne.png'), int(HEIGHT/1.27), random.uniform(2,3), 0))
-car.append(CAR(pygame.image.load('./formula ones/0_green_formulaOne.png'), int(HEIGHT/1.12),random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('./formula ones/0_red_formulaOne.png'), HEIGHT,2.28, random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('./formula ones/0_yellow_formulaOne.png'), HEIGHT,1.83, random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('./formula ones/0_blue_formulaOne.png'), HEIGHT,1.50, random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('./formula ones/0_pink_formulaOne.png'), HEIGHT,1.27, random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('./formula ones/0_green_formulaOne.png'), HEIGHT,1.12,random.uniform(2,3), 0))
 
 item=[]
-item.append(ITEM(car[0].y,car[0].velocity))
-item.append(ITEM(car[1].y,car[1].velocity))
-item.append(ITEM(car[2].y,car[2].velocity))
-item.append(ITEM(car[3].y,car[3].velocity))
-item.append(ITEM(car[4].y,car[4].velocity))
+for i in range(5):
+    item.append(ITEM(car[i].y,car[i].velocity))
 
 #setting run
 def draw(player_car,x,y):
@@ -130,11 +133,12 @@ fps = 60
 
 #Initalize
 r=0
-selected=0
+carSelected=0
+mapSelected=0
 pressed=0
 for i in range (5):
-    bg[r].car.append(i)
-    car[i].x=bg[r].start
+    bg[mapSelected][r].car.append(i)
+    car[i].x=bg[mapSelected][r].start
     car[i].curRound=r
 
 #System Time
@@ -147,7 +151,7 @@ running=True
 while running:
     curTime=pygame.time.get_ticks()
     clock.tick(fps)     
-    screen.blit(bg[car[selected].curRound].img,(0,0))
+    screen.blit(bg[mapSelected][car[carSelected].curRound].img,(0,0))
     #Events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -157,15 +161,15 @@ while running:
         if event.type == pygame.KEYDOWN and pressed==0:
             pressed=1
             if event.key==pygame.K_F1:
-                selected=0
+                carSelected=0
             if event.key==pygame.K_F2:
-                selected=1
+                carSelected=1
             if event.key==pygame.K_F3:
-                selected=2
+                carSelected=2
             if event.key==pygame.K_F4:
-                selected=3
+                carSelected=3
             if event.key==pygame.K_F5:
-                selected=4
+                carSelected=4
         if event.type == pygame.KEYUP and pressed:
             pressed=0
         #resize screen
@@ -173,29 +177,19 @@ while running:
 
             count = count + 1
             screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
-            bg[0].img = pygame.transform.scale(pygame.image.load('./background levels/background-city.png'),(screen.get_width(),screen.get_height()))
-            bg[0].end = screen.get_width()
-            bg[1].img = pygame.transform.scale(pygame.image.load('./background levels/background-code.png'),(screen.get_width(),screen.get_height()))
-            bg[1].end = screen.get_width()
-            bg[2].img = pygame.transform.scale(pygame.image.load('./background levels/background-lake.png'),(screen.get_width(),screen.get_height()))
-            bg[2].end = screen.get_width()
-            bg[3].img = pygame.transform.scale(pygame.image.load('./background levels/background-desert.png'),(screen.get_width(),screen.get_height()))
+            for i in range (4):
+                img=(f"./background levels/background-{mapSelected}-{i}.png")
+                bg[mapSelected][i].img = pygame.transform.scale(pygame.image.load(img),(screen.get_width(),screen.get_height()))
+                bg[mapSelected][i].end = screen.get_width()
+
             w = screen.get_width()
-            bg[3].end = w/1.1
+            bg[mapSelected][3].end = w/1.1
 
             h = screen.get_height()
             for i in range(5):
                 car[i].img = pygame.transform.scale(car[i].img,(w/12.5, h/12))
-
-            car[0].y = h/2.07
-
-            car[1].y = h/1.7
-
-            car[2].y = h/1.45
-
-            car[3].y = h/1.27
-
-            car[4].y = h/1.12
+                car[i].y=h/car[i].ratio
+                item[i].y=car[i].y
 
             if count % 2 == 1:
                 for i in range(5):
@@ -207,11 +201,11 @@ while running:
     #draw items
     for i in range(5):
         for j in range (2):
-            if item[i].appRound[j] == car[selected].curRound and item[i].visible[j]==1:
+            if item[i].appRound[j] == car[carSelected].curRound and item[i].visible[j]==1:
                 draw(mysbox,item[i].x[j],item[i].y)
 
     #draw 5 car
-    for i in bg[car[selected].curRound].car:
+    for i in bg[mapSelected][car[carSelected].curRound].car:
         draw(car[i].img,car[i].x,car[i].y)
 
     #Check collision
@@ -224,23 +218,23 @@ while running:
                 else:
                     item[i].faster(i)
             # Show the item picked
-            if item[i].backToNormal(i) and car[i].curRound==car[selected].curRound:
-                if pressed==0 or i!=selected:
+            if item[i].backToNormal(i) and car[i].curRound==car[carSelected].curRound:
+                if pressed==0 or i!=carSelected:
                     draw(itemImg[item[i].name],car[i].x+10,car[i].y-45)
     if pressed ==1:
-        for i in bg[car[selected].curRound].car:
-            if i==selected :
+        for i in bg[mapSelected][car[carSelected].curRound].car:
+            if i==carSelected :
                 draw(arrow,car[i].x+10,car[i].y-45)
 
     #check if the car have finish the race
     for i in range (5):
-        if car[i].x<=bg[car[i].curRound].end:
-            car[i].run()
+        if car[i].x<=bg[mapSelected][car[i].curRound].end:
+            car[i].run
         elif car[i].curRound<3: 
-            bg[car[i].curRound].car.remove(i)
+            bg[mapSelected][car[i].curRound].car.remove(i)
             car[i].curRound+=1
-            bg[car[i].curRound].car.append(i)
-            car[i].x=bg[car[i].curRound].start-100
+            bg[mapSelected][car[i].curRound].car.append(i)
+            car[i].x=bg[mapSelected][car[i].curRound].start-100
 
     
         #resize display
