@@ -111,7 +111,7 @@ while running:
         #resize screen
         if event.type == VIDEORESIZE:
 
-            count += 1
+            count = count + 1
             screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
             bg[0].img = pygame.transform.scale(pygame.image.load('./background levels/background-city.png'),(screen.get_width(),screen.get_height()))
             bg[0].end = screen.get_width()
