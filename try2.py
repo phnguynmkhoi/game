@@ -19,69 +19,73 @@ WIDTH=1000
 HEIGHT=600  
 screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.RESIZABLE)
 
-#set caption and icon
+#set caption and icon and image
 pygame.display.set_caption("Game cua Khoi")
-icon = pygame.image.load('car.png')
+icon = pygame.image.load('img/car.png')
 pygame.display.set_icon(icon)
+arrow = pygame.image.load('img/arrow.png')
+
 
 #Background
-background = pygame.image.load('background-levels-city.png')
-background = pygame.transform.scale(background,(WIDTH,HEIGHT))
+class BACKGROUND:
+    def __init__(self,img, start,end) :
+        self.img=img
+        self.start=start
+        self.end=end
+        self.car=[]
+
+bg=[] 
+bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('img/bg1.png'),(WIDTH,HEIGHT)),200,1000))
+bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('img/bg2.png'),(WIDTH,HEIGHT)),0,1000))
+bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('img/bg3.png'),(WIDTH,HEIGHT)),0,1000))
+bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('img/bg4.png'),(WIDTH,HEIGHT)),0,800))
 
 #Car
-class Car:
-    def __init__(self, img, car_x, car_y ,velocity, destination):
-        self.img = img
-        self.car_x = car_x
-        self.car_y = car_y
+class CAR:
+    def __init__(self, img, car_y ,velocity,curRound):
+        self.img = pygame.transform.scale(img,(WIDTH/12.5,HEIGHT/12))
+        self.x = 0
+        self.y = car_y
         self.velocity = velocity
-        self.destination = destination
+        self.destination = 0
+        self.curRound=curRound
 
-#create Car
-CAR1 = pygame.image.load('0_red_formulaOne.png')
-CAR2 = pygame.image.load('0_yellow_formulaOne.png')
-CAR3 = pygame.image.load('0_blue_formulaOne.png')
-CAR4 = pygame.image.load('0_pink_formulaOne.png')
-CAR5 = pygame.image.load('0_white_formulaOne.png')
-
-#create item
-ITEM = pygame.image.load('coin.png')
-ITEM = pygame.transform.scale(ITEM,(WIDTH/12.5,HEIGHT/12))
-
-#RESIZE CAR
-CAR1 = pygame.transform.scale(CAR1,(WIDTH/12.5,HEIGHT/12))
-CAR2 = pygame.transform.scale(CAR2,(WIDTH/12.5,HEIGHT/12))
-CAR3 = pygame.transform.scale(CAR3,(WIDTH/12.5,HEIGHT/12))
-CAR4 = pygame.transform.scale(CAR4,(WIDTH/12.5,HEIGHT/12))
-CAR5 = pygame.transform.scale(CAR5,(WIDTH/12.5,HEIGHT/12))
-
-#setting destination
+        # self.ratio=ratio
+    def run(self):
+        self.x += self.velocity
+    
+car=[]
 des = int(WIDTH/1.25)
+car.append(CAR(pygame.image.load('img/0_red_formulaOne.png'), int(HEIGHT/1.65), random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('img/0_yellow_formulaOne.png'), int(HEIGHT/1.47), random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('img/0_blue_formulaOne.png'), int(HEIGHT/1.32), random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('img/0_pink_formulaOne.png'), int(HEIGHT/1.19), random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('img/0_white_formulaOne.png'), int(HEIGHT/1.1),random.uniform(2,3), 0))
 
 #setting CAR1
 w = int(WIDTH/8)
 h = int(HEIGHT/1.65)
-player1_car = Car(CAR1, w, h, random.uniform(1,1.5), des)
+player1_car = CAR(CAR1, w, h, random.uniform(1,1.5), des)
 
 #setting CAR2
 w = int(WIDTH/9)
 h = int(HEIGHT/1.47)
-player2_car = Car(CAR2, w, h, random.uniform(1,1.5), des)
+player2_car = CAR(CAR2, w, h, random.uniform(1,1.5), des)
 
 #setting CAR3
 w = int(WIDTH/9)
 h = int(HEIGHT/1.31)
-player3_car = Car(CAR3, w, h, random.uniform(1,1.5), des)
+player3_car = CAR(CAR3, w, h, random.uniform(1,1.5), des)
 
 #setting CAR4
 w = int(WIDTH/9)
 h = int(HEIGHT/1.19)
-player4_car = Car(CAR4, w, h, random.uniform(1,1.5), des)
+player4_car = CAR(CAR4, w, h, random.uniform(1,1.5), des)
 
 #setting CAR5
 w = int(WIDTH/9)
 h = int(HEIGHT/1.1)
-player5_car = Car(CAR5, w, h, random.uniform(1,1.5), des)
+player5_car = CAR(CAR5, w, h, random.uniform(1,1.5), des)
 
 #gold
 gold = 0
@@ -100,6 +104,15 @@ def draw(player_car):
 clock = pygame.time.Clock()
 fps = 60
 count = 0
+
+#Initalize
+r=0
+selected=0
+pressed=0
+for i in range (5):
+    bg[r].car.append(i)
+    car[i].x=bg[r].start
+    car[i].curRound=r
 
 running=True
 while running:
@@ -138,12 +151,46 @@ while running:
             running = False
             pygame.quit()
             exit()
+        if event.type == pygame.KEYDOWN:
+            print (event.key)
+            pressed=1
+            if event.key==pygame.K_F1:
+                selected=0
+            if event.key==pygame.K_F2:
+                selected=1
+            if event.key==pygame.K_F3:
+                selected=2
+            if event.key==pygame.K_F4:
+                selected=3
+            if event.key==pygame.K_F5:
+                selected=4
+        if event.type == pygame.KEYUP:
+            pressed=0
 
+    #draw 5 car
+    for i in bg[car[selected].curRound].car:
+        draw(car[i].img,car[i].x,car[i].y)
+
+    if pressed ==1:
+        for i in bg[car[selected].curRound].car:
+            if i==selected :
+                draw(arrow,car[i].x+10,car[i].y-45)
+    #check if the car have finish the race
+    for i in range (5):
+        if car[i].x<=bg[car[i].curRound].end:
+            car[i].run()
+        elif car[i].curRound<3: 
+            bg[car[i].curRound].car.remove(i)
+            car[i].curRound+=1
+            bg[car[i].curRound].car.append(i)
+            car[i].x=bg[car[i].curRound].start-100
+
+    
         #resize display
-        if event.type == VIDEORESIZE:
+        # if event.type == VIDEORESIZE:
             
-            screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
-            background = pygame.transform.scale(background,(event.w,event.h))
+        #     screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
+        #     background = pygame.transform.scale(background,(event.w,event.h))
 
             #resize Car
             CAR1 = pygame.transform.scale(CAR1,(event.w/12.5,event.h/12))
@@ -193,5 +240,4 @@ while running:
 
 
     pygame.display.update()
-
 pygame.quit()

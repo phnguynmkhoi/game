@@ -3,6 +3,7 @@ import pygame
 from pygame.locals import *
 import random
 import time
+import math
 
 pygame.init()
 
@@ -20,11 +21,60 @@ screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.RESIZABLE)
 
 #set caption and icon and image
 pygame.display.set_caption("Game cua Khoi")
-icon = pygame.image.load('car.png')
+icon = pygame.image.load('img/car.png')
 pygame.display.set_icon(icon)
 arrow = pygame.image.load('arrow.png')
 
+#Mystery Box
+mysbox= pygame.image.load('mics/mystery box.png')
+cheetahIcon= pygame.image.load('mics/cheetah.png')
+turtleIcon = pygame.image.load('mics/turtle.png')
+itemImg=[]
+itemImg.append(cheetahIcon)
+itemImg.append(turtleIcon)
 #Background
+
+def rand():
+    a=random.randint(0,3)
+    b=random.randint(0,3)
+    while a==b:
+        b=random.randint(0,3)
+    return [a,b]
+#Note
+#0 : Faster
+#1 : Slower
+class ITEM :
+    def __init__(self,y,velocity):
+        self.img=mysbox
+        self.x=[]
+        self.y=y #fixed
+        self.appRound=rand()
+        self.x= [random.randint(400,800),random.randint(400,800)]
+        self.visible=[1,1]
+        self.velocity=velocity
+        self.duration=0
+        self.pivotTime=0 #Set when you pick an item
+    def slower(self,i):
+        self.name=1
+        self.duration=1500
+        car[i].velocity=1
+        self.pivotTime=pygame.time.get_ticks()
+    def faster(self,i):
+        self.name=0
+        self.duration=1500 #Duration of an item
+        car[i].velocity= 4
+        self.pivotTime= pygame.time.get_ticks()
+
+    def backToNormal(self, i): 
+        global curTime
+        if curTime-self.pivotTime> self.duration:
+            car[i].velocity=self.velocity
+            return 0
+        return 1
+        
+
+
+
 class BACKGROUND:
     def __init__(self,img, start,end) :
         self.img=img
@@ -47,7 +97,6 @@ class CAR:
         self.velocity = velocity
         self.destination = 0
         self.curRound=curRound
-
         # self.ratio=ratio
     def run(self):
         self.x += self.velocity
@@ -61,11 +110,18 @@ car.append(CAR(pygame.image.load('./formula ones/0_blue_formulaOne.png'), int(HE
 car.append(CAR(pygame.image.load('./formula ones/0_pink_formulaOne.png'), int(HEIGHT/1.27), random.uniform(2,3), 0))
 car.append(CAR(pygame.image.load('./formula ones/0_green_formulaOne.png'), int(HEIGHT/1.12),random.uniform(2,3), 0))
 
+item=[]
+item.append(ITEM(car[0].y,car[0].velocity))
+item.append(ITEM(car[1].y,car[1].velocity))
+item.append(ITEM(car[2].y,car[2].velocity))
+item.append(ITEM(car[3].y,car[3].velocity))
+item.append(ITEM(car[4].y,car[4].velocity))
 
 #setting run
 def draw(player_car,x,y):
     screen.blit(player_car,(x, y))
-    
+def isCollide(a,b,x,y):
+    return (math.sqrt((a-x)*(a-x)+(b-y)*(b-y))<80)
 #game Loop
 clock = pygame.time.Clock()
 fps = 60
@@ -79,12 +135,15 @@ for i in range (5):
     car[i].x=bg[r].start
     car[i].curRound=r
 
+#System Time
+curTime=0
+pivotTime=0
 #resize count
 count = 0
 
 running=True
 while running:
-
+    curTime=pygame.time.get_ticks()
     clock.tick(fps)     
     screen.blit(bg[car[selected].curRound].img,(0,0))
     #Events
@@ -93,7 +152,7 @@ while running:
             running = False
             pygame.quit()
             exit()
-        if event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN and pressed==0:
             pressed=1
             if event.key==pygame.K_F1:
                 selected=0
@@ -105,9 +164,15 @@ while running:
                 selected=3
             if event.key==pygame.K_F5:
                 selected=4
-        if event.type == pygame.KEYUP:
+        if event.type == pygame.KEYUP and pressed:
             pressed=0
 
+    #draw items
+    for i in range(5):
+        for j in range (2):
+            if item[i].appRound[j] == car[selected].curRound and item[i].visible[j]==1:
+                draw(mysbox,item[i].x[j],item[i].y)
+            
         #resize screen
         if event.type == VIDEORESIZE:
 
@@ -148,6 +213,19 @@ while running:
     for i in bg[car[selected].curRound].car:
         draw(car[i].img,car[i].x,car[i].y)
 
+    #Check collision
+    for i in range (5):
+        for j in range(2):
+            if item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]:
+                item[i].visible[j]=0
+                if random.randint(0,1)==1:
+                    item[i].slower(i)
+                else:
+                    item[i].faster(i)
+            # Show the item picked
+            if item[i].backToNormal(i) and car[i].curRound==car[selected].curRound:
+                if pressed==0 or i!=selected:
+                    draw(itemImg[item[i].name],car[i].x+10,car[i].y-45)
     if pressed ==1:
         for i in bg[car[selected].curRound].car:
             if i==selected :
