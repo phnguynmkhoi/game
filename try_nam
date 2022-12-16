@@ -65,6 +65,7 @@ class ITEM :
         self.spriteWin=[]
         self.spriteFlash=[]
         self.curSprite=0
+        self.portalX=0
 
         self.checkFlip = False
     def slower(self,i):
@@ -104,11 +105,11 @@ class ITEM :
         self.portalX=0
         self.out=0
         carSelected=idx
-        winItem=1
+        winItem=idx
         self.curSprite=0
         for i in range(5):
             item[i].visible[0]=item[i].visible[1]=0
-        car[idx].x=screen.get_width()/1.2
+        
         
     def runWin(self,idx):
         if isCollide(car[idx].x,car[idx].y,self.portalX,self.y):
@@ -116,10 +117,10 @@ class ITEM :
             car[idx].curRound=3
             bg[mapSelected][car[idx].curRound].car.append(idx)
             if self.out==0:
-                car[idx].x=600
+                car[idx].x=screen.get_width()/1.3
                 self.curSprite=4
             self.out=1
-            self.portalX=600
+            self.portalX=screen.get_width()/1.3
         if self.out==0:    
             if self.curSprite>3:
                 self.curSprite=0
@@ -233,7 +234,7 @@ r=0
 carSelected=0
 mapSelected=0
 pressed=0
-winItem=0
+winItem=-1
 
 for i in range (5):
     bg[mapSelected][r].car.append(i)
@@ -295,7 +296,7 @@ while running:
             if item[i].appRound[j] == car[carSelected].curRound and item[i].visible[j]==1:
                 draw(mysbox,item[i].x[j],item[i].y)
     #Win
-    if winItem:
+    if winItem !=-1:
         item[carSelected].runWin(carSelected)
     #Flash
     for i in range(5):
@@ -314,6 +315,7 @@ while running:
             if item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]:
                 item[i].visible[j]=0
                 picked=random.randint(0,120)
+                picked=99
                 if picked < 44:
                     item[i].slower(i)
                 elif picked < 87:
@@ -339,10 +341,14 @@ while running:
         if car[i].x<=bg[mapSelected][car[i].curRound].end:
             car[i].run()
         elif car[i].curRound<3: 
+            
             bg[mapSelected][car[i].curRound].car.remove(i)
             car[i].curRound+=1
             bg[mapSelected][car[i].curRound].car.append(i)
             car[i].x=bg[mapSelected][car[i].curRound].start-(screen.get_width()/10)
-        
+        else: 
+            if winItem==i:
+                winItem=-1
+                
     pygame.display.update()
 pygame.quit()
