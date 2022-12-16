@@ -1,6 +1,6 @@
 from turtle import width
 import pygame
-from pygame.locals import *
+# from pygame.locals import *
 import random
 import time
 import math
@@ -8,11 +8,12 @@ import math
 pygame.init()
 
 #set color
-green = (76,208,56)
-gray = (100,100,100)
-red = (200,0,0)
-yellow = (255,232,0)
-white = (255,255,255)
+# green = (76,208,56)
+# gray = (100,100,100)
+# red = (200,0,0)
+# yellow = (255,232,0)
+# white = (255,255,255)
+color={0:"red", 1:"yellow", 2:"blue", 3:"pink", 4:"green"}
 
 #set screen
 WIDTH=1000
@@ -20,7 +21,7 @@ HEIGHT=600
 screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.RESIZABLE)
 
 #set caption and icon and image
-pygame.display.set_caption("Game cua Khoi")
+pygame.display.set_caption("Game cua nha cai den tu Chau Au")
 icon = pygame.image.load('img/car.png')
 pygame.display.set_icon(icon)
 arrow = pygame.image.load('arrow.png')
@@ -28,13 +29,13 @@ arrow = pygame.image.load('arrow.png')
 #Mystery Box
 mysbox= pygame.image.load('mics/mystery box.png')
 mysbox = pygame.transform.scale(mysbox,(WIDTH/25,HEIGHT/20))
-def resizemysbox(mysbox):
-        return pygame.transform.scale(mysbox,(screen.get_width()/25,screen.get_height()/20))
 cheetahIcon= pygame.image.load('mics/cheetah.png')
 turtleIcon = pygame.image.load('mics/turtle.png')
 itemImg=[]
 itemImg.append(cheetahIcon)
 itemImg.append(turtleIcon)
+def resizemysbox(mysbox):
+        return pygame.transform.scale(mysbox,(screen.get_width()/25,screen.get_height()/20))
 #Background
 
 def rand():
@@ -46,14 +47,14 @@ def rand():
 #Note
 #0 : Faster
 #1 : Slower
-#2 : win
+#2 : Win
 class ITEM :
     def __init__(self,y,velocity):
         self.img = mysbox
         self.x=[]
         self.y=y #fixed
         self.appRound=rand()
-        self.x= [random.randint(400,800),random.randint(400,800)]
+        self.x= [random.randint(400,700),random.randint(400,700)]
         self.visible=[1,1]
         self.velocity=velocity
         self.duration=0
@@ -69,8 +70,16 @@ class ITEM :
         car[i].velocity=car[i].velocity*1.5
         self.pivotTime= pygame.time.get_ticks()
 
-    def win(self,i):
-        pass
+    def win(self,idx):
+        print(idx)
+        global carSelected
+        carSelected=idx
+        for i in range(5):
+            item[i].visible[0]=item[i].visible[1]=0
+        bg[mapSelected][car[idx].curRound].car.remove(idx)
+        car[idx].curRound=3
+        bg[mapSelected][car[idx].curRound].car.append(idx)
+        car[idx].x=600
 
     def backToNormal(self, i): 
         global curTime
@@ -98,41 +107,58 @@ for i in range (1):
 
 #Car
 class CAR:
-    def __init__(self, img, car_y,ratio ,velocity,curRound):
-        self.img = pygame.transform.scale(img,(WIDTH/12.5,HEIGHT/12))
+    def __init__(self, car_y,ratio ,velocity,curRound):
+        self.img = []
         self.x = 0
         self.y = car_y/ratio
         self.velocity = velocity
         self.destination = 0
         self.curRound=curRound
         self.oldWidth = screen.get_width()
-        # self.ratio=ratio
         self.ratio=ratio
+        self.curSprite=0
+    def addImg(self,img):
+        self.img.append(pygame.transform.scale(img,(WIDTH/12.5,HEIGHT/12)))
     def run(self):
         self.x += self.velocity 
+    def runAnimation(self,ok):
+        if self.curSprite>3:
+            self.curSprite=0
+        if ok:
+            self.curSprite+=0.4
+        draw(self.img[int(self.curSprite)],self.x,self.y)
     def resize(self):
         w = screen.get_width()
         h = screen.get_height()
-        self.img = pygame.transform.scale(self.img,(w/12.5,h/12))
+        for i in range(4):
+            self.img[i] = pygame.transform.scale(self.img[i],(w/12.5,h/12))
         self.velocity = w * self.velocity / self.oldWidth
         self.oldWidth = screen.get_width()
         self.y=h/self.ratio
+
+transportation={
+    0:"formula ones" # List phuong tien
+}
+transSelected=0
+r=[2.28,1.83,1.5,1.27,1.12] # ratio cho vo 1 mang de initialize
 car=[]
-car.append(CAR(pygame.image.load('./formula ones/0_red_formulaOne.png'), HEIGHT,2.28, random.uniform(5,6), 0))
-car.append(CAR(pygame.image.load('./formula ones/0_yellow_formulaOne.png'), HEIGHT,1.83, random.uniform(5,6), 0))
-car.append(CAR(pygame.image.load('./formula ones/0_blue_formulaOne.png'), HEIGHT,1.50, random.uniform(5,6), 0))
-car.append(CAR(pygame.image.load('./formula ones/0_pink_formulaOne.png'), HEIGHT,1.27, random.uniform(5,6), 0))
-car.append(CAR(pygame.image.load('./formula ones/0_green_formulaOne.png'), HEIGHT,1.12,random.uniform(5,6), 0))
+for i in range (5):
+    trans= transportation[transSelected]
+    car.append(CAR(HEIGHT,r[i], random.uniform(3,4), 0))
+    for j in range(4): # Add animation
+        img=f"./{transportation[0]}/{j}_{color[i]}.png"
+        car[i].addImg(pygame.image.load(img))
 
 item=[]
 for i in range(5):
     item.append(ITEM(car[i].y+int(screen.get_height()/50),car[i].velocity))
 
-#setting run
+#function for GAME
 def draw(player_car,x,y):
     screen.blit(player_car,(x, y))
 def isCollide(a,b,x,y):
     return (math.sqrt((a-x)*(a-x)+(b-y)*(b-y))<80)
+
 #game Loop
 clock = pygame.time.Clock()
 fps = 120
@@ -153,6 +179,8 @@ pivotTime=0
 #resize count
 count = 0
 
+
+#GAME
 running=True
 while running:
     curTime=pygame.time.get_ticks()
@@ -179,7 +207,7 @@ while running:
         if event.type == pygame.KEYUP and pressed:
             pressed=0
         #resize screen
-        if event.type == VIDEORESIZE:
+        if event.type == pygame.VIDEORESIZE:
 
             screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
             for i in range (4):
@@ -204,17 +232,24 @@ while running:
 
     #draw 5 car
     for i in bg[mapSelected][car[carSelected].curRound].car:
-        draw(car[i].img,car[i].x,car[i].y)
+        if car[i].x <= bg[mapSelected][car[carSelected].curRound].end: # Finished ?
+            car[i].runAnimation(1)
+        else:
+            car[i].runAnimation(0)
 
     #Check collision
     for i in range (5):
         for j in range(2):
             if item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]:
                 item[i].visible[j]=0
-                if random.randint(0,1)==1:
+                picked=random.randint(0,2)
+                picked=2
+                if picked==1:
                     item[i].slower(i)
-                else:
+                if picked==0:
                     item[i].faster(i)
+                if picked==2:
+                    item[i].win(i)
             # Show the item picked
             if item[i].backToNormal(i) and car[i].curRound==car[carSelected].curRound:
                 if pressed==0 or i!=carSelected:
@@ -233,9 +268,6 @@ while running:
             car[i].curRound+=1
             bg[mapSelected][car[i].curRound].car.append(i)
             car[i].x=bg[mapSelected][car[i].curRound].start-(screen.get_width()/10)
-
-    
-        #resize display
     
 
     pygame.display.update()
