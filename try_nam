@@ -250,7 +250,6 @@ while running:
             if item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]:
                 item[i].visible[j]=0
                 picked=random.randint(0,99)
-                picked = 99
                 if picked < 49:
                     item[i].slower(i)
                 elif picked < 98:
