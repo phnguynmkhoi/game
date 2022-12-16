@@ -66,20 +66,36 @@ class ITEM :
         self.spriteFlash=[]
         self.curSprite=0
 
+        self.checkFlip = False
     def slower(self,i):
-        self.name=1
+        self.name = 1
         self.duration=1500
-        car[i].velocity=car[i].velocity/1.5
+        car[i].velocity=car[i].velocity/2
         self.pivotTime=pygame.time.get_ticks()
     def faster(self,i):
-        self.name=0
+        self.name = 0
         self.duration=1500 #Duration of an item
-        car[i].velocity=car[i].velocity*1.5
+        car[i].velocity=car[i].velocity*2
         self.pivotTime= pygame.time.get_ticks()
+        
+    
+    def flip(self, i):
+        self.checkFlip = True
+        self.name = 0
+        car[i].velocity = -1 * car[i].velocity
+        for j in range(4):
+            car[i].img[j] = pygame.transform.flip(car[i].img[j],True,False)
+        self.duration = 500
+        self.pivotTime = pygame.time.get_ticks()
+
     def backToNormal(self, i): 
         global curTime
-        if curTime-self.pivotTime> self.duration:
+        if curTime-self.pivotTime > self.duration:
             car[i].velocity = self.velocity
+            if self.checkFlip == True:
+                for j in range(4):
+                    car[i].img[j] = pygame.transform.flip(car[i].img[j],True,False)
+                self.checkFlip = False
             return 0
         return 1
 
@@ -92,6 +108,7 @@ class ITEM :
         self.curSprite=0
         for i in range(5):
             item[i].visible[0]=item[i].visible[1]=0
+        car[idx].x=screen.get_width()/1.2
         
     def runWin(self,idx):
         if isCollide(car[idx].x,car[idx].y,self.portalX,self.y):
@@ -124,6 +141,8 @@ class ITEM :
             car[idx].y=self.y-20
         if car[idx].curRound == car[carSelected].curRound:
             draw(self.spriteFlash[int(self.curSprite)],self.flashX,self.y-30)
+
+            
 class BACKGROUND:
     def __init__(self,img, start,end) :
         self.img=pygame.transform.scale(img,(screen.get_width(),screen.get_height()))
@@ -180,7 +199,7 @@ r=[2.28,1.83,1.5,1.27,1.12] # ratio cho vo 1 mang de initialize
 car=[]
 for i in range (5):
     trans= transportation[transSelected]
-    car.append(CAR(HEIGHT,r[i], random.uniform(2,3), 0))
+    car.append(CAR(HEIGHT,r[i], random.uniform(2.8,3), 0))
     for j in range(4): # Add animation
         img=f"./{transportation[0]}/{j}_{color[i]}.png"
         car[i].addImg(pygame.image.load(img))
@@ -204,10 +223,6 @@ def isCollide(a,b,x,y):
     return (math.sqrt((a-x)*(a-x)+(b-y)*(b-y))<80)
 
 frame = 0
-def congra(player_car):
-    firework = pygame.image.load('firework.png')
-    firework = pygame.transform.scale(firework,(screen.get_width()/20,screen.get_height()/15))
-    draw(firework,car[player_car].x+screen.get_width()/100,car[player_car].y-screen.get_width()/30)
 
 #game Loop
 clock = pygame.time.Clock()
@@ -228,10 +243,7 @@ for i in range (5):
 #System Time
 curTime=0
 pivotTime=0
-
-#check if the car win
-check = False
-
+checkFlip = False
 
 #GAME
 running=True
@@ -302,11 +314,12 @@ while running:
             if item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]:
                 item[i].visible[j]=0
                 picked=random.randint(0,120)
-                picked=100
-                if picked < 49:
+                if picked < 44:
                     item[i].slower(i)
-                elif picked < 98:
+                elif picked < 87:
                     item[i].faster(i)
+                elif picked < 99:
+                    item[i].flip(i)
                 elif picked==99:
                     item[i].win(i)
                     item[i].portalX=car[i].x+200
@@ -330,15 +343,6 @@ while running:
             car[i].curRound+=1
             bg[mapSelected][car[i].curRound].car.append(i)
             car[i].x=bg[mapSelected][car[i].curRound].start-(screen.get_width()/10)
-        else:
-            if check == False:
-                check = True
-                congraCar = i
-    if check == True:
-        frame += 1
-        if frame % 60 < 50:
-            congra(congraCar)
-        frame = frame % 60
         
     pygame.display.update()
 pygame.quit()
