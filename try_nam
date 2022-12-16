@@ -159,6 +159,12 @@ def draw(player_car,x,y):
 def isCollide(a,b,x,y):
     return (math.sqrt((a-x)*(a-x)+(b-y)*(b-y))<80)
 
+frame = 0
+def congra(player_car):
+    firework = pygame.image.load('firework.png')
+    firework = pygame.transform.scale(firework,(screen.get_width()/20,screen.get_height()/15))
+    draw(firework,car[player_car].x+screen.get_width()/100,car[player_car].y-screen.get_width()/30)
+
 #game Loop
 clock = pygame.time.Clock()
 fps = 120
@@ -176,8 +182,9 @@ for i in range (5):
 #System Time
 curTime=0
 pivotTime=0
-#resize count
-count = 0
+
+#check if the car win
+check = False
 
 
 #GAME
@@ -242,13 +249,13 @@ while running:
         for j in range(2):
             if item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]:
                 item[i].visible[j]=0
-                picked=random.randint(0,2)
-                picked=2
-                if picked==1:
+                picked=random.randint(0,99)
+                picked = 99
+                if picked < 49:
                     item[i].slower(i)
-                if picked==0:
+                elif picked < 98:
                     item[i].faster(i)
-                if picked==2:
+                else:
                     item[i].win(i)
             # Show the item picked
             if item[i].backToNormal(i) and car[i].curRound==car[carSelected].curRound:
@@ -268,7 +275,15 @@ while running:
             car[i].curRound+=1
             bg[mapSelected][car[i].curRound].car.append(i)
             car[i].x=bg[mapSelected][car[i].curRound].start-(screen.get_width()/10)
-    
-
+        else:
+            if check == False:
+                check = True
+                congraCar = i
+    if check == True:
+        frame += 1
+        if frame % 60 < 50:
+            congra(congraCar)
+        frame = frame % 60
+        
     pygame.display.update()
 pygame.quit()
