@@ -63,10 +63,11 @@ class ITEM :
         self.duration=0
         self.pivotTime=0 #Set when you pick an item
         self.spriteWin=[]
+        self.spriteLose=[]
         self.spriteFlash=[]
         self.curSprite=0
         self.portalX=0
-
+        self.openPortal=0
         self.checkFlip = False
     def slower(self,i):
         self.name = 1
@@ -75,7 +76,7 @@ class ITEM :
         self.pivotTime=pygame.time.get_ticks()
     def faster(self,i):
         self.name = 0
-        self.duration=1500 #Duration of an item
+        self.duration=1000 #Duration of an item
         car[i].velocity=car[i].velocity*2
         self.pivotTime= pygame.time.get_ticks()
     def stun(self,i):
@@ -105,16 +106,12 @@ class ITEM :
         return 1
 
     def win(self,idx):
-        global carSelected,winItem
+        self.openPortal=1
         self.portalX=0
         self.out=0
-        carSelected=idx
-        winItem=idx
         self.curSprite=0
-        for i in range(5):
-            item[i].visible[0]=item[i].visible[1]=0
 
-
+           
     def runWin(self,idx):
         if isCollide(car[idx].x,car[idx].y,self.portalX,self.y):
             bg[mapSelected][car[idx].curRound].car.remove(idx)
@@ -132,10 +129,38 @@ class ITEM :
             if self.curSprite>7:
                 self.curSprite=4
         self.curSprite+=0.4
-        draw(self.spriteWin[int(self.curSprite)],self.portalX,self.y-30)
+        if car[idx].curRound==car[carSelected].curRound:
+            draw(self.spriteWin[int(self.curSprite)],self.portalX,self.y-30)
+        if distance(car[idx].x,car[idx].y,self.portalX,self.y)>140 and self.out :
+            self.openPortal=0
+
+    def lose(self,idx):
+        self.openPortal=2
+        self.portalX=0
+        self.out=0
+        self.curSprite=0
+
+    def runLose(self,idx):
+        if isCollide(car[idx].x,car[idx].y,self.portalX,self.y):
+            if self.out==0:
+                car[idx].x=10
+                self.curSprite=4
+            self.out=1
+            self.portalX=10
+        if self.out==0:    
+            if self.curSprite>3:
+                self.curSprite=0
+        else:
+            if self.curSprite>7:
+                self.curSprite=4
+        self.curSprite+=0.4
+        if car[idx].curRound==car[carSelected].curRound:
+            draw(self.spriteLose[int(self.curSprite)],self.portalX,self.y-30)
+        if distance(car[idx].x,car[idx].y,self.portalX,self.y)>250:
+            self.openPortal=0
 
     def flash(self,idx):
-        car[idx].x+=150
+        car[idx].x+=170
         car[idx].y=-100
         self.curSprite=0
         self.flashX= car[idx].x+10
@@ -221,11 +246,18 @@ for i in range(5):
         img=f"./mics/flash_{j}.png"
         item[i].spriteFlash.append(pygame.image.load(img))
 
+for i in range(5):
+    for j in range(8):
+        img=f"./mics/portal_lose_{j}.png"
+        item[i].spriteLose.append(pygame.image.load(img))
 #function for GAME
 def draw(player_car,x,y):
     screen.blit(player_car,(x, y))
 def isCollide(a,b,x,y):
     return (math.sqrt((a-x)*(a-x)+(b-y)*(b-y))<80)
+
+def distance(a,b,x,y):
+    return math.sqrt((a-x)*(a-x)+(b-y)*(b-y))
 
 frame = 0
 
@@ -300,8 +332,12 @@ while running:
             if item[i].appRound[j] == car[carSelected].curRound and item[i].visible[j]==1:
                 draw(mysbox,item[i].x[j],item[i].y)
     #Win
-    if winItem !=-1:
-        item[carSelected].runWin(carSelected)
+    for i in range (5):
+        if item[i].openPortal==1:
+            # print (i)
+            item[i].runWin(i)
+        if item[i].openPortal==2:
+            item[i].runLose(i)
     #Flash
     for i in range(5):
         if car[i].y<0 :
@@ -318,7 +354,7 @@ while running:
         for j in range(2):
             if item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]:
                 item[i].visible[j]=0
-                picked=random.randint(0,120)
+                picked=random.randint(0,130)
                 if picked < 44:
                     item[i].slower(i)
                 elif picked < 87:
@@ -328,7 +364,10 @@ while running:
                 elif picked==99:
                     item[i].win(i)
                     item[i].portalX=car[i].x+200
-                elif picked<110:
+                elif picked<105:
+                    item[i].lose(i)
+                    item[i].portalX=car[i].x+200
+                elif picked<110 :
                     item[i].flash(i)
                 else:
                     item[i].stun(i)
@@ -350,10 +389,9 @@ while running:
             car[i].curRound+=1
             bg[mapSelected][car[i].curRound].car.append(i)
             car[i].x=bg[mapSelected][car[i].curRound].start-(screen.get_width()/10)
-
-        else: 
-            if winItem==i:
-                winItem=-1
-
+        # else: 
+        #     if item[i].openPortalWin:
+        #         item[i].openPortalWin=0
+                
     pygame.display.update()
 pygame.quit()
