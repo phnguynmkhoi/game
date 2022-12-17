@@ -319,7 +319,6 @@ while running:
             if item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]:
                 item[i].visible[j]=0
                 picked=random.randint(0,120)
-                picked=109
                 if picked < 44:
                     item[i].slower(i)
                 elif picked < 87:
@@ -329,7 +328,7 @@ while running:
                 elif picked==99:
                     item[i].win(i)
                     item[i].portalX=car[i].x+200
-                elif picked < 110:
+                elif picked<110:
                     item[i].flash(i)
                 else:
                     item[i].stun(i)
