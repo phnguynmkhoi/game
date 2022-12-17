@@ -79,7 +79,11 @@ class ITEM :
         self.duration=1000 #Duration of an item
         car[i].velocity=car[i].velocity*2
         self.pivotTime= pygame.time.get_ticks()
-        
+    def stun(self,i):
+        self.name = 0
+        self.duration=500 #Duration of an item
+        car[i].velocity = 0
+        self.pivotTime = pygame.time.get_ticks()
     
     def flip(self, i):
         self.checkFlip = True
@@ -167,8 +171,8 @@ class ITEM :
             car[idx].y=self.y-20
         if car[idx].curRound == car[carSelected].curRound:
             draw(self.spriteFlash[int(self.curSprite)],self.flashX,self.y-30)
-
             
+
 class BACKGROUND:
     def __init__(self,img, start,end) :
         self.img=pygame.transform.scale(img,(screen.get_width(),screen.get_height()))
@@ -350,8 +354,7 @@ while running:
         for j in range(2):
             if item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]:
                 item[i].visible[j]=0
-                picked=random.randint(0,120)
-                # picked=99
+                picked=random.randint(0,130)
                 if picked < 44:
                     item[i].slower(i)
                 elif picked < 87:
@@ -364,8 +367,10 @@ while running:
                 elif picked<105:
                     item[i].lose(i)
                     item[i].portalX=car[i].x+200
-                else :
+                elif picked<110 :
                     item[i].flash(i)
+                else:
+                    item[i].stun(i)
             # Show the item picked
             if item[i].backToNormal(i) and car[i].curRound==car[carSelected].curRound:
                 if pressed==0 or i!=carSelected:
@@ -374,13 +379,12 @@ while running:
         for i in bg[mapSelected][car[carSelected].curRound].car:
             if i==carSelected :
                 draw(arrow,car[i].x+10,car[i].y-45)
-
     #check if the car have finish the race
     for i in range (5):
         if car[i].x<=bg[mapSelected][car[i].curRound].end:
             car[i].run()
         elif car[i].curRound<3: 
-            
+
             bg[mapSelected][car[i].curRound].car.remove(i)
             car[i].curRound+=1
             bg[mapSelected][car[i].curRound].car.append(i)
