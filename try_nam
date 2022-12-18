@@ -31,9 +31,18 @@ mysbox= pygame.image.load('mics/mystery box.png')
 mysbox = pygame.transform.scale(mysbox,(WIDTH/25,HEIGHT/20))
 cheetahIcon= pygame.image.load('mics/cheetah.png')
 turtleIcon = pygame.image.load('mics/turtle.png')
+flipIcon = pygame.image.load('mics/flip.png')
+flipIcon = pygame.transform.scale(flipIcon,(screen.get_width()/25,screen.get_height()/20))
 itemImg=[]
 itemImg.append(cheetahIcon)
 itemImg.append(turtleIcon)
+itemImg.append(flipIcon)
+dizzy_star = []
+for i in range(4):
+    img_load = pygame.image.load(f"./mics/stun_{i}.png")
+    img_load = pygame.transform.scale(img_load,(screen.get_width()/25,screen.get_height()/20))
+    dizzy_star.append(img_load)
+
 def resizemysbox(mysbox):
         return pygame.transform.scale(mysbox,(screen.get_width()/25,screen.get_height()/20))
 #Background
@@ -72,25 +81,35 @@ class ITEM :
     def slower(self,i):
         self.name = 1
         self.duration=1500
-        car[i].velocity=car[i].velocity/2
+        car[i].velocity=car[i].velocity/1.5
         self.pivotTime=pygame.time.get_ticks()
     def faster(self,i):
         self.name = 0
         self.duration=1000 #Duration of an item
-        car[i].velocity=car[i].velocity*2
+        car[i].velocity=car[i].velocity*1.5
         self.pivotTime= pygame.time.get_ticks()
+
     def stun(self,i):
-        self.name = 0
         self.duration=500 #Duration of an item
         car[i].velocity = 0
         self.pivotTime = pygame.time.get_ticks()
+        self.curSprite = 0
+    def runStun(self,i):
+        self.name = 3
+        if (car[i].velocity == 0):
+            self.curSprite += 0.1
+        if (self.curSprite<=3):
+            draw(dizzy_star[int(self.curSprite)],car[i].x+screen.get_width()/100,car[i].y-screen.get_width()/35)
+        else:
+            self.curSprite = self.curSprite % 3
     
     def flip(self, i):
+        self.name = 2
         self.checkFlip = True
-        self.name = 0
         car[i].velocity = -1 * car[i].velocity
         for j in range(4):
             car[i].img[j] = pygame.transform.flip(car[i].img[j],True,False)
+        
         self.duration = 500
         self.pivotTime = pygame.time.get_ticks()
 
@@ -342,6 +361,11 @@ while running:
     for i in range(5):
         if car[i].y<0 :
             item[i].runFlash(i)
+    #runStun
+    for i in range(5):
+        if car[i].velocity == 0 and car[carSelected].curRound == car[i].curRound:
+            item[i].runStun(i)
+
     #draw 5 car
     for i in bg[mapSelected][car[carSelected].curRound].car:
         if car[i].x <= bg[mapSelected][car[carSelected].curRound].end: # check finished 
@@ -354,27 +378,28 @@ while running:
         for j in range(2):
             if item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]:
                 item[i].visible[j]=0
-                picked=random.randint(0,130)
-                if picked < 44:
+                picked=random.randint(0,99)
+                if picked <= 33:
                     item[i].slower(i)
-                elif picked < 87:
+                elif picked <= 67:
                     item[i].faster(i)
-                elif picked < 99:
+                elif picked <= 76:
                     item[i].flip(i)
-                elif picked==99:
+                elif picked == 76:
                     item[i].win(i)
                     item[i].portalX=car[i].x+200
-                elif picked<105:
+                elif picked<=81:
                     item[i].lose(i)
                     item[i].portalX=car[i].x+200
-                elif picked<110 :
+                elif picked<=91 :
                     item[i].flash(i)
                 else:
                     item[i].stun(i)
+                    item[i].runStun(i)
             # Show the item picked
             if item[i].backToNormal(i) and car[i].curRound==car[carSelected].curRound:
-                if pressed==0 or i!=carSelected:
-                    draw(itemImg[item[i].name],car[i].x+10,car[i].y-45)
+                if (pressed==0 or i!=carSelected) and item[i].name<=2:
+                    draw(itemImg[item[i].name],car[i].x+screen.get_width()/100,car[i].y-screen.get_height()/22)
     if pressed ==1:
         for i in bg[mapSelected][car[carSelected].curRound].car:
             if i==carSelected :
