@@ -90,7 +90,7 @@ class ITEM :
         self.pivotTime= pygame.time.get_ticks()
 
     def stun(self,i):
-        self.duration=500 #Duration of an item
+        self.duration=800 #Duration of an item
         car[i].velocity = 0
         self.pivotTime = pygame.time.get_ticks()
         self.curSprite = 0
