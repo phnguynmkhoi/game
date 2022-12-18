@@ -77,6 +77,7 @@ class ITEM :
         self.spriteLose=[]
         self.spriteFlash=[]
         self.spriteFlip=[]
+        self.spriteLaser=[]
         self.curSprite=0
         self.portalX=0
         self.openPortal=0
@@ -84,6 +85,7 @@ class ITEM :
         self.flipX=0
         self.flipVelocity=0
         self.name=10
+        self.laser=0
     def slower(self,i):
         self.name = 1
         self.duration=1500
@@ -94,7 +96,19 @@ class ITEM :
         self.duration=1000 #Duration of an item
         car[i].velocity=car[i].velocity*1.5
         self.pivotTime= pygame.time.get_ticks()
+    def setLaser(self):
+        self.curSprite=0    
+        self.laser=1
 
+    def runLaser(self,idx):
+        self.curSprite+=0.5
+        if self.curSprite>1:
+            print (123)
+            draw(self.laserSprite[int(self.curSprite)],car[idx].x,self.y-self.laserSprite[int(self.curSprite)].get_height())
+        else:
+            self.laser=2
+            self.curSprite=0
+            self.stun(idx)
     def stun(self,i):
         self.duration=800 #Duration of an item
         car[i].velocity = 0
@@ -104,10 +118,8 @@ class ITEM :
         self.name = 3
         if (car[i].velocity == 0):
             self.curSprite += 0.1
-        if (self.curSprite<=3):
-            draw(dizzy_star[int(self.curSprite)],car[i].x+screen.get_width()/100,car[i].y-screen.get_width()/35)
-        else:
-            self.curSprite = self.curSprite % 3
+            draw(dizzy_star[int(self.curSprite)%3],car[i].x+screen.get_width()/100,car[i].y-screen.get_width()/35)
+       
     
     def flip(self, i):
         # self.name = 2
@@ -299,6 +311,11 @@ for i in range(5):
     for j in range(6):
         img=f"./mics/flip_{j}.png"
         item[i].spriteFlip.append(pygame.image.load(img))
+
+# for i in range(5):
+#     for j in range(16):
+#         img=f".mics/laser_{j}.png"
+#         item[i].spriteLaser.append(pygame.image.load(img))
 #function for GAME
 def draw(player_car,x,y):
     screen.blit(player_car,(x, y))
@@ -393,8 +410,11 @@ while running:
             item[i].runFlash(i)
     #runStun
     for i in range(5):
-        if car[i].velocity == 0 and car[carSelected].curRound == car[i].curRound:
-            item[i].runStun(i)
+        if item[i].laser==1 and car[carSelected].curRound== car[i].curRound:
+            item[i].runLaser(i)
+        elif item[i].laser==2:
+            if car[i].velocity == 0 and car[carSelected].curRound == car[i].curRound:
+                item[i].runStun(i)
 
     for i in range(5):
         if item[i].checkFlip==1 and car[carSelected].curRound == car[i].curRound:
@@ -412,7 +432,7 @@ while running:
             if item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]:
                 item[i].visible[j]=0
                 picked=random.randint(0,99)
-                picked=75
+                picked=92
                 if picked <= 33:
                     item[i].slower(i)
                 elif picked <= 67:
@@ -428,8 +448,7 @@ while running:
                 elif picked<=91 :
                     item[i].flash(i)
                 else:
-                    item[i].stun(i)
-                    item[i].runStun(i)
+                    item[i].setLaser()
             # Show the item picked
             if item[i].backToNormal(i) and car[i].curRound==car[carSelected].curRound:
                 if (pressed==0 or i!=carSelected) and item[i].name<=1:
