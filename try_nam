@@ -124,13 +124,11 @@ class ITEM :
     def runFlip(self,idx):
         if isCollide(car[idx].x,car[idx].y,self.flipX,self.y):
             if car[idx].x<self.flipX:
-                print(123)
                 car[idx].y-=0.8
             # if car[idx].x-distance(car[idx].x,car[idx].y,self.flipX,self.y)<=self.flipX:
             elif car[idx].x>self.flipX :
-                print("haha")
                 car[idx].y+=0.8
-            car[i].x-=2*car[i].velocity
+            car[i].x-=2.5*car[i].velocity
         self.flipX -= self.flipVelocity
         if self.curSprite>5:
             self.curSprite=0
