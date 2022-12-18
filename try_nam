@@ -6,7 +6,9 @@ import time
 import math
 
 pygame.init()
-
+pygame.mixer.music.load('sound/backgroundmusic.wav')
+pygame.mixer.music.play(-1)
+pygame.mixer.music.set_volume(0.2)
 #set color
 # green = (76,208,56)
 # gray = (100,100,100)
@@ -74,10 +76,16 @@ class ITEM :
         self.spriteWin=[]
         self.spriteLose=[]
         self.spriteFlash=[]
+        self.spriteFlip=[]
+        self.spriteLaser=[]
         self.curSprite=0
         self.portalX=0
         self.openPortal=0
-        self.checkFlip = False
+        self.checkFlip = 0
+        self.flipX=0
+        self.flipVelocity=0
+        self.name=10
+        self.laser=0
     def slower(self,i):
         self.name = 1
         self.duration=1500
@@ -88,7 +96,19 @@ class ITEM :
         self.duration=1000 #Duration of an item
         car[i].velocity=car[i].velocity*1.5
         self.pivotTime= pygame.time.get_ticks()
+    def setLaser(self):
+        self.curSprite=0    
+        self.laser=1
 
+    def runLaser(self,idx):
+        self.curSprite+=0.5
+        if self.curSprite>1:
+            print (123)
+            draw(self.laserSprite[int(self.curSprite)],car[idx].x,self.y-self.laserSprite[int(self.curSprite)].get_height())
+        else:
+            self.laser=2
+            self.curSprite=0
+            self.stun(idx)
     def stun(self,i):
         self.duration=800 #Duration of an item
         car[i].velocity = 0
@@ -98,29 +118,47 @@ class ITEM :
         self.name = 3
         if (car[i].velocity == 0):
             self.curSprite += 0.1
-        if (self.curSprite<=3):
-            draw(dizzy_star[int(self.curSprite)],car[i].x+screen.get_width()/100,car[i].y-screen.get_width()/35)
-        else:
-            self.curSprite = self.curSprite % 3
+            draw(dizzy_star[int(self.curSprite)%3],car[i].x+screen.get_width()/100,car[i].y-screen.get_width()/35)
+       
     
     def flip(self, i):
-        self.name = 2
-        self.checkFlip = True
-        car[i].velocity = -1 * car[i].velocity
-        for j in range(4):
-            car[i].img[j] = pygame.transform.flip(car[i].img[j],True,False)
+        # self.name = 2
+        self.curSprite=0
+        self.flipX=screen.get_width()+150
+        self.checkFlip = 1
+        self.flipVelocity=6
+        # car[i].velocity = -1 * car[i].velocity
+        # for j in range(4):
+        #     car[i].img[j] = pygame.transform.flip(car[i].img[j],True,False)
         
-        self.duration = 500
+        self.duration = 2800
         self.pivotTime = pygame.time.get_ticks()
+    def runFlip(self,idx):
+        if isCollide(car[idx].x,car[idx].y,self.flipX,self.y):
+            if car[idx].x<self.flipX:
+                car[idx].y-=0.8
+            # if car[idx].x-distance(car[idx].x,car[idx].y,self.flipX,self.y)<=self.flipX:
+            elif car[idx].x>self.flipX :
+                car[idx].y+=0.8
+            car[i].x-=2.5*car[i].velocity
+        self.flipX -= self.flipVelocity
+        if self.curSprite>5:
+            self.curSprite=0
+        self.curSprite+=0.4 
+        
+        draw(self.spriteFlip[int(self.curSprite)],self.flipX,self.y-55)
+        if self.flipX<-100 or curTime-self.pivotTime>=self.duration:
+            self.checkFlip=0
+            
 
     def backToNormal(self, i): 
         global curTime
         if curTime-self.pivotTime > self.duration:
             car[i].velocity = self.velocity
-            if self.checkFlip == True:
-                for j in range(4):
-                    car[i].img[j] = pygame.transform.flip(car[i].img[j],True,False)
-                self.checkFlip = False
+            # if self.checkFlip == True:
+                # for j in range(4):
+                #     car[i].img[j] = pygame.transform.flip(car[i].img[j],True,False)
+                # self.checkFlip = False
             return 0
         return 1
 
@@ -129,7 +167,6 @@ class ITEM :
         self.portalX=0
         self.out=0
         self.curSprite=0
-
            
     def runWin(self,idx):
         if isCollide(car[idx].x,car[idx].y,self.portalX,self.y):
@@ -248,7 +285,7 @@ r=[2.28,1.83,1.5,1.27,1.12] # ratio cho vo 1 mang de initialize
 car=[]
 for i in range (5):
     trans= transportation[transSelected]
-    car.append(CAR(HEIGHT,r[i], random.uniform(2.8,3), 0))
+    car.append(CAR(HEIGHT,r[i], random.uniform(2,3), 0))
     for j in range(4): # Add animation
         img=f"./{transportation[0]}/{j}_{color[i]}.png"
         car[i].addImg(pygame.image.load(img))
@@ -269,6 +306,16 @@ for i in range(5):
     for j in range(8):
         img=f"./mics/portal_lose_{j}.png"
         item[i].spriteLose.append(pygame.image.load(img))
+
+for i in range(5):
+    for j in range(6):
+        img=f"./mics/flip_{j}.png"
+        item[i].spriteFlip.append(pygame.image.load(img))
+
+# for i in range(5):
+#     for j in range(16):
+#         img=f".mics/laser_{j}.png"
+#         item[i].spriteLaser.append(pygame.image.load(img))
 #function for GAME
 def draw(player_car,x,y):
     screen.blit(player_car,(x, y))
@@ -363,9 +410,15 @@ while running:
             item[i].runFlash(i)
     #runStun
     for i in range(5):
-        if car[i].velocity == 0 and car[carSelected].curRound == car[i].curRound:
-            item[i].runStun(i)
+        if item[i].laser==1 and car[carSelected].curRound== car[i].curRound:
+            item[i].runLaser(i)
+        elif item[i].laser==2:
+            if car[i].velocity == 0 and car[carSelected].curRound == car[i].curRound:
+                item[i].runStun(i)
 
+    for i in range(5):
+        if item[i].checkFlip==1 and car[carSelected].curRound == car[i].curRound:
+            item[i].runFlip(i)
     #draw 5 car
     for i in bg[mapSelected][car[carSelected].curRound].car:
         if car[i].x <= bg[mapSelected][car[carSelected].curRound].end: # check finished 
@@ -379,11 +432,12 @@ while running:
             if item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]:
                 item[i].visible[j]=0
                 picked=random.randint(0,99)
-                if picked <= 33:
+                picked=68
+                if picked < 33:
                     item[i].slower(i)
-                elif picked <= 67:
+                elif picked < 67:
                     item[i].faster(i)
-                elif picked <= 76:
+                elif picked < 76:
                     item[i].flip(i)
                 elif picked == 76:
                     item[i].win(i)
@@ -394,11 +448,10 @@ while running:
                 elif picked<=91 :
                     item[i].flash(i)
                 else:
-                    item[i].stun(i)
-                    item[i].runStun(i)
+                    item[i].setLaser()
             # Show the item picked
             if item[i].backToNormal(i) and car[i].curRound==car[carSelected].curRound:
-                if (pressed==0 or i!=carSelected) and item[i].name<=2:
+                if (pressed==0 or i!=carSelected) and item[i].name<=1:
                     draw(itemImg[item[i].name],car[i].x+screen.get_width()/100,car[i].y-screen.get_height()/22)
     if pressed ==1:
         for i in bg[mapSelected][car[carSelected].curRound].car:
