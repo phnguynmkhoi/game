@@ -131,7 +131,7 @@ class ITEM :
         # for j in range(4):
         #     car[i].img[j] = pygame.transform.flip(car[i].img[j],True,False)
         
-        self.duration = 3000
+        self.duration = 2800
         self.pivotTime = pygame.time.get_ticks()
     def runFlip(self,idx):
         if isCollide(car[idx].x,car[idx].y,self.flipX,self.y):
@@ -432,10 +432,10 @@ while running:
             if item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]:
                 item[i].visible[j]=0
                 picked=random.randint(0,99)
-                picked=92
-                if picked <= 33:
+                picked=68
+                if picked < 33:
                     item[i].slower(i)
-                elif picked <= 67:
+                elif picked < 67:
                     item[i].faster(i)
                 elif picked < 76:
                     item[i].flip(i)
