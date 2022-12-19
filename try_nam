@@ -101,10 +101,10 @@ class ITEM :
         self.laser=1
 
     def runLaser(self,idx):
-        self.curSprite+=0.5
-        if self.curSprite>1:
-            print (123)
-            draw(self.laserSprite[int(self.curSprite)],car[idx].x,self.y-self.laserSprite[int(self.curSprite)].get_height())
+        self.curSprite+=0.1
+        if self.curSprite<5:
+            if car[idx].curRound==car[carSelected].curRound:
+                draw(self.spriteLaser[int(self.curSprite)],car[idx].x,self.y-self.spriteLaser[int(self.curSprite)].get_height()+110)
         else:
             self.laser=2
             self.curSprite=0
@@ -118,21 +118,20 @@ class ITEM :
         self.name = 3
         if (car[i].velocity == 0):
             self.curSprite += 0.1
-            draw(dizzy_star[int(self.curSprite)%3],car[i].x+screen.get_width()/100,car[i].y-screen.get_width()/35)
+            if car[i].curRound== car[carSelected].curRound:
+                 draw(dizzy_star[int(self.curSprite)%3],car[i].x+screen.get_width()/100,car[i].y-screen.get_width()/35)
        
     
-    def flip(self, i):
+    def flip(self):
         # self.name = 2
         self.curSprite=0
         self.flipX=screen.get_width()+150
         self.checkFlip = 1
-        self.flipVelocity=6
+        self.flipVelocity=7
         # car[i].velocity = -1 * car[i].velocity
         # for j in range(4):
         #     car[i].img[j] = pygame.transform.flip(car[i].img[j],True,False)
-        
-        self.duration = 2800
-        self.pivotTime = pygame.time.get_ticks()
+
     def runFlip(self,idx):
         if isCollide(car[idx].x,car[idx].y,self.flipX,self.y):
             if car[idx].x<self.flipX:
@@ -145,9 +144,9 @@ class ITEM :
         if self.curSprite>5:
             self.curSprite=0
         self.curSprite+=0.4 
-        
-        draw(self.spriteFlip[int(self.curSprite)],self.flipX,self.y-55)
-        if self.flipX<-100 or curTime-self.pivotTime>=self.duration:
+        if car[carSelected].curRound==car[idx].curRound:
+            draw(self.spriteFlip[int(self.curSprite)],self.flipX,self.y-55)
+        if self.flipX<-100 :
             self.checkFlip=0
             
 
@@ -312,10 +311,10 @@ for i in range(5):
         img=f"./mics/flip_{j}.png"
         item[i].spriteFlip.append(pygame.image.load(img))
 
-# for i in range(5):
-#     for j in range(16):
-#         img=f".mics/laser_{j}.png"
-#         item[i].spriteLaser.append(pygame.image.load(img))
+for i in range(5):
+    for j in range(5):
+        img=f"./mics/lightning_{j}.png"
+        item[i].spriteLaser.append(pygame.transform.scale(pygame.image.load(img),(95,900)))
 #function for GAME
 def draw(player_car,x,y):
     screen.blit(player_car,(x, y))
@@ -349,8 +348,10 @@ pivotTime=0
 checkFlip = False
 
 #GAME
+
 running=True
 while running:
+    # print(car[0].velocity)
     curTime=pygame.time.get_ticks()
     clock.tick(fps)     
     screen.blit(bg[mapSelected][car[carSelected].curRound].img,(0,0))
@@ -410,14 +411,14 @@ while running:
             item[i].runFlash(i)
     #runStun
     for i in range(5):
-        if item[i].laser==1 and car[carSelected].curRound== car[i].curRound:
+        if item[i].laser==1 :
             item[i].runLaser(i)
-        elif item[i].laser==2:
-            if car[i].velocity == 0 and car[carSelected].curRound == car[i].curRound:
+        if item[i].laser==2:
+            if car[i].velocity == 0:
                 item[i].runStun(i)
 
     for i in range(5):
-        if item[i].checkFlip==1 and car[carSelected].curRound == car[i].curRound:
+        if item[i].checkFlip==1:
             item[i].runFlip(i)
     #draw 5 car
     for i in bg[mapSelected][car[carSelected].curRound].car:
@@ -432,13 +433,13 @@ while running:
             if item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]:
                 item[i].visible[j]=0
                 picked=random.randint(0,99)
-                picked=68
+                # picked=92
                 if picked < 33:
                     item[i].slower(i)
                 elif picked < 67:
                     item[i].faster(i)
                 elif picked < 76:
-                    item[i].flip(i)
+                    item[i].flip()
                 elif picked == 76:
                     item[i].win(i)
                     item[i].portalX=car[i].x+200
