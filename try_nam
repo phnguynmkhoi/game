@@ -35,6 +35,9 @@ cheetahIcon= pygame.image.load('mics/cheetah.png')
 turtleIcon = pygame.image.load('mics/turtle.png')
 flipIcon = pygame.image.load('mics/flip.png')
 flipIcon = pygame.transform.scale(flipIcon,(screen.get_width()/25,screen.get_height()/20))
+first_velocity = 3
+second_velocity = 3.5
+oldWidth = screen.get_width();
 dizzy_star = []
 #Countdown
 countdownbg=pygame.transform.scale(pygame.image.load("./mics/testbg.png"),(screen.get_width(),300)).convert()
@@ -93,7 +96,7 @@ class ITEM :
         self.curSprite=0
     def runSlow(self, i): 
         if curTime-self.pivotTime > self.duration:
-            car[i].velocity = car[i].velocity*2
+            car[i].velocity = car[i].velocity
             print (i)
             self.slow=0
         self.curSprite+=0.3
@@ -167,6 +170,8 @@ class ITEM :
             draw(self.spriteFlip[int(self.curSprite)],self.flipX,self.y-55)
         if self.flipX<-100 :
             self.checkFlip=0
+        for j in range (4):
+            car[i].img[j] = pygame.transform.flip(car[i].img[j],True,False)
             
 
 
@@ -234,7 +239,7 @@ class ITEM :
         else:
             car[idx].y=self.y-20
         if car[idx].curRound == car[carSelected].curRound:
-            draw(self.spriteFlash[int(self.curSprite)],self.flashX,self.y-30)
+            draw(self.spriteFlash[int(self.curSprite)],self.flashX,self.y-screen.get_height()/20)
             
 
 class BACKGROUND:
@@ -263,7 +268,6 @@ class CAR:
         self.velocity = velocity
         self.destination = 0
         self.curRound=curRound
-        self.oldWidth = screen.get_width()
         self.ratio=ratio
         self.duration=random.uniform(2000,3000)
         self.curSpriteWheel=0
@@ -274,7 +278,7 @@ class CAR:
         self.img.append(pygame.transform.scale(img,(WIDTH/12.5,HEIGHT/12)))
     def run(self):
         if curTime-self.pivotTime>= self.duration and self.velocity!=0:
-            self.velocity=random.uniform(3,3.5)
+            self.velocity=random.uniform(first_velocity,second_velocity)
             self.pivotTime=curTime
             self.curSpriteSmoke=0
         self.x += self.velocity 
@@ -286,15 +290,19 @@ class CAR:
         
         self.curSpriteSmoke+=0.1
         if self.curSpriteSmoke<4 :
-                draw(self.spriteSmoke[int(self.curSpriteSmoke)],self.x-30,self.y+5)
+                draw(self.spriteSmoke[int(self.curSpriteSmoke)],self.x-screen.get_width()/30,self.y+screen.get_height()/120)
         draw(self.img[int(self.curSpriteWheel)],self.x,self.y)
     def resize(self):
         w = screen.get_width()
         h = screen.get_height()
         for i in range(4):
             self.img[i] = pygame.transform.scale(self.img[i],(w/12.5,h/12))
-        self.velocity = w * self.velocity / self.oldWidth
-        self.oldWidth = screen.get_width()
+        global oldWidth,first_velocity,second_velocity
+        self.velocity = w * self.velocity / oldWidth
+        first_velocity = first_velocity * screen.get_width() / oldWidth
+        second_velocity = second_velocity * screen.get_width() / oldWidth
+        self.x = self.x * screen.get_width() / oldWidth
+        oldWidth = screen.get_width()
         self.y=h/self.ratio
 # Car initialization
 transportation={
@@ -305,7 +313,7 @@ r=[2.28,1.83,1.5,1.27,1.12] # ratio cho vo 1 mang de initialize
 car=[]
 for i in range (5):
     trans= transportation[transSelected]
-    car.append(CAR(HEIGHT,r[i], random.uniform(3,3.5), 0))
+    car.append(CAR(HEIGHT,r[i], random.uniform(first_velocity,second_velocity), 0))
     for j in range(4): # Add animation
         img=f"./{transportation[0]}/{j}_{color[i]}.png"
         car[i].addImg(pygame.image.load(img))
@@ -348,7 +356,7 @@ for i in range(5):
 def draw(player_car,x,y):
     screen.blit(player_car,(x, y))
 def isCollide(a,b,x,y):
-    return (math.sqrt((a-x)*(a-x)+(b-y)*(b-y))<80)
+    return (math.sqrt((a-x)*(a-x)+(b-y)*(b-y))<screen.get_width()/12.5)
 
 def distance(a,b,x,y):
     return math.sqrt((a-x)*(a-x)+(b-y)*(b-y))
@@ -378,9 +386,10 @@ checkFlip = False
 iCountdown=0
 #GAME
 
+
 running=True
 while running:
-    # print(car[0].velocity)
+    print(car[0].velocity)
     curTime=pygame.time.get_ticks()
     clock.tick(fps)     
     #Events
@@ -413,6 +422,8 @@ while running:
                 bg[mapSelected][i].end = screen.get_width()
 
             bg[mapSelected][3].end = screen.get_width()/1.1
+
+            print(screen.get_width())
 
             for i in range(5):
                 car[i].resize()
@@ -478,13 +489,15 @@ while running:
             if item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]:
                 item[i].visible[j]=0
                 picked=random.randint(0,99)
-                picked=92
+                picked=58
                 if picked < 25:
                     item[i].slower(i)
                 elif picked < 55:
                     item[i].faster(i)
                 elif picked < 70:
                     item[i].flip()
+                    for j in range (4):
+                        car[i].img[j] = pygame.transform.flip(car[i].img[j],True,False)
                 elif picked == 71:
                     item[i].win(i)
                     item[i].portalX=car[i].x+200
