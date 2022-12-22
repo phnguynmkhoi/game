@@ -21,15 +21,15 @@ screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.RESIZABLE)
 
 #set caption and icon
 pygame.display.set_caption("Game cua Khoi")
-icon = pygame.image.load('car.png')
+icon = pygame.image.load('img/mics/car.png')
 pygame.display.set_icon(icon)
 
 #Background
-background = pygame.image.load('background-levels-city.png')
+background = pygame.image.load('img/background-levels/bg1.png')
 background = pygame.transform.scale(background,(WIDTH,HEIGHT))
 
 #Car
-Car1 = pygame.image.load('0_blue_formulaOne.png')
+Car1 = pygame.image.load('img/formula ones/0_red_formulaOne.png')
 Car1 = pygame.transform.scale(Car1,(WIDTH/12.5,HEIGHT/12))
 w_1 = int(WIDTH/9)
 h_1 = int(HEIGHT/1.67777777)
