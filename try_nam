@@ -40,7 +40,7 @@ second_velocity = 3.5
 oldWidth = screen.get_width();
 dizzy_star = []
 #Countdown
-countdownbg=pygame.transform.scale(pygame.image.load("img/mics/testbg.png"),(screen.get_width(),300)).convert()
+countdownbg=pygame.transform.scale(pygame.image.load("img/mics/testbg.png"),(screen.get_width(),screen.get_height()/2)).convert()
 countdownbg.set_alpha(100)
 countdown=[]
 countdown.append(-1)
@@ -246,35 +246,35 @@ class ITEM :
     
     def resize(self):
         for j in range(4):
-            img = pygame.image.load(f"./mics/stun_{j}.png")
+            img = pygame.image.load(f"img/mics/stun_{j}.png")
             img = pygame.transform.scale(img,(screen.get_width()/25,screen.get_height()/20))
             self.spriteStun[j] = img
         for j in range(8):
-            img = pygame.image.load(f"./mics/{j}-nitro.png")
+            img = pygame.image.load(f"img/mics/{j}-nitro.png")
             img = pygame.transform.scale(img,(screen.get_width()/15,screen.get_height()/20))
             self.spriteBoost[j] = img
         for j in range (1):
-            img=pygame.image.load(f"./mics/turtle.png")
+            img=pygame.image.load(f"img/mics/turtle.png")
             img = pygame.transform.scale(img, (screen.get_width()/18,screen.get_height()/15))
             self.spriteSlow[j] = img
         for j in range(8):
-            img=pygame.image.load(f"./mics/portal_{j}.png")
+            img=pygame.image.load(f"img/mics/portal_{j}.png")
             img = pygame.transform.scale(img,(screen.get_width()/18,screen.get_height()/8))
             self.spriteWin[j] = img
         for j in range(5):
-            img=pygame.image.load(f"./mics/flash_{j}.png")
+            img=pygame.image.load(f"img/mics/flash_{j}.png")
             img = pygame.transform.scale(img,(screen.get_width()/7,screen.get_height()/7))
             self.spriteFlash[j] = img
         for j in range(8):
-            img=pygame.image.load(f"./mics/portal_lose_{j}.png")
+            img=pygame.image.load(f"img/mics/portal_lose_{j}.png")
             img = pygame.transform.scale(img,(screen.get_width()/18,screen.get_height()/8))
             self.spriteLose[j] = img
         for j in range(6):
-            img=pygame.image.load(f"./mics/flip_{j}.png")
+            img=pygame.image.load(f"img/mics/flip_{j}.png")
             img = pygame.transform.scale(img, (screen.get_width()/20,screen.get_height()/6))
             self.spriteFlip[j] = img
         for j in range(5):
-            img=pygame.image.load(f"./mics/lightning_{j}.png")
+            img=pygame.image.load(f"img/mics/lightning_{j}.png")
             img = pygame.transform.scale(img,(screen.get_width()/14,screen.get_height()/4))
             self.spriteLaser[j] = img
         self.x[0] = self.x[0] * screen.get_width()/ oldWidth
@@ -371,31 +371,31 @@ for i in range(5):
         img = pygame.transform.scale(img,(screen.get_width()/25,screen.get_height()/20))
         item[i].spriteStun.append(img)
     for j in range(8):
-        img = pygame.image.load(f"./mics/{j}-nitro.png")
+        img = pygame.image.load(f"img/mics/{j}-nitro.png")
         img = pygame.transform.scale(img,(screen.get_width()/15,screen.get_height()/20))
         item[i].spriteBoost.append(img)
     for j in range (1):
-        img=pygame.image.load(f"./mics/turtle.png")
+        img=pygame.image.load(f"img/mics/turtle.png")
         img = pygame.transform.scale(img, (screen.get_width()/18,screen.get_height()/15))
         item[i].spriteSlow.append(img)
     for j in range(8):
-        img=pygame.image.load(f"./mics/portal_{j}.png")
+        img=pygame.image.load(f"img/mics/portal_{j}.png")
         img = pygame.transform.scale(img,(screen.get_width()/18,screen.get_height()/8))
         item[i].spriteWin.append(img)
     for j in range(5):
-        img=pygame.image.load(f"./mics/flash_{j}.png")
+        img=pygame.image.load(f"img/mics/flash_{j}.png")
         img = pygame.transform.scale(img,(screen.get_width()/7,screen.get_height()/7))
         item[i].spriteFlash.append(img)
     for j in range(8):
-        img=pygame.image.load(f"./mics/portal_lose_{j}.png")
+        img=pygame.image.load(f"img/mics/portal_lose_{j}.png")
         img = pygame.transform.scale(img,(screen.get_width()/18,screen.get_height()/8))
         item[i].spriteLose.append(img)
     for j in range(6):
-        img=pygame.image.load(f"./mics/flip_{j}.png")
+        img=pygame.image.load(f"img/mics/flip_{j}.png")
         img = pygame.transform.scale(img, (screen.get_width()/20,screen.get_height()/6))
         item[i].spriteFlip.append(img)
     for j in range(5):
-        img=pygame.image.load(f"./mics/lightning_{j}.png")
+        img=pygame.image.load(f"img/mics/lightning_{j}.png")
         img = pygame.transform.scale(img,(screen.get_width()/14,screen.get_height()/4))
         item[i].spriteLaser.append(img)
 #function for GAME
@@ -435,7 +435,6 @@ iCountdown=0
 
 running=True
 while running:
-    print(car[0].velocity)
     curTime=pygame.time.get_ticks()
     clock.tick(fps)     
     #Events
@@ -480,6 +479,10 @@ while running:
 
             oldWidth = screen.get_width()
 
+            #resize countdown
+            countdownbg=pygame.transform.scale(pygame.image.load("img/mics/testbg.png"),(screen.get_width(),screen.get_height()/2)).convert()
+            countdownbg.set_alpha(200)    
+
     screen.blit(bg[mapSelected][car[carSelected].curRound].img,(0,0))
 
     #draw 5 car
@@ -493,11 +496,11 @@ while running:
             if item[i].appRound[j] == car[carSelected].curRound and item[i].visible[j]==1:
                 draw(mysbox,item[i].x[j],item[i].y)
     if curTime-pivotTime<5000:
-        draw(countdownbg,0,(screen.get_height()-300)/2)
+        draw(countdownbg,0,(screen.get_height()-screen.get_height()/2)/2)
         iCountdown=int((curTime-pivotTime)/1000)
         if iCountdown>0:
             draw(countdown[iCountdown],
-            (screen.get_width()-countdown[iCountdown].get_width())/2,(screen.get_height()-140)/2)
+            (screen.get_width()-countdown[iCountdown].get_width())/2,(screen.get_height()-screen.get_height()/5)/2)
             
         pygame.display.update()
         continue
