@@ -18,8 +18,8 @@ pygame.mixer.music.set_volume(0.2)
 color={0:"red", 1:"yellow", 2:"blue", 3:"pink", 4:"green"}
 
 #set screen
-WIDTH=1000
-HEIGHT=600
+WIDTH=1024
+HEIGHT=534
 screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.RESIZABLE)
 
 #set caption and icon and image and font
@@ -49,6 +49,8 @@ countdown.append(-1)
 rankImg=[]
 for i in range(5):
     rankImg.append(fontRank.render(f"{i+1}",True,(51, 204, 204)))
+for i in range(5):
+    rankImg[i] = pygame.transform.scale(rankImg[i],(screen.get_width()/25,screen.get_height()/10))
 for i in range(3,0,-1):
     countdown.append(pygame.image.load(f"img/mics/{i}.png"))
 countdown.append(font.render(("Goooo!"),True,(51, 204, 204)))
@@ -231,7 +233,7 @@ class ITEM :
                 self.curSprite=4
         self.curSprite+=0.4
         if car[idx].curRound==car[carSelected].curRound:
-            draw(self.spriteLose[int(self.curSprite)],self.portalX,self.y-30)
+            draw(self.spriteLose[int(self.curSprite)],self.portalX,self.y-screen.get_height()/20)
         if distance(car[idx].x,car[idx].y,self.portalX,self.y)>250:
             self.openPortal=0
 
@@ -248,7 +250,7 @@ class ITEM :
         if car[idx].curRound == car[carSelected].curRound:
             draw(self.spriteFlash[int(self.curSprite)],self.flashX,self.y-screen.get_height()/20)
     
-    def resize(self):
+    def resize(self,i):
         for j in range(4):
             img = pygame.image.load(f"img/mics/stun_{j}.png")
             img = pygame.transform.scale(img,(screen.get_width()/25,screen.get_height()/20))
@@ -473,6 +475,9 @@ while running:
         #resize screen
         if event.type == pygame.VIDEORESIZE:
 
+            print(screen.get_height())
+            print(screen.get_width())
+            
             screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
             for i in range (4):
                 img=(f"img/background-levels/background-{mapSelected}-{i}.png")
@@ -485,17 +490,21 @@ while running:
 
             for i in range(5):
                 car[i].resize()
-                item[i].velocity = car[i].velocity
                 item[i].y=car[i].y + int(screen.get_height()/50)
-                item[i].resize()
+                item[i].resize(i)
                 mysbox = resizemysbox(mysbox)
+                item[i].velocity = car[i].velocity
 
             oldWidth = screen.get_width()
 
             #resize countdown
             countdownbg=pygame.transform.scale(pygame.image.load("img/mics/testbg.png"),(screen.get_width(),screen.get_height()/2)).convert()
             countdownbg.set_alpha(200)    
+            #resize rank
+            for i in range(5):
+                rankImg[i] = pygame.transform.scale(rankImg[i],(screen.get_width()/25,screen.get_height()/10))
 
+            
     screen.blit(bg[mapSelected][car[carSelected].curRound].img,(0,0))
 
     #draw 5 car
@@ -546,9 +555,9 @@ while running:
         #Flip
         if item[i].checkFlip==1:
             item[i].runFlip(i)
-        if item[i].checkFlip == 0 and item[i].countFlip % 2 == 1:
+        if item[i].checkFlip == 0 and (item[i].countFlip % 2 == 1):
             for j in range (4):
-                car[i].img[j] = pygame.transform.flip(car[i].img[j],True,False)
+                car[i].img[j] = temp[i].img[j]
             item[i].countFlip += 1
 
 
@@ -558,7 +567,7 @@ while running:
             if item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]:
                 item[i].visible[j]=0
                 picked=random.randint(0,99)
-                picked=69
+                picked=71
                 if picked < 25:
                     item[i].slower(i)
                 elif picked < 55:
@@ -602,6 +611,6 @@ while running:
             
             
     for i in listRank:
-        draw(i[0],screen.get_width()/1.1,screen.get_height()/i[1]-10)
+        draw(i[0],screen.get_width()/1.08,screen.get_height()/i[1])
     pygame.display.update()
 pygame.quit()
