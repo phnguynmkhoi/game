@@ -49,7 +49,6 @@ countdown.append(-1)
 rankImg=[]
 for i in range(5):
     rankImg.append(fontRank.render(f"{i+1}",True,(51, 204, 204)))
-    print(i)
 for i in range(3,0,-1):
     countdown.append(pygame.image.load(f"img/mics/{i}.png"))
 countdown.append(font.render(("Goooo!"),True,(51, 204, 204)))
@@ -103,7 +102,6 @@ class ITEM :
     def runSlow(self, i): 
         if curTime-self.pivotTime > self.duration:
             car[i].velocity = car[i].velocity
-            print (i)
             self.slow=0
         self.curSprite+=0.3
         if car[i].curRound== car[carSelected].curRound:
@@ -176,8 +174,8 @@ class ITEM :
             draw(self.spriteFlip[int(self.curSprite)],self.flipX,self.y-55)
         if self.flipX<-100 :
             self.checkFlip=0
-        for j in range (4):
-            car[i].img[j] = pygame.transform.flip(car[i].img[j],True,False)
+        # for j in range (4):
+        #     car[i].img[j] = pygame.transform.flip(car[i].img[j],True,False)
             
 
 
@@ -330,7 +328,7 @@ for i in range (5):
         img=f"img/{transportation[0]}/{j}_{color[i]}.png"
         car[i].addImg(pygame.image.load(img))
     for j in range(9):
-        img=pygame.transform.scale(pygame.image.load(f"./mics/smoke_{j}.png"),(50,30))
+        img=pygame.transform.scale(pygame.image.load(f"./img/mics/smoke_{j}.png"),(50,30))
         car[i].spriteSmoke.append(img)
 
 # Item initialization
@@ -404,7 +402,6 @@ finished=[1,1,1,1,1]
 
 running=True
 while running:
-    print(car[0].velocity)
     curTime=pygame.time.get_ticks()
     clock.tick(fps)     
     #Events
@@ -438,7 +435,7 @@ while running:
 
             bg[mapSelected][3].end = screen.get_width()/1.1
 
-            print(screen.get_width())
+            # print(screen.get_width())
 
             for i in range(5):
                 car[i].resize()
@@ -504,15 +501,15 @@ while running:
             if item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]:
                 item[i].visible[j]=0
                 picked=random.randint(0,99)
-                picked=200
+                picked=69
                 if picked < 25:
                     item[i].slower(i)
                 elif picked < 55:
                     item[i].faster(i)
                 elif picked < 70:
                     item[i].flip()
-                    for j in range (4):
-                        car[i].img[j] = pygame.transform.flip(car[i].img[j],True,False)
+                    # for j in range (4):
+                        # car[i].img[j] = pygame.transform.flip(car[i].img[j],True,False)
                 elif picked == 71:
                     item[i].win(i)
                     item[i].portalX=car[i].x+200
