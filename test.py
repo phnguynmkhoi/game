@@ -21,9 +21,9 @@ screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.RESIZABLE)
 
 #set caption and icon and image
 pygame.display.set_caption("Game cua Khoi")
-icon = pygame.image.load('img/car.png')
+icon = pygame.image.load('img/mics/car.png')
 pygame.display.set_icon(icon)
-arrow = pygame.image.load('img/arrow.png')
+arrow = pygame.image.load('img/mics/arrow.png')
 
 
 #Background
@@ -35,10 +35,10 @@ class BACKGROUND:
         self.car=[]
 
 bg=[] 
-bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('img/bg1.png'),(WIDTH,HEIGHT)),200,1000))
-bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('img/bg2.png'),(WIDTH,HEIGHT)),0,1000))
-bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('img/bg3.png'),(WIDTH,HEIGHT)),0,1000))
-bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('img/bg4.png'),(WIDTH,HEIGHT)),0,800))
+bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('img/background-levels/bg1.png'),(WIDTH,HEIGHT)),200,1000))
+bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('img/background-levels/bg2.png'),(WIDTH,HEIGHT)),0,1000))
+bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('img/background-levels/bg3.png'),(WIDTH,HEIGHT)),0,1000))
+bg.append (BACKGROUND(pygame.transform.scale(pygame.image.load('img/background-levels/bg4.png'),(WIDTH,HEIGHT)),0,800))
 
 #Car
 class CAR:
@@ -56,11 +56,11 @@ class CAR:
     
 car=[]
 des = int(WIDTH/1.25)
-car.append(CAR(pygame.image.load('img/0_red_formulaOne.png'), int(HEIGHT/1.65), random.uniform(2,3), 0))
-car.append(CAR(pygame.image.load('img/0_yellow_formulaOne.png'), int(HEIGHT/1.47), random.uniform(2,3), 0))
-car.append(CAR(pygame.image.load('img/0_blue_formulaOne.png'), int(HEIGHT/1.32), random.uniform(2,3), 0))
-car.append(CAR(pygame.image.load('img/0_pink_formulaOne.png'), int(HEIGHT/1.19), random.uniform(2,3), 0))
-car.append(CAR(pygame.image.load('img/0_white_formulaOne.png'), int(HEIGHT/1.1),random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('img/formula ones/0_red_formulaOne.png'), int(HEIGHT/1.65), random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('img/formula ones/0_yellow_formulaOne.png'), int(HEIGHT/1.47), random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('img/formula ones/0_blue_formulaOne.png'), int(HEIGHT/1.32), random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('img/formula ones/0_pink_formulaOne.png'), int(HEIGHT/1.19), random.uniform(2,3), 0))
+car.append(CAR(pygame.image.load('img/formula ones/0_green_formulaOne.png'), int(HEIGHT/1.1),random.uniform(2,3), 0))
 
 
 #setting run
