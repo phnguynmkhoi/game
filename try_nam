@@ -158,6 +158,7 @@ class ITEM :
         self.checkFlip = 1
         self.flipVelocity=screen.get_width()/120
         self.countFlip = 0
+        self.tempFlip = 0
         # car[i].velocity = -1 * car[i].velocity
         # for j in range(4):
         #     car[i].img[j] = pygame.transform.flip(car[i].img[j],True,False)
@@ -170,9 +171,11 @@ class ITEM :
             elif car[idx].x>self.flipX :
                 car[idx].y+=0.8
             car[i].x-=2.5*car[i].velocity
-            for j in range (4):
-                car[i].img[int(j)] = pygame.transform.flip(car[i].img[int(j)],True,False)
-            self.countFlip += 1
+            if int(self.tempFlip) == self.tempFlip:
+                for j in range (4):
+                    car[i].img[int(j)] = pygame.transform.flip(car[i].img[int(j)],True,False)
+                self.countFlip += 1
+        self.tempFlip += 0.5
         self.flipX -= self.flipVelocity 
         if self.curSprite>5:
             self.curSprite=0
@@ -327,7 +330,7 @@ class CAR:
             self.velocity=random.uniform(first_velocity,second_velocity)
             self.pivotTime=curTime
             self.curSpriteSmoke=0
-            self.smokeX=self.x-30
+            self.smokeX=self.x-screen.get_width()/33.34
         self.x += self.velocity 
     def runAnimation(self,ok):
         if self.curSpriteWheel>3:
@@ -340,7 +343,7 @@ class CAR:
             if int(self.curSpriteSmoke)<=5  :
                 self.smokeX=self.x-screen.get_width()/30
             if  self.x>self.smokeX:
-                draw(self.spriteSmoke[int(self.curSpriteSmoke)],self.smokeX,self.y+20)
+                draw(self.spriteSmoke[int(self.curSpriteSmoke)],self.smokeX,self.y+screen.get_height()/28)
 
         draw(self.img[int(self.curSpriteWheel)],self.x,self.y)
     def resize(self):
@@ -369,7 +372,7 @@ for i in range (5):
         img=f"img/{transportation[0]}/{j}_{color[i]}.png"
         car[i].addImg(pygame.image.load(img))
     for j in range(9):
-        img=pygame.transform.scale(pygame.image.load(f"./img/mics/smoke_{j}.png"),(50,30))
+        img=pygame.transform.scale(pygame.image.load(f"./img/mics/smoke_{j}.png"),(screen.get_width()/20,screen.get_height()/20))
         car[i].spriteSmoke.append(img)
 
 # Item initialization
@@ -491,6 +494,11 @@ while running:
             for i in range(5):
                 car[i].resize()
                 item[i].y=car[i].y + int(screen.get_height()/50)
+                
+                #resize smoke
+                for j in range(9):
+                    car[i].spriteSmoke[j] = pygame.transform.scale(car[i].spriteSmoke[j],(screen.get_width()/20,screen.get_height()/20))
+
                 item[i].resize(i)
                 mysbox = resizemysbox(mysbox)
                 item[i].velocity = car[i].velocity
@@ -557,8 +565,8 @@ while running:
             item[i].runFlip(i)
         if item[i].checkFlip == 0 and (item[i].countFlip % 2 == 1):
             for j in range (4):
-                car[i].img[j] = temp[i].img[j]
-            item[i].countFlip += 1
+                car[i].img[j] = pygame.transform.flip(car[i].img[j],True,False)
+            item[i].countFlip = 0
 
 
     #Check collision
@@ -567,7 +575,7 @@ while running:
             if item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]:
                 item[i].visible[j]=0
                 picked=random.randint(0,99)
-                picked=71
+                picked=69
                 if picked < 25:
                     item[i].slower(i)
                 elif picked < 55:
