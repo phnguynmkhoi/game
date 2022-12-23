@@ -176,7 +176,7 @@ class ITEM :
                 for j in range (4):
                     car[i].img[int(j)] = pygame.transform.flip(car[i].img[int(j)],True,False)
                 self.countFlip += 1
-        self.tempFlip += 0.5
+        self.tempFlip += 0.25
         self.flipX -= self.flipVelocity 
         if self.curSprite>5:
             self.curSprite=0
