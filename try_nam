@@ -38,7 +38,8 @@ flipIcon = pygame.image.load('img/mics/flip.png')
 flipIcon = pygame.transform.scale(flipIcon,(screen.get_width()/25,screen.get_height()/20))
 first_velocity = 3
 second_velocity = 3.5
-oldWidth = screen.get_width();
+oldWidth = screen.get_width()
+oldHeight = screen.get_height()
 dizzy_star = []
 #Countdown
 countdownbg=pygame.transform.scale(pygame.image.load("img/mics/testbg.png"),(screen.get_width(),screen.get_height()/2)).convert()
@@ -352,11 +353,7 @@ class CAR:
         for i in range(4):
             self.img[i] = pygame.transform.scale(self.img[i],(w/12.5,h/12))
         global oldWidth,first_velocity,second_velocity
-        self.velocity = w * self.velocity / oldWidth
-        first_velocity = first_velocity * screen.get_width() / oldWidth
-        second_velocity = second_velocity * screen.get_width() / oldWidth
         self.x = self.x * screen.get_width() / oldWidth
-        oldWidth = screen.get_width()
         self.y=h/self.ratio
 # Car initialization
 transportation={
@@ -426,7 +423,7 @@ frame = 0
 
 #game Loop
 clock = pygame.time.Clock()
-fps = 120
+fps = 60
 
 #Initalize
 r=0
@@ -477,9 +474,6 @@ while running:
             pressed=0
         #resize screen
         if event.type == pygame.VIDEORESIZE:
-
-            print(screen.get_height())
-            print(screen.get_width())
             
             screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
             for i in range (4):
@@ -487,12 +481,12 @@ while running:
                 bg[mapSelected][i].img = pygame.transform.scale(pygame.image.load(img),(screen.get_width(),screen.get_height()))
                 bg[mapSelected][i].end = screen.get_width()
 
-            bg[mapSelected][3].end = screen.get_width()
-
-            # print(screen.get_width())
-
+            fps = fps * (screen.get_width() / oldWidth + screen.get_height() / oldHeight)
+            first_velocity = first_velocity * screen.get_width() / oldWidth
+            second_velocity = second_velocity * screen.get_width() / oldWidth
             for i in range(5):
                 car[i].resize()
+                car[i].velocity = car[i].velocity * screen.get_width() / oldWidth
                 item[i].y=car[i].y + int(screen.get_height()/50)
                 
                 #resize smoke
@@ -502,8 +496,8 @@ while running:
                 item[i].resize(i)
                 mysbox = resizemysbox(mysbox)
                 item[i].velocity = car[i].velocity
-
             oldWidth = screen.get_width()
+            oldHeight = screen.get_height()
 
             #resize countdown
             countdownbg=pygame.transform.scale(pygame.image.load("img/mics/testbg.png"),(screen.get_width(),screen.get_height()/2)).convert()
