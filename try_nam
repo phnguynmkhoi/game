@@ -15,7 +15,7 @@ pygame.mixer.music.set_volume(0.2)
 # red = (200,0,0)
 # yellow = (255,232,0)
 # white = (255,255,255)
-color={0:"red", 1:"yellow", 2:"blue", 3:"pink", 4:"green"}
+color={0:"red", 1:"blue", 2:"yellow", 3:"green", 4:"pink"}
 
 #set screen
 WIDTH=1024
@@ -30,17 +30,19 @@ arrow = pygame.image.load('img/mics/arrow.png')
 font = pygame.font.Font('./font/Audiowide-Regular.ttf',150)
 fontRank = pygame.font.Font('./font/Audiowide-Regular.ttf',64)
 #Mystery Box
-mysbox= pygame.image.load('img/mics/mystery box.png')
-mysbox = pygame.transform.scale(mysbox,(WIDTH/25,HEIGHT/20))
+mysbox=[] 
+for i in range(4):
+    img=pygame.image.load(f"img/mics/mysterybox_{i}.png")
+    img=pygame.transform.scale(img,(WIDTH/25,HEIGHT/20))
+    mysbox.append(img)
 cheetahIcon= pygame.image.load('img/mics/cheetah.png')
 turtleIcon = pygame.image.load('img/mics/turtle.png')
 flipIcon = pygame.image.load('img/mics/flip.png')
 flipIcon = pygame.transform.scale(flipIcon,(screen.get_width()/25,screen.get_height()/20))
 first_velocity = 3
-second_velocity = 3.5
+second_velocity = 4
 oldWidth = screen.get_width()
 oldHeight = screen.get_height()
-dizzy_star = []
 #Countdown
 countdownbg=pygame.transform.scale(pygame.image.load("img/mics/testbg.png"),(screen.get_width(),screen.get_height()/2)).convert()
 countdownbg.set_alpha(100)
@@ -69,6 +71,8 @@ def rand():
 
 class ITEM :
     def __init__(self,y,velocity):
+        global mysbox
+        self.curBox=0
         self.img = mysbox
         self.y=y #fixed
         self.appRound=rand()
@@ -129,14 +133,15 @@ class ITEM :
         self.laser=1
 
     def runLaser(self,idx):
-        self.curSprite+=0.08
+        self.curSprite+=0.12
         if self.curSprite<5:
             if car[idx].curRound==car[carSelected].curRound:
-                draw(self.spriteLaser[int(self.curSprite)],car[idx].x,self.y-self.spriteLaser[int(self.curSprite)].get_height()+screen.get_height()/20)
+                draw(self.spriteLaser[int(self.curSprite)],car[idx].x,self.y-self.spriteLaser[int(self.curSprite)].get_height()+screen.get_height()/5)
         else:
             self.laser=2
             self.curSprite=0
             self.stun(idx)
+            
     def stun(self,i):
         self.duration=1000 #Duration of an item
         self.velocity=car[i].velocity
@@ -160,9 +165,6 @@ class ITEM :
         self.flipVelocity=screen.get_width()/120
         self.countFlip = 0
         self.tempFlip = 0
-        # car[i].velocity = -1 * car[i].velocity
-        # for j in range(4):
-        #     car[i].img[j] = pygame.transform.flip(car[i].img[j],True,False)
 
     def runFlip(self,idx):
         if isCollide(car[idx].x,car[idx].y,self.flipX,self.y):
@@ -173,8 +175,8 @@ class ITEM :
                 car[idx].y+=0.8
             car[i].x-=2.5*car[i].velocity
             if int(self.tempFlip) == self.tempFlip:
-                for j in range (4):
-                    car[i].img[int(j)] = pygame.transform.flip(car[i].img[int(j)],True,False)
+                for j in range (len(car[idx].spriteWheel)):
+                    car[i].spriteWheel[int(j)] = pygame.transform.flip(car[i].spriteWheel[int(j)],True,False)
                 self.countFlip += 1
         self.tempFlip += 0.25
         self.flipX -= self.flipVelocity 
@@ -187,7 +189,6 @@ class ITEM :
             self.checkFlip=0
             
             
-
     def win(self,idx):
         self.openPortal=1
         self.portalX=0
@@ -285,7 +286,7 @@ class ITEM :
             self.spriteFlip[j] = img
         for j in range(5):
             img=pygame.image.load(f"img/mics/lightning_{j}.png")
-            img = pygame.transform.scale(img,(screen.get_width()/14,screen.get_height()/4))
+            img = pygame.transform.scale(img,(screen.get_width()/14,screen.get_height()))
             self.spriteLaser[j] = img
         self.x[0] = self.x[0] * screen.get_width()/ oldWidth
         self.x[1] = self.x[1] * screen.get_width()/ oldWidth
@@ -299,19 +300,20 @@ class BACKGROUND:
         self.car=[]
 #Background Initialization
 bg=[]
-for i in range (1):
+mapp=['city','desert','galaxy','painting','sea']
+for i in range(5):
     bg.append([])
     for j in range(4):
         start,end=0,screen.get_width()  
         # if j==3:
         #     end =screen.get_width()/1.1
-        img=(f"img/background-levels/background-{i}-{j}.png")
+        img=(f"img/background-levels/background-{mapp[i]}-{j}.png")
         bg[i].append(BACKGROUND(pygame.image.load(img),start,end))
 
 #Car
 class CAR:
     def __init__(self, car_y,ratio ,velocity,curRound):
-        self.img = []
+        self.spriteWheel = []
         self.x = 0
         self.y = car_y/ratio
         self.velocity = velocity
@@ -324,52 +326,53 @@ class CAR:
         self.spriteSmoke=[]
         self.pivotTime=0
         self.smokeX=0
-    def addImg(self,img):
-        self.img.append(pygame.transform.scale(img,(WIDTH/12.5,HEIGHT/12)))
     def run(self):
         if curTime-self.pivotTime>= self.duration and self.velocity!=0:
-            self.velocity=random.uniform(first_velocity,second_velocity)
+            tmp=random.uniform(self.velocity-0.3,second_velocity)
+            if tmp>=self.velocity:
+                self.curSpriteSmoke=0
+                self.velocity=tmp
             self.pivotTime=curTime
-            self.curSpriteSmoke=0
             self.smokeX=self.x-screen.get_width()/33.34
         self.x += self.velocity 
     def runAnimation(self,ok):
-        if self.curSpriteWheel>3:
-            self.curSpriteWheel=0
         if ok:
             self.curSpriteWheel+=0.4
-        draw(self.img[int(self.curSpriteWheel)] ,self.x,self.y)
-        self.curSpriteSmoke+=0.1
-        if self.curSpriteSmoke<9 :
+        if self.curSpriteWheel>=len(self.spriteWheel):
+            self.curSpriteWheel=0
+        draw(self.spriteWheel[int(self.curSpriteWheel)] ,self.x,self.y)
+        self.curSpriteSmoke+=0.2
+        if self.curSpriteSmoke<len(self.spriteSmoke) :
             if int(self.curSpriteSmoke)<=5  :
                 self.smokeX=self.x-screen.get_width()/30
             if  self.x>self.smokeX:
                 draw(self.spriteSmoke[int(self.curSpriteSmoke)],self.smokeX,self.y+screen.get_height()/28)
 
-        draw(self.img[int(self.curSpriteWheel)],self.x,self.y)
     def resize(self):
         w = screen.get_width()
         h = screen.get_height()
         for i in range(4):
-            self.img[i] = pygame.transform.scale(self.img[i],(w/12.5,h/12))
+            self.spriteWheel[i] = pygame.transform.scale(self.spriteWheel[i],(w/12.5,h/12))
         global oldWidth,first_velocity,second_velocity
         self.x = self.x * screen.get_width() / oldWidth
         self.y=h/self.ratio
 # Car initialization
 transportation={
-    0:"formula ones" # List phuong tien
+    0:("formula ones",4,9,"smoke"), # loai phuong tien,so sprite phuong tien, so sprite animation hieu ung
+    1:("spaceship",1,7,"nitro")
 }
-transSelected=0
+transSelected=1
 r=[2.28,1.83,1.5,1.27,1.12] # ratio cho vo 1 mang de initialize
 car=[]
 for i in range (5):
     trans= transportation[transSelected]
     car.append(CAR(HEIGHT,r[i], random.uniform(first_velocity,second_velocity), 0))
-    for j in range(4): # Add animation
-        img=f"img/{transportation[0]}/{j}_{color[i]}.png"
-        car[i].addImg(pygame.image.load(img))
-    for j in range(9):
-        img=pygame.transform.scale(pygame.image.load(f"./img/mics/smoke_{j}.png"),(screen.get_width()/20,screen.get_height()/20))
+    for j in range(trans[1]): # Add animation
+        img=pygame.image.load(f"img/{trans[0]}/{j}_{color[i]}.png")
+        img =pygame.transform.scale(img,(WIDTH/12.5,HEIGHT/12))
+        car[i].spriteWheel.append(img)
+    for j in range(trans[2]):
+        img=pygame.transform.scale(pygame.image.load(f"./img/mics/{trans[3]}_{j}.png"),(screen.get_width()/20,screen.get_height()/20))
         car[i].spriteSmoke.append(img)
 
 # Item initialization
@@ -383,7 +386,7 @@ for i in range(5):
         img = pygame.transform.scale(img,(screen.get_width()/25,screen.get_height()/20))
         item[i].spriteStun.append(img)
     for j in range(8):
-        img = pygame.image.load(f"img/mics/{j}-nitro.png")
+        img = pygame.image.load(f"img/mics/nitro_{j}.png")
         img = pygame.transform.scale(img,(screen.get_width()/15,screen.get_height()/20))
         item[i].spriteBoost.append(img)
     for j in range (1):
@@ -404,11 +407,11 @@ for i in range(5):
         item[i].spriteLose.append(img)
     for j in range(6):
         img=pygame.image.load(f"img/mics/flip_{j}.png")
-        img = pygame.transform.scale(img, (screen.get_width()/20,screen.get_height()/6))
+        img = pygame.transform.scale(img, (screen.get_width()/20,screen.get_height()/5))
         item[i].spriteFlip.append(img)
     for j in range(5):
         img=pygame.image.load(f"img/mics/lightning_{j}.png")
-        img = pygame.transform.scale(img,(screen.get_width()/14,screen.get_height()/4))
+        img = pygame.transform.scale(img,(screen.get_width()/14,screen.get_height()))
         item[i].spriteLaser.append(img)
 #function for GAME
 def draw(player_car,x,y):
@@ -419,7 +422,6 @@ def isCollide(a,b,x,y):
 def distance(a,b,x,y):
     return math.sqrt((a-x)*(a-x)+(b-y)*(b-y))
 
-frame = 0
 
 #game Loop
 clock = pygame.time.Clock()
@@ -428,7 +430,7 @@ fps = 60
 #Initalize
 r=0
 carSelected=0
-mapSelected=0
+mapSelected=2
 pressed=0
 winItem=-1
 
@@ -451,13 +453,16 @@ finished=[1,1,1,1,1]
 running=True
 while running:
     curTime=pygame.time.get_ticks()
+    # print(curTime)
     clock.tick(fps)     
     #Events
+    if curTime-pivotTime<1000:
+        print(123)      
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
             pygame.quit()
-            exit()
+            break
         if event.type == pygame.KEYDOWN and pressed==0:
             pressed=1
             if event.key==pygame.K_F1:
@@ -506,7 +511,7 @@ while running:
             for i in range(5):
                 rankImg[i] = pygame.transform.scale(rankImg[i],(screen.get_width()/25,screen.get_height()/10))
 
-            
+    
     screen.blit(bg[mapSelected][car[carSelected].curRound].img,(0,0))
 
     #draw 5 car
@@ -515,13 +520,16 @@ while running:
             car[i].runAnimation(1)
         else:
             car[i].runAnimation(0)
+    #draw item
     for i in range(5):
         for j in range (2):
             if item[i].appRound[j] == car[carSelected].curRound and item[i].visible[j]==1:
-                draw(mysbox,item[i].x[j],item[i].y)
-    if curTime-pivotTime<5000:
+                draw(item[i].img[int(item[i].curBox)%4],item[i].x[j],item[i].y)
+                item[i].curBox+=0.08
+
+    if curTime-pivotTime<6000:
         draw(countdownbg,0,(screen.get_height()-screen.get_height()/2)/2)
-        iCountdown=int((curTime-pivotTime)/1000)
+        iCountdown=int((curTime-pivotTime)/1000)-1
         if iCountdown>0:
             draw(countdown[iCountdown],
             (screen.get_width()-countdown[iCountdown].get_width())/2,(screen.get_height()-screen.get_height()/5)/2)
@@ -529,9 +537,6 @@ while running:
         pygame.display.update()
         continue
      
-
-    #draw items
-
     for i in range(5):
         #Slower
         if item[i].slow==1:
@@ -558,8 +563,8 @@ while running:
         if item[i].checkFlip==1:
             item[i].runFlip(i)
         if item[i].checkFlip == 0 and (item[i].countFlip % 2 == 1):
-            for j in range (4):
-                car[i].img[j] = pygame.transform.flip(car[i].img[j],True,False)
+            for j in range (len(car[i].spriteWheel)):
+                car[i].spriteWheel[j] = pygame.transform.flip(car[i].spriteWheel[j],True,False)
             item[i].countFlip = 0
 
 
@@ -569,7 +574,7 @@ while running:
             if item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]:
                 item[i].visible[j]=0
                 picked=random.randint(0,99)
-                picked=69
+                # picked=69
                 if picked < 25:
                     item[i].slower(i)
                 elif picked < 55:
@@ -608,10 +613,6 @@ while running:
                 finished[i]=0
                 listRank.append((rankImg[rank],car[i].ratio))
                 rank+=1
-
-
-            
-            
     for i in listRank:
         draw(i[0],screen.get_width()/1.08,screen.get_height()/i[1])
     pygame.display.update()
