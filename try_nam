@@ -57,10 +57,10 @@ for i in range(3,0,-1):
 countdown.append(font.render(("Goooo!"),True,(51, 204, 204)))
 
 #myscount
-myscount = 1
+myscount = 7
 myscount_img = font.render(str(myscount),True,(0,0,0))
 myscount_img = pygame.transform.scale(myscount_img,(screen.get_width()/30,screen.get_height()/12))
-picked_car = 3
+picked_car = 2
 
 def resizemysbox(mysbox):
         return pygame.transform.scale(mysbox,(screen.get_width()/25,screen.get_height()/20))
@@ -468,7 +468,7 @@ while running:
             exit()
         if event.type == pygame.KEYDOWN and pressed==0:
             pressed=1
-            if event.key == pygame.K_f:
+            if event.key == pygame.K_SPACE:
                 useMys = 1
             if event.key==pygame.K_F1:
                 carSelected=0
