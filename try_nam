@@ -56,6 +56,12 @@ for i in range(3,0,-1):
     countdown.append(pygame.image.load(f"img/mics/{i}.png"))
 countdown.append(font.render(("Goooo!"),True,(51, 204, 204)))
 
+#myscount
+myscount = 1
+myscount_img = font.render(str(myscount),True,(0,0,0))
+myscount_img = pygame.transform.scale(myscount_img,(screen.get_width()/30,screen.get_height()/12))
+picked_car = 3
+
 def resizemysbox(mysbox):
         return pygame.transform.scale(mysbox,(screen.get_width()/25,screen.get_height()/20))
 #Background
@@ -445,6 +451,8 @@ iCountdown=0
 rank=0
 listRank=[]
 finished=[1,1,1,1,1]
+picked = 0
+useMys = 0
 #GAME
 
 
@@ -460,6 +468,8 @@ while running:
             exit()
         if event.type == pygame.KEYDOWN and pressed==0:
             pressed=1
+            if event.key == pygame.K_f:
+                useMys = 1
             if event.key==pygame.K_F1:
                 carSelected=0
             if event.key==pygame.K_F2:
@@ -506,7 +516,6 @@ while running:
             for i in range(5):
                 rankImg[i] = pygame.transform.scale(rankImg[i],(screen.get_width()/25,screen.get_height()/10))
 
-            
     screen.blit(bg[mapSelected][car[carSelected].curRound].img,(0,0))
 
     #draw 5 car
@@ -528,7 +537,16 @@ while running:
             
         pygame.display.update()
         continue
-     
+    
+    draw(myscount_img,screen.get_width()/1.05,0)
+    if useMys == 1:
+        if myscount > 0:
+            picked=random.randint(0,99)
+        useMys = 0
+        if myscount > 0:
+            myscount -= 1
+            myscount_img = font.render(str(myscount),True,(0,0,0))
+            myscount_img = pygame.transform.scale(myscount_img,(screen.get_width()/30,screen.get_height()/12))
 
     #draw items
 
@@ -566,10 +584,11 @@ while running:
     #Check collision
     for i in range (5):
         for j in range(2):
-            if item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]:
+            if (item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]) or (picked != 0 and i == picked_car):
                 item[i].visible[j]=0
-                picked=random.randint(0,99)
-                picked=69
+                if picked == 0:
+                    picked=random.randint(0,99)
+                    picked=69
                 if picked < 25:
                     item[i].slower(i)
                 elif picked < 55:
@@ -586,6 +605,7 @@ while running:
                     item[i].flash(i)
                 else:
                     item[i].setLaser()
+                picked = 0
             # Show the item picked
             # if item[i].backToNormal(i) and car[i].curRound==car[carSelected].curRound:
             #     if (pressed==0 or i!=carSelected) and item[i].name<=1:
