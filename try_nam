@@ -436,7 +436,7 @@ fps = 60
 #Initalize
 r=0
 carSelected=0
-mapSelected=2
+mapSelected=1
 pressed=0
 winItem=-1
 
@@ -492,7 +492,7 @@ while running:
             
             screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
             for i in range (4):
-                img=(f"img/background-levels/background-{mapSelected}-{i}.png")
+                img=(f"img/background-levels/background-{mapp[mapSelected]}-{i}.png")
                 bg[mapSelected][i].img = pygame.transform.scale(pygame.image.load(img),(screen.get_width(),screen.get_height()))
                 bg[mapSelected][i].end = screen.get_width()
 
