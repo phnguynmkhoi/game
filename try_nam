@@ -375,7 +375,7 @@ for i in range (5):
     trans= transportation[transSelected]
     car.append(CAR(HEIGHT,r[i], random.uniform(first_velocity,second_velocity), 0))
     for j in range(trans[1]): # Add animation
-        img=pygame.image.load(f"img/{trans[0]}/{j}_{color[i]}.png")
+        img=pygame.image.load(f"img/{trans[0]}/{color[i]}.png")
         img =pygame.transform.scale(img,(WIDTH/12.5,HEIGHT/12))
         car[i].spriteWheel.append(img)
     for j in range(trans[2]):
