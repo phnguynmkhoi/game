@@ -52,7 +52,7 @@ countdown.append(font.render(("Goooo!"),True,(51, 204, 204)))
 
 #myscount
 myscount = 7
-myscount_img = font.render(str(myscount),True,(0,0,0))
+myscount_img = font.render(str(myscount),True,(255,255,255))
 myscount_img = pygame.transform.scale(myscount_img,(screen.get_width()/30,screen.get_height()/12))
 picked_car = 2
 
@@ -64,8 +64,11 @@ def isCollide(a,b,x,y):
 
 def distance(a,b,x,y):
     return math.sqrt((a-x)*(a-x)+(b-y)*(b-y))
-def resizemysbox(mysbox):
-    return pygame.transform.scale(mysbox,(screen.get_width()/25,screen.get_height()/20))
+
+def resizemysbox(i):
+    img = mysbox[i] 
+    return pygame.transform.scale(img,(screen.get_width()/25,screen.get_height()/20))
+#Background
 
 def rand():
     a=random.randint(0,3)
@@ -266,7 +269,7 @@ class ITEM :
             img = pygame.transform.scale(img,(screen.get_width()/25,screen.get_height()/20))
             self.spriteStun[j] = img
         for j in range(8):
-            img = pygame.image.load(f"img/mics/{j}-nitro.png")
+            img = pygame.image.load(f"./img/mics/{trans[3]}_{j}.png")
             img = pygame.transform.scale(img,(screen.get_width()/15,screen.get_height()/20))
             self.spriteBoost[j] = img
         for j in range (1):
@@ -343,7 +346,7 @@ class CAR:
     def resize(self):
         w = screen.get_width()
         h = screen.get_height()
-        for i in range(4):
+        for i in range(trans[1]):
             self.spriteWheel[i] = pygame.transform.scale(self.spriteWheel[i],(w/12.5,h/12))
         global oldWidth,first_velocity,second_velocity
         self.x = self.x * screen.get_width() / oldWidth
@@ -482,10 +485,12 @@ while running:
             
             screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
             for i in range (4):
-                img=(f"img/background-levels/background-{mapSelected}-{i}.png")
+                img=(f"img/background-levels/background-{mapp[mapSelected]}-{i}.png")
                 bg[mapSelected][i].img = pygame.transform.scale(pygame.image.load(img),(screen.get_width(),screen.get_height()))
                 bg[mapSelected][i].end = screen.get_width()
 
+            print(oldWidth)
+            print(screen.get_width())
             fps = fps * (screen.get_width() / oldWidth + screen.get_height() / oldHeight)
             first_velocity = first_velocity * screen.get_width() / oldWidth
             second_velocity = second_velocity * screen.get_width() / oldWidth
@@ -495,11 +500,12 @@ while running:
                 item[i].y=car[i].y + int(screen.get_height()/50)
                 
                 #resize smoke
-                for j in range(9):
+                for j in range(trans[2]):
                     car[i].spriteSmoke[j] = pygame.transform.scale(car[i].spriteSmoke[j],(screen.get_width()/20,screen.get_height()/20))
 
                 item[i].resize(i)
-                mysbox = resizemysbox(mysbox)
+                for i in range(4):
+                    mysbox[i] = resizemysbox(i)
                 item[i].velocity = car[i].velocity
             oldWidth = screen.get_width()
             oldHeight = screen.get_height()
@@ -538,13 +544,14 @@ while running:
         continue
     
     draw(myscount_img,screen.get_width()/1.05,0)
+
+    #Su dung bua
     if useMys == 1:
-        if myscount > 0:
+        if myscount > 0 and finished[picked_car] == 1:
             picked=random.randint(0,99)
-        useMys = 0
-        if myscount > 0:
+            useMys = 0
             myscount -= 1
-            myscount_img = font.render(str(myscount),True,(0,0,0))
+            myscount_img = font.render(str(myscount),True,(255,255,255))
             myscount_img = pygame.transform.scale(myscount_img,(screen.get_width()/30,screen.get_height()/12))
 
     #items influence
