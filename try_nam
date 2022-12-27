@@ -9,12 +9,7 @@ pygame.init()
 pygame.mixer.music.load('sounds/backgroundmusic.wav')
 pygame.mixer.music.play(-1)
 pygame.mixer.music.set_volume(0.2)
-#set color
-# green = (76,208,56)
-# gray = (100,100,100)
-# red = (200,0,0)
-# yellow = (255,232,0)
-# white = (255,255,255)
+
 color={0:"red", 1:"blue", 2:"yellow", 3:"green", 4:"pink"}
 
 #set screen
@@ -35,10 +30,7 @@ for i in range(4):
     img=pygame.image.load(f"img/mics/mysterybox_{i}.png")
     img=pygame.transform.scale(img,(WIDTH/25,HEIGHT/20))
     mysbox.append(img)
-cheetahIcon= pygame.image.load('img/mics/cheetah.png')
-turtleIcon = pygame.image.load('img/mics/turtle.png')
-flipIcon = pygame.image.load('img/mics/flip.png')
-flipIcon = pygame.transform.scale(flipIcon,(screen.get_width()/25,screen.get_height()/20))
+
 first_velocity = 3
 second_velocity = 4
 oldWidth = screen.get_width()
@@ -64,9 +56,16 @@ myscount_img = font.render(str(myscount),True,(0,0,0))
 myscount_img = pygame.transform.scale(myscount_img,(screen.get_width()/30,screen.get_height()/12))
 picked_car = 2
 
+#function for GAME
+def draw(player_car,x,y):
+    screen.blit(player_car,(x, y))
+def isCollide(a,b,x,y):
+    return (math.sqrt((a-x)*(a-x)+(b-y)*(b-y))<screen.get_width()/12.5)
+
+def distance(a,b,x,y):
+    return math.sqrt((a-x)*(a-x)+(b-y)*(b-y))
 def resizemysbox(mysbox):
-        return pygame.transform.scale(mysbox,(screen.get_width()/25,screen.get_height()/20))
-#Background
+    return pygame.transform.scale(mysbox,(screen.get_width()/25,screen.get_height()/20))
 
 def rand():
     a=random.randint(0,3)
@@ -74,6 +73,7 @@ def rand():
     while a==b:
         b=random.randint(0,3)
     return [a,b]
+
 
 class ITEM :
     def __init__(self,y,velocity):
@@ -193,8 +193,7 @@ class ITEM :
             draw(self.spriteFlip[int(self.curSprite)],self.flipX,self.y-screen.get_height()/12)
         if self.flipX<-screen.get_width()/6 :
             self.checkFlip=0
-            
-            
+                   
     def win(self,idx):
         self.openPortal=1
         self.portalX=0
@@ -297,26 +296,13 @@ class ITEM :
         self.x[0] = self.x[0] * screen.get_width()/ oldWidth
         self.x[1] = self.x[1] * screen.get_width()/ oldWidth
         
-
 class BACKGROUND:
     def __init__(self,img, start,end) :
         self.img=pygame.transform.scale(img,(screen.get_width(),screen.get_height()))
         self.start=start
         self.end=end
         self.car=[]
-#Background Initialization
-bg=[]
-mapp=['city','desert','galaxy','painting','sea']
-for i in range(5):
-    bg.append([])
-    for j in range(4):
-        start,end=0,screen.get_width()  
-        # if j==3:
-        #     end =screen.get_width()/1.1
-        img=(f"img/background-levels/background-{mapp[i]}-{j}.png")
-        bg[i].append(BACKGROUND(pygame.image.load(img),start,end))
 
-#Car
 class CAR:
     def __init__(self, car_y,ratio ,velocity,curRound):
         self.spriteWheel = []
@@ -362,26 +348,38 @@ class CAR:
         global oldWidth,first_velocity,second_velocity
         self.x = self.x * screen.get_width() / oldWidth
         self.y=h/self.ratio
-# Car initialization
+
+#Background INITIALIZATION
+bg=[]
+mapp=['city','desert','galaxy','painting','sea']
+for i in range(5):
+    bg.append([])
+    for j in range(4):
+        start,end=0,screen.get_width()  
+        img=(f"img/background-levels/background-{mapp[i]}-{j}.png")
+        bg[i].append(BACKGROUND(pygame.image.load(img),start,end))
+
+# Car INITIALIZATION
+car=[]
 transportation={
-    0:("formula ones",4,9,"smoke"), # loai phuong tien,so sprite phuong tien, so sprite animation hieu ung
+    0:("formula ones",4,9,"smoke"), # loai phuong tien/so sprite phuong tien/ so sprite animation hieu ung/ten hieu ung
     1:("spaceship",1,7,"nitro")
 }
-transSelected=1
+transSelected=1# Change Transportation here
 r=[2.28,1.83,1.5,1.27,1.12] # ratio cho vo 1 mang de initialize
-car=[]
+
 for i in range (5):
     trans= transportation[transSelected]
     car.append(CAR(HEIGHT,r[i], random.uniform(first_velocity,second_velocity), 0))
     for j in range(trans[1]): # Add animation
-        img=pygame.image.load(f"img/{trans[0]}/{j}_{color[i]}.png")
+        img=pygame.image.load(f"img/{trans[0]}/{j+2}_{color[i]}.png")
         img =pygame.transform.scale(img,(WIDTH/12.5,HEIGHT/12))
         car[i].spriteWheel.append(img)
     for j in range(trans[2]):
         img=pygame.transform.scale(pygame.image.load(f"./img/mics/{trans[3]}_{j}.png"),(screen.get_width()/20,screen.get_height()/20))
         car[i].spriteSmoke.append(img)
 
-# Item initialization
+# Item INITIALIZATION
 item=[]
 for i in range(5):
     item.append(ITEM(car[i].y+int(screen.get_height()/50),car[i].velocity))
@@ -419,15 +417,8 @@ for i in range(5):
         img=pygame.image.load(f"img/mics/lightning_{j}.png")
         img = pygame.transform.scale(img,(screen.get_width()/14,screen.get_height()))
         item[i].spriteLaser.append(img)
-#function for GAME
-def draw(player_car,x,y):
-    screen.blit(player_car,(x, y))
-def isCollide(a,b,x,y):
-    return (math.sqrt((a-x)*(a-x)+(b-y)*(b-y))<screen.get_width()/12.5)
-
-def distance(a,b,x,y):
-    return math.sqrt((a-x)*(a-x)+(b-y)*(b-y))
-
+#######
+#######
 
 #game Loop
 clock = pygame.time.Clock()
@@ -435,8 +426,8 @@ fps = 60
 
 #Initalize
 r=0
-carSelected=0
-mapSelected=2
+carSelected=0 
+mapSelected=3#Change map here
 pressed=0
 winItem=-1
 
@@ -448,7 +439,6 @@ for i in range (5):
 #System Time
 curTime=0
 pivotTime=0
-checkFlip = False
 iCountdown=0
 rank=0
 listRank=[]
@@ -557,7 +547,7 @@ while running:
             myscount_img = font.render(str(myscount),True,(0,0,0))
             myscount_img = pygame.transform.scale(myscount_img,(screen.get_width()/30,screen.get_height()/12))
 
-    #draw items
+    #items influence
 
     for i in range(5):
         #Slower
@@ -597,7 +587,8 @@ while running:
                 item[i].visible[j]=0
                 if picked == 0:
                     picked=random.randint(0,99)
-                    picked=69
+                
+                # picked=69
                 if picked < 25:
                     item[i].slower(i)
                 elif picked < 55:
