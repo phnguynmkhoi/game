@@ -59,6 +59,7 @@ picked_car = 2
 #function for GAME
 def draw(player_car,x,y):
     screen.blit(player_car,(x, y))
+
 def isCollide(a,b,x,y):
     return (math.sqrt((a-x)*(a-x)+(b-y)*(b-y))<screen.get_width()/12.5)
 
@@ -68,7 +69,6 @@ def distance(a,b,x,y):
 def resizemysbox(i):
     img = mysbox[i] 
     return pygame.transform.scale(img,(screen.get_width()/25,screen.get_height()/20))
-#Background
 
 def rand():
     a=random.randint(0,3)
@@ -366,7 +366,7 @@ for i in range(5):
 car=[]
 transportation={
     0:("formula ones",4,9,"smoke"), # loai phuong tien/so sprite phuong tien/ so sprite animation hieu ung/ten hieu ung
-    1:("spaceship",1,7,"nitro")
+    1:("spaceship",1,4,"fire")
 }
 transSelected=1# Change Transportation here
 r=[2.28,1.83,1.5,1.27,1.12] # ratio cho vo 1 mang de initialize
@@ -489,8 +489,6 @@ while running:
                 bg[mapSelected][i].img = pygame.transform.scale(pygame.image.load(img),(screen.get_width(),screen.get_height()))
                 bg[mapSelected][i].end = screen.get_width()
 
-            print(oldWidth)
-            print(screen.get_width())
             fps = fps * (screen.get_width() / oldWidth + screen.get_height() / oldHeight)
             first_velocity = first_velocity * screen.get_width() / oldWidth
             second_velocity = second_velocity * screen.get_width() / oldWidth
@@ -594,7 +592,6 @@ while running:
                 item[i].visible[j]=0
                 if picked == 0:
                     picked=random.randint(0,99)
-                
                 # picked=69
                 if picked < 25:
                     item[i].slower(i)
@@ -613,10 +610,7 @@ while running:
                 else:
                     item[i].setLaser()
                 picked = 0
-            # Show the item picked
-            # if item[i].backToNormal(i) and car[i].curRound==car[carSelected].curRound:
-            #     if (pressed==0 or i!=carSelected) and item[i].name<=1:
-            #         draw(itemImg[item[i].name],car[i].x+screen.get_width()/100,car[i].y-screen.get_height()/22)
+        
     if pressed ==1:
         for i in bg[mapSelected][car[carSelected].curRound].car:
             if i==carSelected :
@@ -638,4 +632,6 @@ while running:
     for i in listRank:
         draw(i[0],screen.get_width()/1.08,screen.get_height()/i[1])
     pygame.display.update()
+
+
 pygame.quit()
