@@ -29,6 +29,7 @@ pygame.display.set_icon(icon)
 arrow = pygame.image.load('img/mics/arrow.png')
 font = pygame.font.Font('./font/Audiowide-Regular.ttf',150)
 fontRank = pygame.font.Font('./font/Audiowide-Regular.ttf',64)
+fontChat = pygame.font.Font('./font/Arial.ttf',15)
 #Mystery Box
 mysbox=[] 
 for i in range(4):
@@ -57,6 +58,26 @@ for i in range(5):
 for i in range(3,0,-1):
     countdown.append(pygame.image.load(f"img/mics/{i}.png"))
 countdown.append(font.render(("Goooo!"),True,(51, 204, 204)))
+#chat
+chatList = ["VN vô địch","Cầm sổ đỏ rồi","đừng thua nữa bán xe rồi","MU vô hang","Arg vô địch","non quá","xin cái tuổi","ez game","nhảy cầu thôi","tạm biệt mọi người","cược nhầm xe rồi","đau lưng quá","nhà mình còn gì đâu"]
+botList = ["Khoi","Nam Android","Huy","Tung","Uong Nam"]
+line = []
+chat = []
+chatTime = 0
+for i in range(5):
+    line.append(" ")
+    chat.append(fontChat.render((" "),True,(255,255,255)))
+def randomChatbox():
+    for i in range(4):
+        line[i]=line[i+1]
+    randomChat = chatList[random.randint(0,12)]
+    randomName = botList[random.randint(0,4)]
+    line[4] = randomName + ": " + randomChat
+    for i in range(5):
+        chat[i] = fontChat.render(line[i],True,(255,255,255))
+def runChat():
+    for i in range(5):
+        draw(chat[i],screen.get_width()/60,screen.get_height()/30+i*screen.get_height()/30)
 
 #myscount
 myscount = 7
@@ -463,10 +484,7 @@ running=True
 while running:
     curTime=pygame.time.get_ticks()
     # print(curTime)
-    clock.tick(fps)     
-    #Events
-    if curTime-pivotTime<1000:
-        print(123)      
+    clock.tick(fps)        
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -550,6 +568,16 @@ while running:
             
         pygame.display.update()
         continue
+    
+    runChat()
+    if chatTime % 5000 == 0:
+        randomChatbox()
+        chatTime+=100
+    else:
+        chatTime+=100
+
+    
+
     
     draw(myscount_img,screen.get_width()/1.05,0)
 
