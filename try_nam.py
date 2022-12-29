@@ -68,12 +68,10 @@ chatTime = 0
 for i in range(5):
     line.append(" ")
     chat.append(fontChat.render((" "),True,(255,255,255)))
-def randomChatbox():
+def randomChatbox(chatInput):
     for i in range(4):
         line[i]=line[i+1]
-    randomChat = chatList[random.randint(0,12)]
-    randomName = botList[random.randint(0,4)]
-    line[4] = randomName + ": " + randomChat
+    line[4] = chatInput
     for i in range(5):
         chat[i] = fontChat.render(line[i],True,(255,255,255))
 def runChat():
@@ -299,7 +297,7 @@ class ITEM :
             img = pygame.transform.scale(img,(screen.get_width()/25,screen.get_height()/20))
             self.spriteStun[j] = img
         for j in range(8):
-            img = pygame.image.load(f"./img/mics/{trans[3]}_{j}.png")
+            img = pygame.image.load(f"./img/mics/nitro_{j}.png")
             img = pygame.transform.scale(img,(screen.get_width()/15,screen.get_height()/20))
             self.spriteBoost[j] = img
         for j in range (1):
@@ -618,7 +616,9 @@ while running:
     
     runChat()
     if chatTime % 5000 == 0:
-        randomChatbox()
+        randomChat = chatList[random.randint(0,12)]
+        randomName = botList[random.randint(0,4)]
+        randomChatbox(randomName+": "+randomChat)
         chatTime+=100
     else:
         chatTime+=100
