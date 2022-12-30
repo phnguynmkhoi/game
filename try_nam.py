@@ -62,21 +62,49 @@ prize.append(pygame.transform.scale(pygame.image.load("img/celebrate/third.png")
 #chat
 chatList = ["VN vô địch","Cầm sổ đỏ rồi","đừng thua nữa bán xe rồi","MU vô hang","Arg vô địch","non quá","xin cái tuổi","ez game","nhảy cầu thôi","tạm biệt mọi người","cược nhầm xe rồi","đau lưng quá","nhà mình còn gì đâu"]
 botList = ["Khoi","Nam Android","Huy","Tung","Uong Nam"]
-line = []
-chat = []
-chatTime = 0
-for i in range(5):
-    line.append(" ")
-    chat.append(fontChat.render((" "),True,(255,255,255)))
-def randomChatbox(chatInput):
-    for i in range(4):
-        line[i]=line[i+1]
-    line[4] = chatInput
-    for i in range(5):
-        chat[i] = fontChat.render(line[i],True,(255,255,255))
-def runChat():
-    for i in range(5):
-        draw(chat[i],screen.get_width()/60,screen.get_height()/30+i*screen.get_height()/30)
+
+class CHAT:
+    def __init__(self):
+        self.chatScript=[]
+        self.chatTime=0
+        self.inputText=""
+        self.onDisplay=True
+        self.activeInput=True
+    def randomChatScript(self):
+        randomChat = chatList[random.randint(0,12)]
+        randomName = botList[random.randint(0,4)]
+        self.chatScript.append(fontChat.render(randomName+": "+randomChat,True,(255,255,255)))
+    def runChat(self):
+        self.chatTime+=50
+        if self.chatTime%5000==0:
+            self.randomChatScript()
+        n=4
+        for i in range(n):
+            j=len(self.chatScript)-i-1
+            if j>=0:
+                draw(self.chatScript[j],screen.get_width()/60,screen.get_height()/30+(n-i)*screen.get_height()/30)
+            self.displayInputChat()
+    def displayInputChat(self):
+        surf=fontChat.render("Chat: "+ self.inputText,True,(255,255,255))
+        draw(surf,screen.get_width()/60,screen.get_height()/30+5*screen.get_height()/30)
+    def pubChat(self):
+        surf=fontChat.render("You: "+self.inputText,True,(255,255,255))
+        self.chatScript.append(surf)
+        self.inputText=""
+#CHAT
+chat = CHAT()
+# for i in range(5):
+#     line.append(" ")
+#     chat.append(fontChat.render((" "),True,(255,255,255)))
+# def randomChatbox(chatInput):
+#     for i in range(4):
+#         line[i]=line[i+1]
+#     line[4] = chatInput
+#     for i in range(5):
+#         chat[i] = fontChat.render(line[i],True,(255,255,255))
+# def runChat():
+    # for i in range(5):
+    #     draw(chat[i],screen.get_width()/60,screen.get_height()/30+i*screen.get_height()/30)
 
 #myscount
 myscount = 7
@@ -518,20 +546,32 @@ while running:
             running = False
             pygame.quit()
             break
+        #Nhap text
+        if event.type==pygame.KEYDOWN:
+            if event.key== pygame.K_BACKSPACE:
+                
+                chat.inputText=chat.inputText[:-1]
+            elif event.key == pygame.K_RETURN:
+                chat.pubChat()
+            else: 
+                chat.inputText+= event.unicode
+        #Het phan nhap Text
         if event.type == pygame.KEYDOWN and pressed==0:
             pressed=1
-            if event.key == pygame.K_SPACE:
-                useMys = 1
+            # if event.key == pygame.K_SPACE:
+            #     useMys = 1
             if event.key==pygame.K_F1:
                 carSelected=0
-            if event.key==pygame.K_F2:
+            elif event.key==pygame.K_F2:
                 carSelected=1
-            if event.key==pygame.K_F3:
+            elif event.key==pygame.K_F3:
                 carSelected=2
-            if event.key==pygame.K_F4:
+            elif event.key==pygame.K_F4:
                 carSelected=3
-            if event.key==pygame.K_F5:
+            elif event.key==pygame.K_F5:
                 carSelected=4
+            else: 
+                pressed=0
         if event.type == pygame.KEYUP and pressed:
             pressed=0
         #resize screen
@@ -569,6 +609,7 @@ while running:
             for i in range(5):
                 rankImg[i] = pygame.transform.scale(rankImg[i],(screen.get_width()/25,screen.get_height()/10))
 
+    
 
     # Celebrate
     if rank==5 : 
@@ -603,6 +644,8 @@ while running:
             if item[i].appRound[j] == car[carSelected].curRound and item[i].visible[j]==1:
                 draw(item[i].img[int(item[i].curBox)%4],item[i].x[j],item[i].y)
                 item[i].curBox+=0.08
+    #CHAT
+    chat.runChat()
 
     if curTime-pivotTime<6000 and rank==0:
         draw(countdownbg,0,(screen.get_height()-screen.get_height()/2)/2)
@@ -613,18 +656,6 @@ while running:
             
         pygame.display.update()
         continue
-    
-    runChat()
-    if chatTime % 5000 == 0:
-        randomChat = chatList[random.randint(0,12)]
-        randomName = botList[random.randint(0,4)]
-        randomChatbox(randomName+": "+randomChat)
-        chatTime+=100
-    else:
-        chatTime+=100
-
-    
-
     
     draw(myscount_img,screen.get_width()/1.05,0)
 
