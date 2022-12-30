@@ -540,6 +540,15 @@ picked = 0
 useMys = 0
 #GAME
 
+#set cursor
+pygame.mouse.set_cursor(*pygame.cursors.arrow)
+
+chatWidthMin = screen.get_width()/18
+chatHeightMin = screen.get_height()/4.9
+chatWidthMax = screen.get_width()/18+screen.get_width()/5
+chatHeightMax = screen.get_height()/4.9+screen.get_height()/35
+chatChecked = 0
+
 
 running=True
 while running:
@@ -552,14 +561,20 @@ while running:
             pygame.quit()
             break
         #Nhap text
-        if event.type==pygame.KEYDOWN:
-            if event.key== pygame.K_BACKSPACE:
-                
-                chat.inputText=chat.inputText[:-1]
-            elif event.key == pygame.K_RETURN:
-                chat.pubChat()
-            else: 
-                chat.inputText+= event.unicode
+        if event.type == pygame.MOUSEBUTTONUP:
+            if (pygame.mouse.get_pos()[0]>=chatWidthMin) and (pygame.mouse.get_pos()[0]<=chatWidthMax) and (pygame.mouse.get_pos()[1]>=chatHeightMin) and (pygame.mouse.get_pos()[1]<=chatHeightMax):
+                chatChecked = 1
+            else:
+                chatChecked = 0
+        if chatChecked == 1:
+            if event.type==pygame.KEYDOWN:
+                if event.key== pygame.K_BACKSPACE:
+                    
+                    chat.inputText=chat.inputText[:-1]
+                elif event.key == pygame.K_RETURN:
+                    chat.pubChat()
+                else: 
+                    chat.inputText+= event.unicode
         #Het phan nhap Text
         if event.type == pygame.KEYDOWN and pressed==0:
             pressed=1
@@ -622,6 +637,7 @@ while running:
 
             oldWidth = screen.get_width()
             oldHeight = screen.get_height()
+
     # Celebrate
     if rank==5 : 
         if curTime-pivotTime>2000:
@@ -643,6 +659,9 @@ while running:
         pygame.display.update()
         continue
     draw(bg[mapSelected][car[carSelected].curRound].img,0,0)
+
+    
+    
     #draw 5 car
     for i in bg[mapSelected][car[carSelected].curRound].car:
         if car[i].x <= bg[mapSelected][car[carSelected].curRound].end: # check finished 
