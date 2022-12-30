@@ -22,9 +22,9 @@ pygame.display.set_caption("Game cua nha cai den tu Chau Au")
 icon = pygame.image.load('img/mics/car.png')
 pygame.display.set_icon(icon)
 arrow = pygame.image.load('img/mics/arrow.png')
-font = pygame.font.Font('./font/Audiowide-Regular.ttf',150)
-fontRank = pygame.font.Font('./font/Audiowide-Regular.ttf',64)
-fontChat = pygame.font.Font('./font/Arial.ttf',15)
+font = pygame.font.Font('./font/Audiowide-Regular.ttf',int(screen.get_width()/6.667))
+fontRank = pygame.font.Font('./font/Audiowide-Regular.ttf',int(screen.get_width()/16))
+fontChat = pygame.font.Font('./font/Arial.ttf',int(screen.get_width()/69))
 #Mystery Box
 mysbox=[] 
 for i in range(4):
@@ -42,8 +42,8 @@ countdownbg.set_alpha(100)
 countdown=[]
 countdown.append(-1)
 bgwin=[]
-bgwin.append(pygame.transform.scale(pygame.image.load("img/celebrate/bg1.jpg"),(WIDTH,HEIGHT)))
-bgwin.append(pygame.transform.scale(pygame.image.load("img/celebrate/bgwin.png"),(WIDTH,HEIGHT)))
+bgwin.append(pygame.transform.scale(pygame.image.load("img/celebrate/bg1.jpg"),(screen.get_width(),screen.get_height())))
+bgwin.append(pygame.transform.scale(pygame.image.load("img/celebrate/bgwin.png"),(screen.get_width(),screen.get_height())))
 #End
 rankImg=[]
 for i in range(5):
@@ -426,6 +426,11 @@ class CELEBRATE:
         for i in range (len(self.crowdImg)):
             self.curSprite+=0.05
             draw(self.crowdImg[int(self.curSprite)%len(self.crowdImg)],self.crowdX,self.crowdY)
+    def resize(self):
+        self.crowdX = self.crowdX * screen.get_width() / oldWidth
+        self.crowdY = self.crowdY * screen.get_height() / oldHeight
+        for i in range(len(self.crowdImg)):
+            self.crowdImg[i] = pygame.transform.scale(self.crowdImg[i],(screen.get_width()/3,screen.get_height()/5))
 
 #Background INITIALIZATION
 bg=[]
@@ -599,8 +604,6 @@ while running:
                 for i in range(4):
                     mysbox[i] = resizemysbox(i)
                 item[i].velocity = car[i].velocity
-            oldWidth = screen.get_width()
-            oldHeight = screen.get_height()
 
             #resize countdown
             countdownbg=pygame.transform.scale(pygame.image.load("img/mics/testbg.png"),(screen.get_width(),screen.get_height()/2)).convert()
@@ -609,8 +612,16 @@ while running:
             for i in range(5):
                 rankImg[i] = pygame.transform.scale(rankImg[i],(screen.get_width()/25,screen.get_height()/10))
 
-    
+            bgwin[0] = pygame.transform.scale(bgwin[0],(screen.get_width(),screen.get_height()))
+            bgwin[1] = pygame.transform.scale(bgwin[1],(screen.get_width(),screen.get_height()))
+            pygame.transform.scale(pygame.image.load("img/celebrate/first.png"),(screen.get_width()/15,screen.get_height()/9))
+            pygame.transform.scale(pygame.image.load("img/celebrate/second.png"),(screen.get_width()/15,screen.get_height()/9))
+            pygame.transform.scale(pygame.image.load("img/celebrate/third.png"),(screen.get_width()/15,screen.get_height()/9))
+            for i in range(len(crowd)):
+                crowd[i].resize()
 
+            oldWidth = screen.get_width()
+            oldHeight = screen.get_height()
     # Celebrate
     if rank==5 : 
         if curTime-pivotTime>2000:
@@ -622,13 +633,13 @@ while running:
                 car[i].ratio=1.7
                 car[i].bigger()
                 car[i].run()
-                draw(car[i].spriteWheel[0],car[i].x,HEIGHT/car[i].ratio)
+                draw(car[i].spriteWheel[0],car[i].x,screen.get_height()/car[i].ratio)
                 if finished[i]<=3:
-                    draw(prize[finished[i]-1],car[i].x+WIDTH/300,HEIGHT/2)
+                    draw(prize[finished[i]-1],car[i].x+screen.get_width()/300,screen.get_height()/2)
             
         else :
             for i in range(5):
-                car[i].x=-100-finished[i]*WIDTH/8
+                car[i].x=-screen.get_width()/10-finished[i]*screen.get_width()/8
         pygame.display.update()
         continue
     draw(bg[mapSelected][car[carSelected].curRound].img,0,0)
