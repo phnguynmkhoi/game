@@ -62,6 +62,7 @@ prize.append(pygame.transform.scale(pygame.image.load("img/celebrate/third.png")
 #chat
 chatList = ["VN vô địch","Cầm sổ đỏ rồi","đừng thua nữa bán xe rồi","MU vô hang","Arg vô địch","non quá","xin cái tuổi","ez game","nhảy cầu thôi","tạm biệt mọi người","cược nhầm xe rồi","đau lưng quá","nhà mình còn gì đâu"]
 botList = ["Khoi","Nam Android","Huy","Tung","Uong Nam"]
+vowel=["á","à","ả","ã","ạ","ă","ắ","ằ","ẳ","ẵ","ặ","â","ấ","ầ","ẩ","ẫ","ậ","é","è","ẻ","ẽ","ẹ","ê","ế","ề","ể","ễ","ệ","ó","ò","ỏ","õ","ọ","ô","ố","ồ","ổ","ỗ","ộ","ơ","ớ","ờ","ở","ỡ","ợ","í","ì","ỉ","ĩ","ị","ú","ù","ủ","ũ","ụ","ư","ứ","ừ","ử","ữ","ự","ý","ỳ","ỷ","ỹ","ỵ","đ"]
 
 class CHAT:
     def __init__(self):
@@ -88,23 +89,12 @@ class CHAT:
         surf=fontChat.render("Chat: "+ self.inputText,True,(255,255,255))
         draw(surf,screen.get_width()/60,screen.get_height()/30+5*screen.get_height()/30)
     def pubChat(self):
-        surf=fontChat.render("You: "+self.inputText,True,(255,255,255))
-        self.chatScript.append(surf)
-        self.inputText=""
+        if self.inputText!="":
+            surf=fontChat.render("You: "+self.inputText,True,(255,255,255))
+            self.chatScript.append(surf)
+            self.inputText=""
 #CHAT
 chat = CHAT()
-# for i in range(5):
-#     line.append(" ")
-#     chat.append(fontChat.render((" "),True,(255,255,255)))
-# def randomChatbox(chatInput):
-#     for i in range(4):
-#         line[i]=line[i+1]
-#     line[4] = chatInput
-#     for i in range(5):
-#         chat[i] = fontChat.render(line[i],True,(255,255,255))
-# def runChat():
-    # for i in range(5):
-    #     draw(chat[i],screen.get_width()/60,screen.get_height()/30+i*screen.get_height()/30)
 
 #myscount
 myscount = 7
@@ -563,18 +553,26 @@ while running:
         #Nhap text
         if event.type == pygame.MOUSEBUTTONUP:
             if (pygame.mouse.get_pos()[0]>=chatWidthMin) and (pygame.mouse.get_pos()[0]<=chatWidthMax) and (pygame.mouse.get_pos()[1]>=chatHeightMin) and (pygame.mouse.get_pos()[1]<=chatHeightMax):
-                chatChecked = 1
+                chat.activeInput = 1
             else:
-                chatChecked = 0
-        if chatChecked == 1:
+                chat.activeInput = 0
+        if chat.activeInput == 1:
+            ok=0
             if event.type==pygame.KEYDOWN:
-                if event.key== pygame.K_BACKSPACE:
+                print (event)
+                for c in vowel:
+                    if event.unicode==c:
+                        chat.inputText=chat.inputText[:-1]
+                        chat.inputText+=event.unicode
+                        ok=1
+                if ok==0:
+                    if event.key==pygame.K_BACKSPACE:
+                        chat.inputText=chat.inputText[:-1]
+                    elif event.key==pygame.K_RETURN:
+                        chat.pubChat()
+                    else:
+                        chat.inputText+= event.unicode
                     
-                    chat.inputText=chat.inputText[:-1]
-                elif event.key == pygame.K_RETURN:
-                    chat.pubChat()
-                else: 
-                    chat.inputText+= event.unicode
         #Het phan nhap Text
         if event.type == pygame.KEYDOWN and pressed==0:
             pressed=1
@@ -764,7 +762,7 @@ while running:
     #check if the car have finish the race
     for i in range (5):
         if car[i].x<=bg[mapSelected][car[i].curRound].end+100 and rank<5:
-            car[i].run()
+            car[i].run
         elif car[i].curRound<3: 
             bg[mapSelected][car[i].curRound].car.remove(i)
             car[i].curRound+=1
