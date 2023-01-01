@@ -437,7 +437,7 @@ transportation={
     0:("formula ones",4,9,"smoke"), # loai phuong tien/so sprite phuong tien/ so sprite animation hieu ung/ten hieu ung
     1:("spaceship",1,4,"fire")
 }
-transSelected=1# Change Transportation here
+transSelected=0# Change Transportation here
 r=[2.28,1.83,1.5,1.27,1.12] # ratio cho vo 1 mang de initialize
 
 for i in range (5):
@@ -649,6 +649,12 @@ while running:
 
     # Celebrate
     if rank==5 :
+        if rotateChecked == 0:
+            for i in range(5):
+                if finished[i] == 1:
+                    for j in range(trans[1]):
+                        car[i].spriteWheel[j] = pygame.transform.rotate(car[i].spriteWheel[j],15)
+            rotateChecked = 1
         if curTime-pivotTime>2000:
             for i in range(len(bgwin)):
                 draw(bgwin[i],0,0)
@@ -678,22 +684,15 @@ while running:
                     textInside = fontRank.render(text_lose,True,(0,0,0))
                 screen.blit(pygame.transform.scale(textInside,(screen.get_width()/4,screen.get_height()/5)),(screen.get_width()/2.7,screen.get_height()/6))
                 celeCount+=1
-                #if celeCount%60<20:
-                #    j = 0
-                #elif celeCount%60<40:
-                #    j = 1
-                #else:
-                #    j = 2
-                #for i in range(5):
-                #    if finished[i] == 1:
-                #        draw(cele[j],car[i].x+screen.get_width()/18,car[i].y+screen.get_width()/25)
-            print(celeCount)
-            if curTime%100==0:
+                if celeCount%30<10:
+                    j = 0
+                elif celeCount%30<20:
+                    j = 1
+                else:
+                    j = 2
                 for i in range(5):
                     if finished[i] == 1:
-                        for j in range(trans[1]):
-                            car[i].spriteWheel[j] = pygame.transform.rotate(car[i].spriteWheel[j],60)
-                            car[i].spriteWheel[j] = pygame.transform.scale(car[i].spriteWheel[j],(screen.get_width()/12.5,screen.get_height()/12))
+                        draw(cele[j],car[i].x+screen.get_width()/18,car[i].y+screen.get_width()/25)
 
         else :
             for i in range(5):
