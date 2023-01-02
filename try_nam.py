@@ -102,7 +102,7 @@ class CHAT:
         draw(surf,screen.get_width()/60,screen.get_height()/30+5*screen.get_height()/30)
     def pubChat(self):
         if self.inputText!="":
-            surf=fontChat.render(name_display[picked_car] + ": "+self.inputText,True,(115,147,179))
+            surf=fontChat.render("You: "+self.inputText,True,(115,147,179))
             self.chatScript.append(surf)
             self.inputText=""
 #CHAT
