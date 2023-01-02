@@ -551,6 +551,7 @@ buffEffect = 1
 removeEffect = 1
 mysteryBox = 1
 runRemoveEffect = 0
+useMys = 0
 store = STOREEFFECT(buffSpeed, buffEffect, removeEffect, mysteryBox)
 if buffSpeed == 1:
     car[picked_car].velocity*=1.2
@@ -642,7 +643,11 @@ while running:
                         chat.pubChat()
                     else:
                         chat.inputText+= event.unicode
-                    
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE and mysteryBox == 1:
+                useMys = 1
+                store.mysteryBox = 0
+
         #Het phan nhap Text
         if event.type == pygame.KEYDOWN and pressed==0:
             pressed=1
@@ -819,10 +824,12 @@ while running:
     #Check collision
     for i in range (5):
         for j in range(2):
-            if (item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]) or (picked != -1 and i == picked_car):
-                item[i].visible[j]=0
-                if picked == -1:
-                    picked=random.randint(0,99)
+            if (item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]) or (useMys == 1 and i == picked_car):
+                if i != picked_car or useMys == 0:
+                    item[i].visible[j]=0
+                if i == picked_car and useMys == 1:
+                    useMys = 0
+                picked=random.randint(0,99)
                 #picked =26
                 if picked < 25:
                     if i == picked_car:
@@ -869,7 +876,6 @@ while running:
                             runRemoveEffect = 1
                     else:
                         item[i].setLaser()
-                picked = -1
         
     if pressed ==1:
         for i in bg[mapSelected][car[carSelected].curRound].car:
