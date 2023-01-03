@@ -20,8 +20,9 @@ rank=0
 listRank=[]
 finished=[0,0,0,0,0]
 picked = -1
-picked_car = 2
-rotateChecked = 1
+pickedCar = 2
+rotateChecked = 0
+rotateCount = 0
 
 #set screen
 WIDTH=1024
@@ -133,8 +134,8 @@ class STOREEFFECT:
             draw(effectDisplay[i],screen.get_width()-screen.get_width()/15*(i+1),screen.get_height()/45)
     def drawRemove(self):
         self.curTime+=1
-        if self.curTime<=80:
-            draw(pygame.transform.scale(pygame.image.load("./Image/Store/eff/3.png"),(screen.get_width()/30,screen.get_height()/20)),car[picked_car].x,car[picked_car].y-screen.get_height()/20)
+        if self.curTime<=80 and car[carSelected].curRound == car[pickedCar].curRound:
+            draw(pygame.transform.scale(pygame.image.load("./Image/Store/eff/3.png"),(screen.get_width()/30,screen.get_height()/20)),car[pickedCar].x,car[pickedCar].y-screen.get_height()/20)
 #CHAT
 chat = CHAT()
 
@@ -209,8 +210,8 @@ class ITEM :
         self.name = 0
         self.duration=1000 #Duration of an item
         car[i].velocity=car[i].velocity*2
-        if i == picked_car and store.buffEffect == 1:
-            car[picked_car].velocity = car[picked_car].velocity * 1.5
+        if i == pickedCar and store.buffEffect == 1:
+            car[pickedCar].velocity = car[pickedCar].velocity * 1.5
         self.pivotTime= pygame.time.get_ticks()
         self.boost=1
         self.curSprite=0
@@ -221,8 +222,8 @@ class ITEM :
         if curTime- self.pivotTime> self.duration:
             self.boost=0
             car[idx].velocity/=2
-            if idx == picked_car and store.buffEffect == 1:
-                car[picked_car].velocity = car[picked_car].velocity / 1.5
+            if idx == pickedCar and store.buffEffect == 1:
+                car[pickedCar].velocity = car[pickedCar].velocity / 1.5
         
     def setLaser(self):
         self.curSprite=0    
@@ -339,7 +340,7 @@ class ITEM :
 
     def flash(self,idx):
         car[idx].x+=screen.get_width()/6
-        if idx == picked_car and buffEffect == 1:
+        if idx == pickedCar and buffEffect == 1:
             car[idx].x*=1.2
         car[idx].y=-1000
         self.curSprite=0
@@ -485,7 +486,7 @@ transportation={
     4:("motorcycles",3,9,"smoke")
 }
 carName = ["Khoi","Nam","Huy","Tung","Android"]
-transSelected=2# Change Transportation here
+transSelected=0# Change Transportation here
 r=[2.28,1.83,1.5,1.27,1.12] # ratio cho vo 1 mang de initialize
 
 for i in range (5):
@@ -547,14 +548,15 @@ for i in range(5):
 
 #store item initialization
 buffSpeed = 0
-buffEffect = 1
-removeEffect = 1
+buffEffect = 0
+removeEffect = 0
 mysteryBox = 1
 runRemoveEffect = 0
+countdownChecked = 0
 useMys = 0
 store = STOREEFFECT(buffSpeed, buffEffect, removeEffect, mysteryBox)
 if buffSpeed == 1:
-    car[picked_car].velocity*=1.2
+    car[pickedCar].velocity*=1.2
 
 #when choose the right car
 text_lose = "YOU LOSE"
@@ -593,13 +595,17 @@ for i in range (5):
 
 #GAME
 
+#test game
+#for i in range(5):
+#    car[i].velocity = 1000
+
 #player car
-name_display = []
+nameDisplay = []
 for i in range(5):
-    if i == picked_car:
-        name_display.append(fontName.render(carName[i],True,(0,255,255)))
+    if i == pickedCar:
+        nameDisplay.append(fontName.render(carName[i],True,(0,255,255)))
     else:
-        name_display.append(fontName.render(carName[i],True,(255,255,255)))
+        nameDisplay.append(fontName.render(carName[i],True,(255,255,255)))
 
 
 #set cursor
@@ -644,7 +650,7 @@ while running:
                     else:
                         chat.inputText+= event.unicode
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE and mysteryBox == 1:
+            if event.key == pygame.K_SPACE and store.mysteryBox == 1 and countdownChecked == 1:
                 useMys = 1
                 store.mysteryBox = 0
 
@@ -709,15 +715,31 @@ while running:
 
             oldWidth = screen.get_width()
             oldHeight = screen.get_height()
-
+    print(rank)
     # Celebrate
     if rank==5 :
         if rotateChecked == 0:
             for i in range(5):
                 if finished[i] == 1:
-                    for j in range(trans[1]):
-                        car[i].spriteWheel[j] = pygame.transform.rotate(car[i].spriteWheel[j],15)
-            rotateChecked = 1
+                    winTrans = transportation[transSelected]
+                    img = pygame.image.load(f"img/{winTrans[0]}/0_{color[i]}.png")
+                    img = pygame.transform.scale(img,(screen.get_width()/12.5,screen.get_height()/12))
+                    img = pygame.transform.rotate(img,2*rotateCount)
+                    car[i].spriteWheel[0] = img
+            rotateCount+=1
+            if rotateCount >= 5:
+                rotateChecked = 1
+        else:
+            for i in range(5):
+                if finished[i] == 1:
+                    winTrans = transportation[transSelected]
+                    img = pygame.image.load(f"img/{winTrans[0]}/0_{color[i]}.png")
+                    img = pygame.transform.scale(img,(screen.get_width()/12.5,screen.get_height()/12))
+                    img = pygame.transform.rotate(img,2*rotateCount)
+                    car[i].spriteWheel[0] = img
+            rotateCount-=1
+            if rotateCount <= -5:
+                rotateChecked = 0
         if curTime-pivotTime>2000:
             for i in range(len(bgwin)):
                 draw(bgwin[i],0,0)
@@ -730,7 +752,7 @@ while running:
                 draw(car[i].spriteWheel[0],car[i].x,screen.get_height()/car[i].ratio)
                 if finished[i]<=3:
                     draw(prize[finished[i]-1],car[i].x+screen.get_width()/300,screen.get_height()/2)
-            if finished[picked_car]==1:
+            if finished[pickedCar]==1:
                 if curTime%1000<333:
                     textInside = fontRank.render(text_win,True,(220,20,60))
                 elif curTime%1000<=667:
@@ -752,6 +774,7 @@ while running:
                 car[i].x=-screen.get_width()/10-finished[i]*screen.get_width()/8
         pygame.display.update()
         continue
+    
     draw(bg[mapSelected][car[carSelected].curRound].img,0,0)   
 
     #display store effect
@@ -762,7 +785,7 @@ while running:
 
     for i in range(5):
         if car[i].curRound == car[carSelected].curRound and (i!=carSelected or pressed == 0):
-            draw(name_display[i],car[i].x+screen.get_width()/30,car[i].y-screen.get_height()/35)
+            draw(nameDisplay[i],car[i].x+screen.get_width()/30,car[i].y-screen.get_height()/35)
 
     #draw 5 car
     for i in bg[mapSelected][car[carSelected].curRound].car:
@@ -785,10 +808,11 @@ while running:
         if iCountdown>0:
             draw(countdown[iCountdown],
             (screen.get_width()-countdown[iCountdown].get_width())/2,(screen.get_height()-screen.get_height()/5)/2)
-            
         pygame.display.update()
         continue
-    
+    else: 
+        countdownChecked = 1
+        
     #items influence
     for i in range(5):
         #Slower
@@ -824,15 +848,15 @@ while running:
     #Check collision
     for i in range (5):
         for j in range(2):
-            if (item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]) or (useMys == 1 and i == picked_car):
-                if i != picked_car or useMys == 0:
+            if (item[i].appRound[j] == car[i].curRound and isCollide(car[i].x,car[i].y,item[i].x[j],item[i].y) and item[i].visible[j]) or (useMys == 1 and i == pickedCar):
+                if i != pickedCar or useMys == 0:
                     item[i].visible[j]=0
-                if i == picked_car and useMys == 1:
+                if i == pickedCar and useMys == 1:
                     useMys = 0
                 picked=random.randint(0,99)
                 #picked =26
                 if picked < 25:
-                    if i == picked_car:
+                    if i == pickedCar:
                         if store.removeEffect == 0:
                             item[i].slower(i)
                         else:
@@ -843,7 +867,7 @@ while running:
                 elif picked < 55:
                     item[i].faster(i)
                 elif picked < 70:
-                    if i == picked_car:
+                    if i == pickedCar:
                         if store.removeEffect == 0:
                             item[i].flip()
                         else:
@@ -855,7 +879,7 @@ while running:
                     item[i].win(i)
                     item[i].portalX=car[i].x+screen.get_width()/5
                 elif picked<=79:
-                    if i == picked_car:
+                    if i == pickedCar:
                         if store.removeEffect == 0:
                             item[i].lose(i)
                             item[i].portalX=car[i].x+screen.get_width()/5
@@ -868,7 +892,7 @@ while running:
                 elif picked<=91 :
                     item[i].flash(i)
                 else:
-                    if i == picked_car:
+                    if i == pickedCar:
                         if store.removeEffect == 0:
                             item[i].setLaser()
                         else:
