@@ -63,7 +63,7 @@ tokenizer.fit_on_texts(word_reviews_input)
 sequences_input = tokenizer.texts_to_sequences(word_reviews_input)
 data_input = pad_sequences(sequences_input, maxlen=MAX_SEQUENCE_LENGTH)
 
-cnn_model = keras.models.load_model("AI_3.h5")
+cnn_model = keras.models.load_model(".\AI (main)\AI_3.h5")
 prediction = cnn_model.predict(data_input)
 
 for i in range (0,5):
