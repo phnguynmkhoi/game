@@ -19,7 +19,6 @@ iCountdown=0
 rank=0
 listRank=[]
 finished=[0,0,0,0,0]
-picked = -1
 pickedCar = 2
 rotateChecked = 0
 rotateCount = 0
@@ -42,7 +41,7 @@ fontName = pygame.font.Font('./font/Arial.ttf',int(screen.get_width()/70))
 mysbox=[] 
 for i in range(4):
     img=pygame.image.load(f"img/mics/mysterybox_{i}.png")
-    img=pygame.transform.scale(img,(WIDTH/25,HEIGHT/20))
+    img=pygame.transform.smoothscale(img,(WIDTH/25,HEIGHT/20))
     mysbox.append(img)
 
 first_velocity = 3
@@ -50,28 +49,28 @@ second_velocity = 4
 oldWidth = screen.get_width()
 oldHeight = screen.get_height()
 #Countdown
-countdownbg=pygame.transform.scale(pygame.image.load("img/mics/testbg.png"),(screen.get_width(),screen.get_height()/2)).convert()
+countdownbg=pygame.transform.smoothscale(pygame.image.load("img/mics/testbg.png"),(screen.get_width(),screen.get_height()/2)).convert()
 countdownbg.set_alpha(100)
 countdown=[]
 countdown.append(-1)
 bgwin=[]
-bgwin.append(pygame.transform.scale(pygame.image.load("img/celebrate/bg1.jpg"),(screen.get_width(),screen.get_height())))
-bgwin.append(pygame.transform.scale(pygame.image.load("img/celebrate/bgwin.png"),(screen.get_width(),screen.get_height())))
+bgwin.append(pygame.transform.smoothscale(pygame.image.load("img/celebrate/bg1.jpg"),(screen.get_width(),screen.get_height())))
+bgwin.append(pygame.transform.smoothscale(pygame.image.load("img/celebrate/bgwin.png"),(screen.get_width(),screen.get_height())))
 #End
 rankImg=[]
 for i in range(5):
     rankImg.append(fontRank.render(f"{i+1}",True,(51, 204, 204)))
 for i in range(5):
-    rankImg[i] = pygame.transform.scale(rankImg[i],(screen.get_width()/25,screen.get_height()/10))
+    rankImg[i] = pygame.transform.smoothscale(rankImg[i],(screen.get_width()/25,screen.get_height()/10))
 for i in range(3,0,-1):
     countdown.append(pygame.image.load(f"img/mics/{i}.png"))
 countdown.append(font.render(("Goooo!"),True,(51, 204, 204)))
 
 #Trophy
 prize=[]
-prize.append(pygame.transform.scale(pygame.image.load("img/celebrate/first.png"),(WIDTH/15,HEIGHT/9)))
-prize.append(pygame.transform.scale(pygame.image.load("img/celebrate/second.png"),(WIDTH/15,HEIGHT/9)))
-prize.append(pygame.transform.scale(pygame.image.load("img/celebrate/third.png"),(WIDTH/15,HEIGHT/9)))
+prize.append(pygame.transform.smoothscale(pygame.image.load("img/celebrate/first.png"),(WIDTH/15,HEIGHT/9)))
+prize.append(pygame.transform.smoothscale(pygame.image.load("img/celebrate/second.png"),(WIDTH/15,HEIGHT/9)))
+prize.append(pygame.transform.smoothscale(pygame.image.load("img/celebrate/third.png"),(WIDTH/15,HEIGHT/9)))
 #chat
 chatList = ["VN vô địch","Cầm sổ đỏ rồi","đừng thua nữa bán xe rồi","MU vô hang","Arg vô địch","non quá","xin cái tuổi","ez game","nhảy cầu thôi","tạm biệt mọi người","cược nhầm xe rồi","đau lưng quá","nhà mình còn gì đâu"]
 botList = ["Khoi","Nam Android","Huy","Tung","Uong Nam"]
@@ -125,23 +124,23 @@ class STOREEFFECT:
         effectDisplay = []
         if self.buffSpeed == 1:
             img = pygame.image.load("./Image/Store/eff/1.png")
-            effectDisplay.append(pygame.transform.scale(img,(screen.get_width()/18,screen.get_height()/10)))
+            effectDisplay.append(pygame.transform.smoothscale(img,(screen.get_width()/18,screen.get_height()/10)))
         if self.buffEffect == 1:
             img = pygame.image.load("./Image/Store/eff/2.png")
-            effectDisplay.append(pygame.transform.scale(img,(screen.get_width()/18,screen.get_height()/10)))
+            effectDisplay.append(pygame.transform.smoothscale(img,(screen.get_width()/18,screen.get_height()/10)))
         if self.removeEffect == 1:
             img = pygame.image.load("./Image/Store/eff/3.png")
-            effectDisplay.append(pygame.transform.scale(img,(screen.get_width()/18,screen.get_height()/10)))
+            effectDisplay.append(pygame.transform.smoothscale(img,(screen.get_width()/18,screen.get_height()/10)))
         if self.mysteryBox == 1:
             img = pygame.image.load("./Image/Store/eff/4.png")
-            effectDisplay.append(pygame.transform.scale(img,(screen.get_width()/18,screen.get_height()/10)))
+            effectDisplay.append(pygame.transform.smoothscale(img,(screen.get_width()/18,screen.get_height()/10)))
 
         for i in range(len(effectDisplay)):
             draw(effectDisplay[i],screen.get_width()-screen.get_width()/15*(i+1),screen.get_height()/45)
     def drawRemove(self):
         self.curTime+=1
         if self.curTime<=80 and car[carSelected].curRound == car[pickedCar].curRound:
-            draw(pygame.transform.scale(pygame.image.load("./Image/Store/eff/3.png"),(screen.get_width()/30,screen.get_height()/20)),car[pickedCar].x,car[pickedCar].y-screen.get_height()/20)
+            draw(pygame.transform.smoothscale(pygame.image.load("./Image/Store/eff/3.png"),(screen.get_width()/30,screen.get_height()/20)),car[pickedCar].x,car[pickedCar].y-screen.get_height()/20)
 #CHAT
 chat = CHAT()
 
@@ -157,7 +156,7 @@ def distance(a,b,x,y):
 
 def resizemysbox(i):
     img = mysbox[i] 
-    return pygame.transform.scale(img,(screen.get_width()/25,screen.get_height()/20))
+    return pygame.transform.smoothscale(img,(screen.get_width()/25,screen.get_height()/20))
 
 def rand():
     a=random.randint(0,3)
@@ -362,42 +361,42 @@ class ITEM :
     def resize(self,i):
         for j in range(4):
             img = pygame.image.load(f"img/mics/stun_{j}.png")
-            img = pygame.transform.scale(img,(screen.get_width()/25,screen.get_height()/20))
+            img = pygame.transform.smoothscale(img,(screen.get_width()/25,screen.get_height()/20))
             self.spriteStun[j] = img
         for j in range(8):
             img = pygame.image.load(f"./img/mics/nitro_{j}.png")
-            img = pygame.transform.scale(img,(screen.get_width()/15,screen.get_height()/20))
+            img = pygame.transform.smoothscale(img,(screen.get_width()/15,screen.get_height()/20))
             self.spriteBoost[j] = img
         for j in range (1):
             img=pygame.image.load(f"img/mics/turtle.png")
-            img = pygame.transform.scale(img, (screen.get_width()/18,screen.get_height()/15))
+            img = pygame.transform.smoothscale(img, (screen.get_width()/18,screen.get_height()/15))
             self.spriteSlow[j] = img
         for j in range(8):
             img=pygame.image.load(f"img/mics/portal_{j}.png")
-            img = pygame.transform.scale(img,(screen.get_width()/18,screen.get_height()/8))
+            img = pygame.transform.smoothscale(img,(screen.get_width()/18,screen.get_height()/8))
             self.spriteWin[j] = img
         for j in range(5):
             img=pygame.image.load(f"img/mics/flash_{j}.png")
-            img = pygame.transform.scale(img,(screen.get_width()/7,screen.get_height()/7))
+            img = pygame.transform.smoothscale(img,(screen.get_width()/7,screen.get_height()/7))
             self.spriteFlash[j] = img
         for j in range(8):
             img=pygame.image.load(f"img/mics/portal_lose_{j}.png")
-            img = pygame.transform.scale(img,(screen.get_width()/18,screen.get_height()/8))
+            img = pygame.transform.smoothscale(img,(screen.get_width()/18,screen.get_height()/8))
             self.spriteLose[j] = img
         for j in range(6):
             img=pygame.image.load(f"img/mics/flip_{j}.png")
-            img = pygame.transform.scale(img, (screen.get_width()/20,screen.get_height()/6))
+            img = pygame.transform.smoothscale(img, (screen.get_width()/20,screen.get_height()/6))
             self.spriteFlip[j] = img
         for j in range(5):
             img=pygame.image.load(f"img/mics/lightning_{j}.png")
-            img = pygame.transform.scale(img,(screen.get_width()/14,screen.get_height()))
+            img = pygame.transform.smoothscale(img,(screen.get_width()/14,screen.get_height()))
             self.spriteLaser[j] = img
         self.x[0] = self.x[0] * screen.get_width()/ oldWidth
         self.x[1] = self.x[1] * screen.get_width()/ oldWidth
         
 class BACKGROUND:
     def __init__(self,img, start,end,win='') :
-        self.img=pygame.transform.scale(img,(screen.get_width(),screen.get_height()))
+        self.img=pygame.transform.smoothscale(img,(screen.get_width(),screen.get_height()))
         self.winBackground=win
         self.start=start
         self.end=end
@@ -448,15 +447,17 @@ class CAR:
     def resize(self):
         w = screen.get_width()
         h = screen.get_height()
-        for i in range(trans[1]):
-            self.spriteWheel[i] = pygame.transform.scale(self.spriteWheel[i],(w/12.5,h/12))
+        #print(transSelected)
+        print(len(self.spriteWheel))
+        for i in range(len(self.spriteWheel)):
+            self.spriteWheel[i] = pygame.transform.smoothscale(self.spriteWheel[i],(w/12.5,h/12))
         global oldWidth,first_velocity,second_velocity
         self.x = self.x * screen.get_width() / oldWidth
         self.y=h/self.ratio
 
     def bigger(self):
         for i in range(len(self.spriteWheel)):
-            self.spriteWheel[i]=pygame.transform.scale( self.spriteWheel[i],(WIDTH/9,HEIGHT/7))
+            self.spriteWheel[i]=pygame.transform.smoothscale( self.spriteWheel[i],(WIDTH/9,HEIGHT/7))
 class CELEBRATE:
     def __init__(self,x,y) :
         self.crowdImg=[]
@@ -470,7 +471,7 @@ class CELEBRATE:
         self.crowdX = self.crowdX * screen.get_width() / oldWidth
         self.crowdY = self.crowdY * screen.get_height() / oldHeight
         for i in range(len(self.crowdImg)):
-            self.crowdImg[i] = pygame.transform.scale(self.crowdImg[i],(screen.get_width()/3,screen.get_height()/5))
+            self.crowdImg[i] = pygame.transform.smoothscale(self.crowdImg[i],(screen.get_width()/3,screen.get_height()/5))
 
 #Background INITIALIZATION
 bg=[]
@@ -492,7 +493,7 @@ transportation={
     4:("motorcycles",3,9,"smoke")
 }
 carName = ["Android","Nam","Khoi","Tung","Huy"]
-transSelected=0# Change Transportation here
+transSelected=2# Change Transportation here
 r=[2.28,1.83,1.5,1.27,1.12] # ratio cho vo 1 mang de initialize
 
 for i in range (5):
@@ -501,18 +502,18 @@ for i in range (5):
     if transSelected == 4 or transSelected == 1:
         for j in range(trans[1]): # Add animation
             img=pygame.image.load(f"img/{trans[0]}/{j}_{color[i]}.png")
-            img =pygame.transform.scale(img,(WIDTH/12.5,HEIGHT/12))
+            img =pygame.transform.smoothscale(img,(WIDTH/12.5,HEIGHT/12))
             car[i].spriteWheel.append(img)
     else:
-        print('True')
         for j in range(trans[1]-1,0,-1): # Add animation
             img=pygame.image.load(f"img/{trans[0]}/{j}_{color[i]}.png")
-            img =pygame.transform.scale(img,(WIDTH/12.5,HEIGHT/12))
+            img =pygame.transform.smoothscale(img,(WIDTH/12.5,HEIGHT/12))
             car[i].spriteWheel.append(img)
     for j in range(trans[2]):
-        img=pygame.transform.scale(pygame.image.load(f"./img/mics/{trans[3]}_{j}.png"),(screen.get_width()/20,screen.get_height()/20))
+        img=pygame.transform.smoothscale(pygame.image.load(f"./img/mics/{trans[3]}_{j}.png"),(screen.get_width()/20,screen.get_height()/20))
         car[i].spriteSmoke.append(img)
 
+print(len(car[0].spriteWheel))
 # Item INITIALIZATION
 item=[]
 for i in range(5):
@@ -521,35 +522,35 @@ for i in range(5):
 for i in range(5):
     for j in range(4):
         img = pygame.image.load(f"img/mics/stun_{j}.png")
-        img = pygame.transform.scale(img,(screen.get_width()/25,screen.get_height()/20))
+        img = pygame.transform.smoothscale(img,(screen.get_width()/25,screen.get_height()/20))
         item[i].spriteStun.append(img)
     for j in range(8):
         img = pygame.image.load(f"img/mics/nitro_{j}.png")
-        img = pygame.transform.scale(img,(screen.get_width()/15,screen.get_height()/20))
+        img = pygame.transform.smoothscale(img,(screen.get_width()/15,screen.get_height()/20))
         item[i].spriteBoost.append(img)
     for j in range (1):
         img=pygame.image.load(f"img/mics/turtle.png")
-        img = pygame.transform.scale(img, (screen.get_width()/18,screen.get_height()/15))
+        img = pygame.transform.smoothscale(img, (screen.get_width()/18,screen.get_height()/15))
         item[i].spriteSlow.append(img)
     for j in range(8):
         img=pygame.image.load(f"img/mics/portal_{j}.png")
-        img = pygame.transform.scale(img,(screen.get_width()/18,screen.get_height()/8))
+        img = pygame.transform.smoothscale(img,(screen.get_width()/18,screen.get_height()/8))
         item[i].spriteWin.append(img)
     for j in range(5):
         img=pygame.image.load(f"img/mics/flash_{j}.png")
-        img = pygame.transform.scale(img,(screen.get_width()/7,screen.get_height()/7))
+        img = pygame.transform.smoothscale(img,(screen.get_width()/7,screen.get_height()/7))
         item[i].spriteFlash.append(img)
     for j in range(8):
         img=pygame.image.load(f"img/mics/portal_lose_{j}.png")
-        img = pygame.transform.scale(img,(screen.get_width()/18,screen.get_height()/8))
+        img = pygame.transform.smoothscale(img,(screen.get_width()/18,screen.get_height()/8))
         item[i].spriteLose.append(img)
     for j in range(6):
         img=pygame.image.load(f"img/mics/flip_{j}.png")
-        img = pygame.transform.scale(img, (screen.get_width()/20,screen.get_height()/5))
+        img = pygame.transform.smoothscale(img, (screen.get_width()/20,screen.get_height()/5))
         item[i].spriteFlip.append(img)
     for j in range(5):
         img=pygame.image.load(f"img/mics/lightning_{j}.png")
-        img = pygame.transform.scale(img,(screen.get_width()/14,screen.get_height()))
+        img = pygame.transform.smoothscale(img,(screen.get_width()/14,screen.get_height()))
         item[i].spriteLaser.append(img)
 
 #store item initialization
@@ -574,7 +575,7 @@ for i in range(5):
     crowd.append(CELEBRATE(10+i*screen.get_width()/5,screen.get_height()/3))
     for j in range(2):
         img=pygame.image.load(f"img/celebrate/crowd{i%2}_{j}.png")
-        img=pygame.transform.scale(img,(screen.get_width()/3,screen.get_height()/5))
+        img=pygame.transform.smoothscale(img,(screen.get_width()/3,screen.get_height()/5))
         crowd[i].crowdImg.append(img)
 
 #######
@@ -684,20 +685,24 @@ while running:
             screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
             for i in range (4):
                 img=(f"img/background-levels/background-{mapp[mapSelected]}-{i}.png")
-                bg[mapSelected][i].img = pygame.transform.scale(pygame.image.load(img),(screen.get_width(),screen.get_height()))
+                bg[mapSelected][i].img = pygame.transform.smoothscale(pygame.image.load(img),(screen.get_width(),screen.get_height()))
                 bg[mapSelected][i].end = screen.get_width()
 
             fps = fps * (screen.get_width() / oldWidth + screen.get_height() / oldHeight)
             first_velocity = first_velocity * screen.get_width() / oldWidth
             second_velocity = second_velocity * screen.get_width() / oldWidth
             for i in range(5):
+                #print(i)
+                #print(len(car[i].spriteWheel))
+                #print(" ")
                 car[i].resize()
+                print(" ")
                 car[i].velocity = car[i].velocity * screen.get_width() / oldWidth
                 item[i].y=car[i].y + int(screen.get_height()/50)
                 
                 #resize smoke
                 for j in range(trans[2]):
-                    car[i].spriteSmoke[j] = pygame.transform.scale(car[i].spriteSmoke[j],(screen.get_width()/20,screen.get_height()/20))
+                    car[i].spriteSmoke[j] = pygame.transform.smoothscale(car[i].spriteSmoke[j],(screen.get_width()/20,screen.get_height()/20))
 
                 item[i].resize(i)
                 for i in range(4):
@@ -705,23 +710,22 @@ while running:
                 item[i].velocity = car[i].velocity
 
             #resize countdown
-            countdownbg=pygame.transform.scale(pygame.image.load("img/mics/testbg.png"),(screen.get_width(),screen.get_height()/2)).convert()
+            countdownbg=pygame.transform.smoothscale(pygame.image.load("img/mics/testbg.png"),(screen.get_width(),screen.get_height()/2)).convert()
             countdownbg.set_alpha(200)    
             #resize rank
             for i in range(5):
-                rankImg[i] = pygame.transform.scale(rankImg[i],(screen.get_width()/25,screen.get_height()/10))
+                rankImg[i] = pygame.transform.smoothscale(rankImg[i],(screen.get_width()/25,screen.get_height()/10))
 
-            bgwin[0] = pygame.transform.scale(bgwin[0],(screen.get_width(),screen.get_height()))
-            bgwin[1] = pygame.transform.scale(bgwin[1],(screen.get_width(),screen.get_height()))
-            pygame.transform.scale(pygame.image.load("img/celebrate/first.png"),(screen.get_width()/15,screen.get_height()/9))
-            pygame.transform.scale(pygame.image.load("img/celebrate/second.png"),(screen.get_width()/15,screen.get_height()/9))
-            pygame.transform.scale(pygame.image.load("img/celebrate/third.png"),(screen.get_width()/15,screen.get_height()/9))
+            bgwin[0] = pygame.transform.smoothscale(bgwin[0],(screen.get_width(),screen.get_height()))
+            bgwin[1] = pygame.transform.smoothscale(bgwin[1],(screen.get_width(),screen.get_height()))
+            pygame.transform.smoothscale(pygame.image.load("img/celebrate/first.png"),(screen.get_width()/15,screen.get_height()/9))
+            pygame.transform.smoothscale(pygame.image.load("img/celebrate/second.png"),(screen.get_width()/15,screen.get_height()/9))
+            pygame.transform.smoothscale(pygame.image.load("img/celebrate/third.png"),(screen.get_width()/15,screen.get_height()/9))
             for i in range(len(crowd)):
                 crowd[i].resize()
 
             oldWidth = screen.get_width()
             oldHeight = screen.get_height()
-    print(rank)
     # Celebrate
     if rank==5 :
         if rotateChecked == 0:
@@ -729,7 +733,7 @@ while running:
                 if finished[i] == 1:
                     winTrans = transportation[transSelected]
                     img = pygame.image.load(f"img/{winTrans[0]}/0_{color[i]}.png")
-                    img = pygame.transform.scale(img,(screen.get_width()/12.5,screen.get_height()/12))
+                    img = pygame.transform.smoothscale(img,(screen.get_width()/12.5,screen.get_height()/12))
                     img = pygame.transform.rotate(img,2*rotateCount)
                     car[i].spriteWheel[0] = img
             rotateCount+=1
@@ -740,7 +744,7 @@ while running:
                 if finished[i] == 1:
                     winTrans = transportation[transSelected]
                     img = pygame.image.load(f"img/{winTrans[0]}/0_{color[i]}.png")
-                    img = pygame.transform.scale(img,(screen.get_width()/12.5,screen.get_height()/12))
+                    img = pygame.transform.smoothscale(img,(screen.get_width()/12.5,screen.get_height()/12))
                     img = pygame.transform.rotate(img,2*rotateCount)
                     car[i].spriteWheel[0] = img
             rotateCount-=1
@@ -765,7 +769,7 @@ while running:
                     textInside = fontRank.render(text_win,True,(255,255,255))
                 else: 
                     textInside = fontRank.render(text_win,True,(0,0,0))
-                screen.blit(pygame.transform.scale(textInside,(screen.get_width()/4,screen.get_height()/5)),(screen.get_width()/2.7,screen.get_height()/6))
+                screen.blit(pygame.transform.smoothscale(textInside,(screen.get_width()/4,screen.get_height()/5)),(screen.get_width()/2.7,screen.get_height()/6))
             else:
                 if curTime%1000<333:
                     textInside = fontRank.render(text_lose,True,(220,20,60))
@@ -773,7 +777,7 @@ while running:
                     textInside = fontRank.render(text_lose,True,(255,255,255))
                 else: 
                     textInside = fontRank.render(text_lose,True,(0,0,0))
-                screen.blit(pygame.transform.scale(textInside,(screen.get_width()/4,screen.get_height()/5)),(screen.get_width()/2.7,screen.get_height()/6))
+                screen.blit(pygame.transform.smoothscale(textInside,(screen.get_width()/4,screen.get_height()/5)),(screen.get_width()/2.7,screen.get_height()/6))
                 
         else :
             for i in range(5):
@@ -861,7 +865,6 @@ while running:
                 if i == pickedCar and useMys == 1:
                     useMys = 0
                 picked=random.randint(0,99)
-                picked =92
                 if picked < 25:
                     if i == pickedCar:
                         if store.removeEffect == 0:
