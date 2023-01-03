@@ -1,5 +1,5 @@
 from turtle import width
-import pygame
+import pygame,sys
 # from pygame.locals import *
 import random
 import time
@@ -76,6 +76,12 @@ prize.append(pygame.transform.scale(pygame.image.load("img/celebrate/third.png")
 chatList = ["VN vô địch","Cầm sổ đỏ rồi","đừng thua nữa bán xe rồi","MU vô hang","Arg vô địch","non quá","xin cái tuổi","ez game","nhảy cầu thôi","tạm biệt mọi người","cược nhầm xe rồi","đau lưng quá","nhà mình còn gì đâu"]
 botList = ["Khoi","Nam Android","Huy","Tung","Uong Nam"]
 vowel=["á","à","ả","ã","ạ","ă","ắ","ằ","ẳ","ẵ","ặ","â","ấ","ầ","ẩ","ẫ","ậ","é","è","ẻ","ẽ","ẹ","ê","ế","ề","ể","ễ","ệ","ó","ò","ỏ","õ","ọ","ô","ố","ồ","ổ","ỗ","ộ","ơ","ớ","ờ","ở","ỡ","ợ","í","ì","ỉ","ĩ","ị","ú","ù","ủ","ũ","ụ","ư","ứ","ừ","ử","ữ","ự","ý","ỳ","ỷ","ỹ","ỵ","đ"]
+
+
+#Sound
+pickedSound= pygame.mixer.Sound('Music/ding2.wav')
+windSound= pygame.mixer.Sound('Music/wind/Wind.ogg')
+thunderSound = pygame.mixer.Sound('Music/thunderclap.ogg')
 
 class CHAT:
     def __init__(self):
@@ -230,7 +236,7 @@ class ITEM :
         self.laser=1
 
     def runLaser(self,idx):
-        self.curSprite+=0.12
+        self.curSprite+=0.10
         if self.curSprite<5:
             if car[idx].curRound==car[carSelected].curRound:
                 draw(self.spriteLaser[int(self.curSprite)],car[idx].x,self.y-self.spriteLaser[int(self.curSprite)].get_height()+screen.get_height()/5)
@@ -485,7 +491,7 @@ transportation={
     3:("scooters",3,9,"smoke"),
     4:("motorcycles",3,9,"smoke")
 }
-carName = ["Khoi","Nam","Huy","Tung","Android"]
+carName = ["Android","Nam","Khoi","Tung","Huy"]
 transSelected=0# Change Transportation here
 r=[2.28,1.83,1.5,1.27,1.12] # ratio cho vo 1 mang de initialize
 
@@ -583,7 +589,7 @@ fps = 60
 #Initalize
 r=0
 carSelected=0 
-mapSelected=4#Change map here
+mapSelected=0#Change map here
 pressed=0
 winItem=-1
 
@@ -626,7 +632,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
             pygame.quit()
-            break
+            sys.exit()
         #Nhap text
         if event.type == pygame.MOUSEBUTTONUP:
             if (pygame.mouse.get_pos()[0]>=chatWidthMin) and (pygame.mouse.get_pos()[0]<=chatWidthMax) and (pygame.mouse.get_pos()[1]>=chatHeightMin) and (pygame.mouse.get_pos()[1]<=chatHeightMax):
@@ -839,6 +845,7 @@ while running:
         #Flip
         if item[i].checkFlip==1:
             item[i].runFlip(i)
+            
         if item[i].checkFlip == 0 and (item[i].countFlip % 2 == 1):
             for j in range (len(car[i].spriteWheel)):
                 car[i].spriteWheel[j] = pygame.transform.flip(car[i].spriteWheel[j],True,False)
@@ -854,7 +861,7 @@ while running:
                 if i == pickedCar and useMys == 1:
                     useMys = 0
                 picked=random.randint(0,99)
-                #picked =26
+                picked =92
                 if picked < 25:
                     if i == pickedCar:
                         if store.removeEffect == 0:
@@ -875,6 +882,7 @@ while running:
                             runRemoveEffect = 1
                     else:
                         item[i].flip()
+                        windSound.play()
                 elif picked == 71:
                     item[i].win(i)
                     item[i].portalX=car[i].x+screen.get_width()/5
@@ -895,11 +903,13 @@ while running:
                     if i == pickedCar:
                         if store.removeEffect == 0:
                             item[i].setLaser()
+                            
                         else:
                             store.removeEffect = 0
                             runRemoveEffect = 1
                     else:
                         item[i].setLaser()
+                        thunderSound.play()
         
     if pressed ==1:
         for i in bg[mapSelected][car[carSelected].curRound].car:
