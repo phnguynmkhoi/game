@@ -15,24 +15,24 @@ from tensorflow.keras.utils import to_categorical
 from keras.preprocessing.text import Tokenizer 
 
 def pre_processingdata(reviews):
-    reviews_processed = []
-    for review in reviews:
-        review_good_one = ''.join([char for char in review if char not in digits])
-        reviews_processed.append(review_good_one)
-    word_reviews = []
-    clean_reviews = []
-    for review in reviews_processed:
-        review = ViTokenizer.tokenize(review.lower())
-        word_reviews.append(review)
+  reviews_processed = []
+  for review in reviews:
+    review_good_one = ''.join([char for char in review if char not in digits])
+    reviews_processed.append(review_good_one)
+  word_reviews = []
+  clean_reviews = []
+  for review in reviews_processed:
+    review = ViTokenizer.tokenize(review.lower())
+    word_reviews.append(review)
   
-    for statement in word_reviews:
-        clean = []
-        for w in statement.split():
-            new_w = w.translate(str.maketrans('','','!#$%^&*<>?./:;"["]{\}_-+='))
-        if (new_w!=''):
-            clean.append(new_w)
-        clean_reviews.append(clean)
-    return clean_reviews
+  for statement in word_reviews:
+    clean = []
+    for w in statement.split():
+      new_w = w.translate(str.maketrans('','','!#$%^&*<>?./:;"["]{\}_-+='))
+      if (new_w!=''):
+        clean.append(new_w)
+    clean_reviews.append(clean)
+  return clean_reviews
 
 EMBEDDING_DIM = 400 # HOW BIG IS EACH WORD VECTOR
 MAX_VOCAB_SIZE = 10000 # HOW MANY UNIQUE WORDS TO USE
