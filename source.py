@@ -26,3 +26,4 @@ def main():
         mixer.music.play(-1,45,2000)
         function.main_menu(screen,username,0)
 main()
+play(screen,mapp,pickedCar,tile,mode,manhinh,carName)
