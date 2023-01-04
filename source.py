@@ -25,4 +25,6 @@ def main():
         mixer.music.set_volume(0.2)
         mixer.music.play(-1,45,2000)
         function.main_menu(screen,username,0)
+
 main()
+try_nam.play()

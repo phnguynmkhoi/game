@@ -5,7 +5,7 @@ import random
 import time
 import math
 pygame.init()
-def play():
+def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
     pygame.mixer.music.load('sounds/backgroundmusic.wav')
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.2)
@@ -18,7 +18,6 @@ def play():
     listRank=[]
     finished=[0,0,0,0,0]
     picked = -1
-    pickedCar = 2
     rotateChecked = 0
     rotateCount = 0
     #set screen
@@ -471,8 +470,9 @@ def play():
         4:("motorcycles",3,9,"smoke")
     }
     carName = ["Khoi","Nam","Huy","Tung","Android"]
-    carName = ["Android","Nam","Khoi","Tung","Huy"]
     transSelected=0# Change Transportation here
+    pickedCar = 1
+    mapSelected = 4
     r=[2.28,1.83,1.5,1.27,1.12] # ratio cho vo 1 mang de initialize
 
     for i in range (5):
@@ -567,8 +567,7 @@ def play():
     #Initalize
     r=0
     carSelected=0 
-    mapSelected=4#Change map here
-    mapSelected=0#Change map here
+    #mapSelected=#Change map here
     pressed=0
     winItem=-1
 
@@ -584,7 +583,7 @@ def play():
     nameDisplay = []
     for i in range(5):
         if i == pickedCar:
-            nameDisplay.append(fontName.render(carName[i],True,(0,255,255)))
+            nameDisplay.append(fontName.render(playerName,True,(0,255,255)))
         else:
             nameDisplay.append(fontName.render(carName[i],True,(255,255,255)))
     #set cursor
@@ -604,6 +603,10 @@ def play():
                 pygame.quit()
                 sys.exit()
             #Nhap text
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    if rank == 5:
+                        running = False
             if event.type == pygame.MOUSEBUTTONUP:
                 if (pygame.mouse.get_pos()[0]>=chatWidthMin) and (pygame.mouse.get_pos()[0]<=chatWidthMax) and (pygame.mouse.get_pos()[1]>=chatHeightMin) and (pygame.mouse.get_pos()[1]<=chatHeightMax):
                     chat.activeInput = 1
