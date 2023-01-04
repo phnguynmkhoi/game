@@ -10,7 +10,7 @@ import numpy as np
 from string import digits
 from pyvi import ViTokenizer
 from keras.utils.np_utils import to_categorical
-from keras.preprocessing.text import Tokenizer 
+from keras.preprocessing.text import Tokenizer
 
 EMBEDDING_DIM = 400 # HOW BIG IS EACH WORD VECTOR
 MAX_VOCAB_SIZE = 10000 # HOW MANY UNIQUE WORDS TO USE
@@ -36,8 +36,9 @@ def pre_processingdata(reviews):
     clean_reviews.append(clean)
   return clean_reviews
 
-review_list = [["Lạy chúa game quá chán",0],["Lạy chúa game quá chán",0],["Lạy chúa game quá chán",0],["Lạy chúa game quá 1chán",0]]
-data_input = pd.DataFrame(review_list, columns = ['product_name', 'price'])
+#sua review_list
+review_list = [["Lạy chúa game quá chán",0],["Game hay",0],["Không ổn cho lắm",0],["Chán",0]]
+data_input = pd.DataFrame(review_list, columns = ['Text', 'Label'])
 
 labels_input = data_input.iloc[:, 1].values
 reviews_input = data_input.iloc[:, 0].values
@@ -62,6 +63,7 @@ data_input = pad_sequences(sequences_input, maxlen=MAX_SEQUENCE_LENGTH)
 cnn_model = keras.models.load_model(".\AI (main)\AI_final.h5")
 prediction = cnn_model.predict(data_input)
 
+#Xuat predic
 for i in range (0,5):
     print(reviews_input[i])
     print(np.argmax(prediction[i]))
