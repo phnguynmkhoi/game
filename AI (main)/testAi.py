@@ -2,25 +2,14 @@ import tensorflow as tf
 from tensorflow import keras
 import numpy as np
 import pandas as pd
-from preprocessing import encode_AI
-from preprocessing import sequences_AI
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.utils import to_categorical
 from keras.preprocessing.text import Tokenizer
-import tensorflow as tf
 import pandas as pd
 import numpy as np
 from string import digits
-from collections import Counter
 from pyvi import ViTokenizer
-from gensim.models.word2vec import Word2Vec
 from keras.utils.np_utils import to_categorical
-import re
-import matplotlib.pyplot as plt
-import string
-import random
-from tensorflow.keras.preprocessing.sequence import pad_sequences
-from tensorflow.keras.utils import to_categorical
 from keras.preprocessing.text import Tokenizer 
 
 EMBEDDING_DIM = 400 # HOW BIG IS EACH WORD VECTOR
@@ -55,7 +44,14 @@ reviews_input = data_input.iloc[:, 0].values
 
 data_input = pre_processingdata(reviews_input)
 
-labels_input = encode_AI(labels_input)
+encoded_labels_input = []
+for label_input in labels_input:
+  if label_input == -1:
+    encoded_labels_input.append([1,0,0])
+  else:
+    encoded_labels_input.append([0,0,1])   
+encoded_labels_input = np.array(encoded_labels_input)
+labels_input = encoded_labels_input
 
 word_reviews_input = pre_processingdata(reviews_input)
 tokenizer = Tokenizer()
