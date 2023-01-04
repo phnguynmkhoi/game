@@ -64,6 +64,6 @@ cnn_model = keras.models.load_model(".\AI (main)\AI_final.h5")
 prediction = cnn_model.predict(data_input)
 
 #Xuat predic
-for i in range (0,5):
+for i in range (len(review_list)):
     print(reviews_input[i])
     print(np.argmax(prediction[i]))

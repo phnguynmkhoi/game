@@ -453,6 +453,7 @@ def play():
                 self.crowdImg[i] = pygame.transform.scale(self.crowdImg[i],(screen.get_width()/3,screen.get_height()/5))
     #Background INITIALIZATION
     bg=[]
+    NumRound=3#Số round của game (2->4)
     mapp=['city','desert','galaxy','painting','sea']
     for i in range(5):
         bg.append([])
@@ -817,7 +818,6 @@ def play():
                         useMys = 0
                     picked=random.randint(0,99)
                     #picked =26
-                    picked =92
                     if picked < 25:
                         if i == pickedCar:
                             if store.removeEffect == 0:
@@ -878,6 +878,12 @@ def play():
                 car[i].run()
             elif car[i].curRound<3: 
                 bg[mapSelected][car[i].curRound].car.remove(i)
+                if car[i].curRound==0:
+                    if NumRound==2:
+                        car[i].curRound+=2
+                    if NumRound==3:
+                        car[i].curRound+=1
+                
                 car[i].curRound+=1
                 bg[mapSelected][car[i].curRound].car.append(i)
                 car[i].x=bg[mapSelected][car[i].curRound].start-(screen.get_width()/10)
@@ -890,3 +896,4 @@ def play():
         pygame.display.update()
 
     pygame.quit()
+play()
