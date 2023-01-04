@@ -2,6 +2,7 @@ import pygame
 import sys
 import function,user_account,newdraw,ioexcel
 from pygame import mixer
+import try_nam
 pygame.init()
 
 username = user_account.LoginRegister()
@@ -14,8 +15,8 @@ def main():
     global username
     if username !='':
         #Tao cua so game
-        WIDTH = 1280
-        HEIGHT = 720
+        WIDTH = 1024
+        HEIGHT = 534
         RESOLUTION = (WIDTH,HEIGHT)
         ioexcel.laythongtin(username)
         screen = pygame.display.set_mode(RESOLUTION)
