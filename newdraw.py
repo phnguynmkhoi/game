@@ -602,6 +602,109 @@ def main_menu(screen, selection,LeaF,Background,moving_sprite,player):
             temp_leaf = leaf()
             LeaF[i] = temp_leaf
 
+def minigame(screen, usernane):
+    WIDTH, HEIGHT = screen.get_size()
+    Width_1cell = WIDTH*0.14
+    Height_1cell = HEIGHT*0.08
+    Left = (WIDTH*0.48) - Width_1cell
+    Top = HEIGHT*0.87
+    #huong dan choi minigame
+    bg_mini = pygame.image.load('Image/assets/set_0.png.png')
+    bg_mini = pygame.transform.scale(bg_mini, (WIDTH, HEIGHT))
+    
+    Back = pygame.image.load('Image/assets/SetMenu/Back.png')
+    Back = pygame.transform.scale(Back, (Width_1cell,Height_1cell))
+    minigame = pygame.image.load('Image/assets/SetMenu/Start.png')
+    minigame = pygame.transform.scale(minigame, (Width_1cell,Height_1cell))
+    
+    # MINIGAME OBJECT
+    MNG_OBJECT = [
+    pygame.Rect(Left,                            Top, Width_1cell, Height_1cell),
+    pygame.Rect(Left + Width_1cell + 0.04*WIDTH, Top, Width_1cell, Height_1cell)]
+    
+    # MINIGAME LOCATION
+    MNG_LOC = [
+    (Left                           , Top),
+    (Left + Width_1cell + WIDTH*0.04, Top)]
+    
+    screen.blit(bg_mini, (0, 0))
+    screen.blit(Back, MNG_LOC[0])
+    screen.blit(minigame, MNG_LOC[1])
+
+def options(screen, username):
+    WIDTH, HEIGHT = screen.get_size()
+    Width_1Cell = WIDTH*0.2
+    Height_1Cell = WIDTH*0.04
+    Range = WIDTH*0.015
+    Left = WIDTH*0.18
+    Top  = HEIGHT*0.35
+    
+    bg = pygame.image.load('Image/assets/Options/bg2.png')
+    bg = pygame.transform.scale(bg, (WIDTH, HEIGHT))
+    
+    button_light = pygame.image.load('Image/assets/Options/silver.png')
+    button_light = pygame.transform.scale(button_light, (Width_1Cell, Height_1Cell))
+    button_dark  = pygame.image.load('Image/assets/Options/blue.png')
+    button_dark  = pygame.transform.scale(button_dark, (Width_1Cell, Height_1Cell))
+    
+    but1 = pygame.image.load('Image/assets/Options/1.png')
+    but2 = pygame.image.load('Image/assets/Options/2.png')
+    but3 = pygame.image.load('Image/assets/Options/3.png')
+    but4 = pygame.image.load('Image/assets/Options/4.png')
+    but5 = pygame.image.load('Image/assets/Options/5.png')
+    
+    BUT_IMG = [
+    pygame.transform.scale(but1, (Width_1Cell, Height_1Cell)),
+    pygame.transform.scale(but2, (Width_1Cell, Height_1Cell)),
+    pygame.transform.scale(but3, (Width_1Cell, Height_1Cell)),
+    pygame.transform.scale(but4, (Width_1Cell, Height_1Cell)),
+    pygame.transform.scale(but5, (Width_1Cell, Height_1Cell))]
+    
+    BUT_LOC = [
+    (Left, Top),
+    (Left, Top+1*(Height_1Cell+Range)),
+    (Left, Top+2*(Height_1Cell+Range)),
+    (Left, Top+3*(Height_1Cell+Range)),
+    (Left, Top+4*(Height_1Cell+Range))]
+    
+    BUT_OBJ = [
+    pygame.Rect(Left, Top, Width_1Cell, Height_1Cell),
+    pygame.Rect(Left, Top+1*(Height_1Cell+Range), Width_1Cell, Height_1Cell),
+    pygame.Rect(Left, Top+2*(Height_1Cell+Range), Width_1Cell, Height_1Cell),
+    pygame.Rect(Left, Top+3*(Height_1Cell+Range), Width_1Cell, Height_1Cell),
+    pygame.Rect(Left, Top+4*(Height_1Cell+Range), Width_1Cell, Height_1Cell)]
+    
+    screen.blit(bg, (0, 0))
+    mouse = pygame.mouse.get_pos()
+    for i in range(0, len(BUT_OBJ)):
+        if BUT_OBJ[i].collidepoint(mouse):
+            screen.blit(button_dark, BUT_LOC[i])
+            screen.blit(BUT_IMG[i], BUT_LOC[i])
+        else:
+            screen.blit(button_light, BUT_LOC[i])
+            screen.blit(BUT_IMG[i], BUT_LOC[i])
+    
+    ON  = pygame.image.load('Image/assets/Options/on.png')
+    ON  = pygame.transform.scale(ON, (Width_1Cell, Height_1Cell))
+    OFF = pygame.image.load('Image/assets/Options/off.png')
+    OFF = pygame.transform.scale(OFF, (Width_1Cell, Height_1Cell))
+    SOUND_ON = pygame.Rect(WIDTH*0.7, Top, Width_1Cell, Height_1Cell)
+    SOUND_OFF = pygame.Rect(WIDTH*0.7, Top+1*(Height_1Cell+Range), Width_1Cell, Height_1Cell)
+    
+    if SOUND_ON.collidepoint(mouse):
+        screen.blit(button_dark, (WIDTH*0.7, Top))
+        screen.blit(ON, (WIDTH*0.7, Top))
+    else:
+        screen.blit(button_light, (WIDTH*0.7, Top))
+        screen.blit(ON, (WIDTH*0.7, Top))
+        
+    if SOUND_OFF.collidepoint(mouse):
+        screen.blit(button_dark, (WIDTH*0.7, Top+1*(Height_1Cell+Range)))
+        screen.blit(OFF, (WIDTH*0.7, Top+1*(Height_1Cell+Range)))
+    else:
+        screen.blit(button_light, (WIDTH*0.7, Top+1*(Height_1Cell+Range)))
+        screen.blit(OFF, (WIDTH*0.7, Top+1*(Height_1Cell+Range)))
+        
 def choose_bet(screen, set_char, char_name, rename, tiencuoc, mode):
     WIDTH, HEIGHT = screen.get_size()
     background = pygame.image.load('Image/bet/choose_bet.png').convert()

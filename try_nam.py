@@ -899,4 +899,3 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
         pygame.display.update()
 
     pygame.quit()
-play()

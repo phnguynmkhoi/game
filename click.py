@@ -1,5 +1,5 @@
 import pygame,sys
-import function, ioexcel,try_nam,maingameplay
+import function, ioexcel,try_nam,maingameplay,minigame
 from pygame import mixer
 
 pygame.init()
@@ -129,6 +129,27 @@ def help(screen, username, selection_help, goback):
         if goback == 1:
             function.choose_set(screen, username, 0, 0)
             
+def minigame(screen, username):
+    WIDTH, HEIGHT = screen.get_size()
+    mouse = pygame.mouse.get_pos()
+
+    Width_1cell = WIDTH*0.14
+    Height_1cell = HEIGHT*0.08
+    Left = (WIDTH*0.48) - Width_1cell
+    Top = HEIGHT*0.87
+    
+    # MINIGAME OBJECT
+    MNG_OBJECT = [
+    pygame.Rect(Left,                            Top, Width_1cell, Height_1cell),
+    pygame.Rect(Left + Width_1cell + 0.04*WIDTH, Top, Width_1cell, Height_1cell)]
+
+    if MNG_OBJECT[0].collidepoint(mouse):
+        click_sound.play()
+        function.main_menu(screen, username, 0)
+    if MNG_OBJECT[1].collidepoint(mouse):
+        click_sound.play()
+        minigame.layminigame(screen, username, WIDTH/1920)
+
 def store(screen, username):
     global giohang
     mouse = pygame.mouse.get_pos()

@@ -1,6 +1,6 @@
 from os import rename
 import pygame,sys,ioexcel,random
-import click, newdraw, try_nam
+import click, newdraw, try_nam,maingameplay,lichsuchoi
 from pygame.constants import MOUSEBUTTONDOWN
 from pygame.time import Clock
 from pygame import mixer
@@ -306,3 +306,49 @@ def store(screen, username, cart):
         newdraw.money(screen, username)
         pygame.display.update()
         clock.tick(60)
+
+def options(screen, username):
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                ioexcel.writeExcel()
+                pygame.quit()
+                sys.exit()
+            if event.type == MOUSEBUTTONDOWN:
+                click.options(screen, username)
+        
+        newdraw.options(screen, username)
+        pygame.display.update()
+        clock.tick(60)
+
+def history(screen, username):
+    WIDTH, HEIGHT = screen.get_size()
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                ioexcel.writeExcel()
+                pygame.quit()
+                sys.exit()
+
+        print(ioexcel.laythongtinhienthi(username))
+        lichsuchoi.history(screen, username, WIDTH/1920, ioexcel.laythongtinhienthi(username))
+        pygame.display.update()
+        clock.tick(60)
+
+def gameplay(screen, username, set_char, char_name, rename, cost, mode):
+    WIDTH, HEIGHT = screen.get_size()
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            ioexcel.writeExcel()
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            click.bet(screen, username, set_char, char_name, rename, cost, mode)
+        if event.type == pygame.KEYDOWN:
+            if rename == 1 and len(char_name) < 10:
+                if event.key == pygame.K_BACKSPACE:
+                    char_name = char_name[:-1]
+                else:
+                    char_name += event.unicode
+    
+    maingameplay.gameplaymain(screen, username, str(set_char), char_name, str(set_char), cost, WIDTH/1920, mode)
