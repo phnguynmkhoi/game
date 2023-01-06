@@ -3,13 +3,11 @@ from tensorflow import keras
 import numpy as np
 import pandas as pd
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-from tensorflow.keras.utils import to_categorical
 from keras.preprocessing.text import Tokenizer
 import pandas as pd
 import numpy as np
 from string import digits
 from pyvi import ViTokenizer
-from keras.utils.np_utils import to_categorical
 from keras.preprocessing.text import Tokenizer
 
 EMBEDDING_DIM = 400 # HOW BIG IS EACH WORD VECTOR

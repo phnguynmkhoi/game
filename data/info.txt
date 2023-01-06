@@ -8,3 +8,4 @@ admin2;123456
 admin3;123456
 nammoivuive;123456
 minhkhoi;123456
+NotTung;123456

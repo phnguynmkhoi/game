@@ -27,4 +27,5 @@ def main():
         function.main_menu(screen,username,0)
 
 main()
-try_nam.play()
+
+try_nam.play(0,2,3,4,4,0,"Tung")

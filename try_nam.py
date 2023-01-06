@@ -12,7 +12,7 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
     color={0:"red", 1:"blue", 2:"yellow", 3:"green", 4:"pink"}
     #System Time
     curTime=0
-    pivotTime=0
+    pivotTime=pygame.time.get_ticks()
     iCountdown=0
     rank=0
     listRank=[]
@@ -452,7 +452,7 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
                 self.crowdImg[i] = pygame.transform.scale(self.crowdImg[i],(screen.get_width()/3,screen.get_height()/5))
     #Background INITIALIZATION
     bg=[]
-    NumRound=3#Số round của game (2->4)
+    NumRound=mode#Số round của game (2->4)
     mapp=['city','desert','galaxy','painting','sea']
     for i in range(5):
         bg.append([])
