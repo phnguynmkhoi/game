@@ -4,6 +4,7 @@ import pygame,sys
 import random
 import time
 import math
+from testAi import responseChat
 pygame.init()
 def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
     pygame.mixer.music.load('sounds/backgroundmusic.wav')
@@ -33,6 +34,7 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
     fontRank = pygame.font.Font('./font/Audiowide-Regular.ttf',int(screen.get_width()/16))
     fontChat = pygame.font.Font('./font/Arial.ttf',int(screen.get_width()/69))
     fontName = pygame.font.Font('./font/Arial.ttf',int(screen.get_width()/70))
+    fontResponse = pygame.font.Font('./font/Arial.ttf',int(screen.get_width()/15))
     #Mystery Box
     mysbox=[] 
     for i in range(4):
@@ -75,6 +77,7 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
     pickedSound= pygame.mixer.Sound('Music/ding2.wav')
     windSound= pygame.mixer.Sound('Music/wind/Wind.ogg')
     thunderSound = pygame.mixer.Sound('Music/thunderclap.ogg')
+    chatPredict=[]
 
     class CHAT:
         def __init__(self):
@@ -104,6 +107,7 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
             if self.inputText!="":
                 surf=fontChat.render("You: "+self.inputText,True,(115,147,179))
                 self.chatScript.append(surf)
+                chatPredict.append([self.inputText,0])
                 self.inputText=""
     class STOREEFFECT:
         def __init__(self,buffSpeed,buffEffect,removeEffect,mysteryBox):
@@ -451,6 +455,7 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
             for i in range(len(self.crowdImg)):
                 self.crowdImg[i] = pygame.transform.scale(self.crowdImg[i],(screen.get_width()/3,screen.get_height()/5))
     #Background INITIALIZATION
+    mode=2
     bg=[]
     NumRound=mode#Số round của game (2->4)
     mapp=['city','desert','galaxy','painting','sea']
@@ -558,7 +563,8 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
     #######
     #######
 
-
+    chatResponse=[]
+    chatResponse={-1:"Cay không",0:"Trung lập",1:"Vui"}
 
     #game Loop
     clock = pygame.time.Clock()
@@ -569,8 +575,8 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
     carSelected=0 
     #mapSelected=#Change map here
     pressed=0
-    winItem=-1
-
+    checkMenu=0
+    happiness=0
     for i in range (5):
         bg[mapSelected][r].car.append(i)
         car[i].x=bg[mapSelected][r].start
@@ -595,6 +601,8 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
     chatChecked = 0
     running = True
     while running:
+        if curTime-pivotTime>100000:
+            running=False
         curTime=pygame.time.get_ticks()
         clock.tick(fps)        
         for event in pygame.event.get():
@@ -602,11 +610,8 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
                 running = False
                 pygame.quit()
                 sys.exit()
-            #Nhap text
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    if rank == 5:
-                        running = False
+            #Nhap text                
+                        
             if event.type == pygame.MOUSEBUTTONUP:
                 if (pygame.mouse.get_pos()[0]>=chatWidthMin) and (pygame.mouse.get_pos()[0]<=chatWidthMax) and (pygame.mouse.get_pos()[1]>=chatHeightMin) and (pygame.mouse.get_pos()[1]<=chatHeightMax):
                     chat.activeInput = 1
@@ -629,6 +634,11 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
                         else:
                             chat.inputText+= event.unicode
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    if rank == 5:
+                        if  checkMenu==1:
+                            running=False
+                        checkMenu=1
                 if event.key == pygame.K_SPACE and store.mysteryBox == 1 and countdownChecked == 1:
                     useMys = 1
                     store.mysteryBox = 0
@@ -688,6 +698,7 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
                 oldWidth = screen.get_width()
                 oldHeight = screen.get_height()
         # Celebrate
+        
         if rank==5 :
             if rotateChecked == 0:
                 for i in range(5):
@@ -723,6 +734,9 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
                     draw(car[i].spriteWheel[0],car[i].x,screen.get_height()/car[i].ratio)
                     if finished[i]<=3:
                         draw(prize[finished[i]-1],car[i].x+screen.get_width()/300,screen.get_height()/2)
+                if checkMenu==1:
+                    draw(countdownbg,0,(screen.get_height()-screen.get_height()/2)/2)
+                    draw(happiness,(screen.get_width()-happiness.get_width())/2,(screen.get_height()-happiness.get_height())/2)
                 if finished[pickedCar]==1:
                     if curTime%1000<333:
                         textInside = fontRank.render(text_win,True,(220,20,60))
@@ -739,10 +753,12 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
                     else: 
                         textInside = fontRank.render(text_lose,True,(0,0,0))
                     screen.blit(pygame.transform.scale(textInside,(screen.get_width()/4,screen.get_height()/5)),(screen.get_width()/2.7,screen.get_height()/6))
-                    
+                 
             else :
+                happiness= fontResponse.render(chatResponse[responseChat(chatPredict)],True,(204, 51, 153))
                 for i in range(5):
                     car[i].x=-screen.get_width()/10-finished[i]*screen.get_width()/8
+
             pygame.display.update()
             continue
         
@@ -899,3 +915,4 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
         pygame.display.update()
 
     pygame.quit()
+play(0,0,0,0,0,0,"NotTun")
