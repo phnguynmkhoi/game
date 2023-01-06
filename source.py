@@ -25,6 +25,8 @@ def main():
         mixer.music.set_volume(0.2)
         mixer.music.play(-1,45,2000)
         function.main_menu(screen,username,0)
-
+        
+        
+screen = (1024,534)
 main()
-try_nam.play(0,2,3,4,4,0,"Tung")
+try_nam.play(screen,2,3,4,4,0,"Tung")

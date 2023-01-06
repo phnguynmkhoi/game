@@ -21,7 +21,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     rotateChecked = 0
     rotateCount = 0
     #set screen
-    WIDTH,HEIGHT = screen[0], screen[1]
+    WIDTH,HEIGHT = screen.get_size()
     screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.RESIZABLE)
     #set caption and icon and image and font
     pygame.display.set_caption("Game cua nha cai den tu Chau Au")
@@ -915,4 +915,4 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
         pygame.display.update()
 
     pygame.quit()
-play((1024,534),0,0,0,0,0,"NotTun")
+# play((1024,534),0,0,0,0,0,"NotTun")
