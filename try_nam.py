@@ -541,6 +541,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     runRemoveEffect = 0
     countdownChecked = 0
     useMys = 0
+    carSelected = pickedCar
     store = STOREEFFECT(buffSpeed, buffEffect, removeEffect, mysteryBox)
     if buffSpeed == 1:
         car[pickedCar].velocity*=1.2
@@ -585,6 +586,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     #    car[i].velocity = 1000
     #player car
     nameDisplay = []
+    print(pickedCar)
     for i in range(5):
         if i == pickedCar:
             nameDisplay.append(fontName.render(playerName,True,(0,255,255)))
@@ -597,6 +599,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     chatWidthMax = screen.get_width()/18+screen.get_width()/5
     chatHeightMax = screen.get_height()/4.9+screen.get_height()/35
     chatChecked = 0
+    chatPredict.append(["trung lập",1])
     running = True
     while running:
         if curTime-pivotTime>100000:
@@ -637,7 +640,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
                         if  checkMenu==1:
                             running=False
                         checkMenu=1
-                if event.key == pygame.K_SPACE and store.mysteryBox == 1 and countdownChecked == 1:
+                if event.key == pygame.K_SPACE and store.mysteryBox == 1 and countdownChecked == 1 and chat.activeInput == 0:
                     useMys = 1
                     store.mysteryBox = 0
             #Het phan nhap Text
