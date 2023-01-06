@@ -7,7 +7,7 @@ pygame.init()
 
 
 
-def playminigame1():
+def minigame1():
     #Adjust to resize screen
     global maxW,maxH,score,enemyEdge,laserState,playerX,eX,diLaserX,playerY,eY,diLaserY,dis,disX,disY,laserX,laserY,coinState,coinX,coinY,restart,difficulty
     global alive,playerX,playerY,scoreText
