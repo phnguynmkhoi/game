@@ -34,7 +34,6 @@ def responseChat(review_list):
           clean.append(new_w)
       clean_reviews.append(clean)
     return clean_reviews
-  review_list.append(["ok",0])
   #sua review_list
   # review_list = [["Game hay vai",0],["Game hay",0],["Không ổn cho lắm",0],["Chán",0]]
   # print(type(review_list))
@@ -65,16 +64,18 @@ def responseChat(review_list):
 
   #Xuat predic
   happiness=0
-  for i in range (len(review_list)):
-    print(data_input[i])
+  for i in range (1,len(review_list)):
     print(reviews_input[i])
     print(np.argmax(prediction[i]))
     happiness += np.argmax(prediction[i])-1
-  
-  happiness=happiness/len(review_list)
-  if -0.2<happiness<0.2:
+  if len(review_list) > 1:
+    happiness=happiness/(len(review_list)-1)
+    if -0.2<happiness<0.2:
+      return 0
+    elif happiness>=0.1:
+      return 1
+    else :
+      return -1
+  else:
     return 0
-  elif happiness>=0.1:
-    return 1
-  else :
-    return -1
+
