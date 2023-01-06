@@ -15,34 +15,11 @@ MAX_VOCAB_SIZE = 10000 # HOW MANY UNIQUE WORDS TO USE
 MAX_SEQUENCE_LENGTH = 300 # MAX NUMBER OF WORDS IN A COMMENT TO USE
 
 def responseChat(review_list):
-  def pre_processingdata(reviews):
-    reviews_processed = []
-    for review in reviews:
-      review_good_one = ''.join([char for char in review if char not in digits])
-      reviews_processed.append(review_good_one)
-    word_reviews = []
-    clean_reviews = []
-    for review in reviews_processed:
-      review = ViTokenizer.tokenize(review.lower())
-      word_reviews.append(review)
-    
-    for statement in word_reviews:
-      clean = []
-      for w in statement.split():
-        new_w = w.translate(str.maketrans('','','!#$%^&*<>?./:;"["]{\}_-+='))
-        if (new_w!=''):
-          clean.append(new_w)
-      clean_reviews.append(clean)
-    return clean_reviews
-  #sua review_list
-  # review_list = [["Game hay vai",0],["Game hay",0],["Không ổn cho lắm",0],["Chán",0]]
-  # print(type(review_list))
+  # review_list = [["Game chán vãi",0],["Game hay",0],["Không ổn cho lắm",0],["Chán",0]]
   data_input = pd.DataFrame(review_list, columns = ['Text', 'Label'])
 
   labels_input = data_input.iloc[:, 1].values
   reviews_input = data_input.iloc[:, 0].values
-
-  data_input = pre_processingdata(reviews_input)
 
   encoded_labels_input = []
   for label_input in labels_input:
@@ -51,13 +28,25 @@ def responseChat(review_list):
     else:
       encoded_labels_input.append([0,0,1])   
   encoded_labels_input = np.array(encoded_labels_input)
-  labels_input = encoded_labels_input
+  
+  reviews_processed = []
+  unlabeled_processed = []
 
-  word_reviews_input = pre_processingdata(reviews_input)
+  for review in reviews_input:
+    review_cool_one = ''.join([char for char in review if char not in digits])
+    reviews_processed.append(review_cool_one)
+
+  word_reviews = []
+  all_words =[]
+  for review in reviews_processed:
+    review = ViTokenizer.tokenize(review.lower())
+    word_reviews.append(review.split())
+
   tokenizer = Tokenizer()
-  tokenizer.fit_on_texts(word_reviews_input)
-  sequences_input = tokenizer.texts_to_sequences(word_reviews_input)
+  tokenizer.fit_on_texts(word_reviews)
+  sequences_input = tokenizer.texts_to_sequences(word_reviews)
   data_input = pad_sequences(sequences_input, maxlen=MAX_SEQUENCE_LENGTH)
+  labels_input = encoded_labels_input
 
   cnn_model = keras.models.load_model(".\AI_final.h5")
   prediction = cnn_model.predict(data_input)
@@ -78,4 +67,3 @@ def responseChat(review_list):
       return -1
   else:
     return 0
-
