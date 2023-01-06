@@ -5,7 +5,7 @@ import random
 import time
 import math
 pygame.init()
-def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
+def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     pygame.mixer.music.load('sounds/backgroundmusic.wav')
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.2)
@@ -470,9 +470,9 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
         4:("motorcycles",3,9,"smoke")
     }
     carName = ["Khoi","Nam","Huy","Tung","Android"]
-    transSelected=0# Change Transportation here
-    pickedCar = 1
-    mapSelected = 4
+    # transSelected=0# Change Transportation here
+    # pickedCar = 1
+    # mapSelected = 4
     r=[2.28,1.83,1.5,1.27,1.12] # ratio cho vo 1 mang de initialize
 
     for i in range (5):

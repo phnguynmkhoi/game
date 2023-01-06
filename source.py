@@ -27,4 +27,4 @@ def main():
         function.main_menu(screen,username,0)
 
 main()
-try_nam.play()
+#try_nam.play()
