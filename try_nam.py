@@ -18,12 +18,10 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
     rank=0
     listRank=[]
     finished=[0,0,0,0,0]
-    picked = -1
     rotateChecked = 0
     rotateCount = 0
     #set screen
-    WIDTH=1024
-    HEIGHT=534
+    WIDTH,HEIGHT = screen[0], screen[1]
     screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.RESIZABLE)
     #set caption and icon and image and font
     pygame.display.set_caption("Game cua nha cai den tu Chau Au")
@@ -187,7 +185,7 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
             self.countFlip = 0
         def slower(self,i):
             self.name = 1
-            self.duration=1500
+            self.duration=1000
             car[i].velocity=car[i].velocity/2
             self.pivotTime=pygame.time.get_ticks()
             self.slow=1
@@ -312,10 +310,10 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
         def runLose(self,idx):
             if isCollide(car[idx].x,car[idx].y,self.portalX,self.y):
                 if self.out==0:
-                    car[idx].x=10
+                    car[idx].x=screen.get_width()/100
                     self.curSprite=4
                 self.out=1
-                self.portalX=10
+                self.portalX=screen.get_width()/100
             if self.out==0:    
                 if self.curSprite>3:
                     self.curSprite=0
@@ -325,7 +323,7 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
             self.curSprite+=0.4
             if car[idx].curRound==car[carSelected].curRound:
                 draw(self.spriteLose[int(self.curSprite)],self.portalX,self.y-screen.get_height()/20)
-            if distance(car[idx].x,car[idx].y,self.portalX,self.y)>250:
+            if distance(car[idx].x,car[idx].y,self.portalX,self.y)>screen.get_width()/4:
                 self.openPortal=0
         def flash(self,idx):
             car[idx].x+=screen.get_width()/6
@@ -433,7 +431,7 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
             h = screen.get_height()
             for i in range(len(self.spriteWheel)):
                 self.spriteWheel[i] = pygame.transform.scale(self.spriteWheel[i],(w/12.5,h/12))
-            global oldWidth,first_velocity,second_velocity
+            global first_velocity,second_velocity
             self.x = self.x * screen.get_width() / oldWidth
             self.y=h/self.ratio
 
@@ -684,7 +682,7 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
                     item[i].velocity = car[i].velocity
                 #resize countdown
                 countdownbg=pygame.transform.scale(pygame.image.load("img/mics/testbg.png"),(screen.get_width(),screen.get_height()/2)).convert()
-                countdownbg.set_alpha(200)    
+                countdownbg.set_alpha(100)    
                 #resize rank
                 for i in range(5):
                     rankImg[i] = pygame.transform.scale(rankImg[i],(screen.get_width()/25,screen.get_height()/10))
@@ -836,7 +834,7 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
                     if i == pickedCar and useMys == 1:
                         useMys = 0
                     picked=random.randint(0,99)
-                    #picked =26
+                    picked =24
                     if picked < 25:
                         if i == pickedCar:
                             if store.removeEffect == 0:
@@ -863,8 +861,10 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
                         item[i].win(i)
                         item[i].portalX=car[i].x+screen.get_width()/5
                     elif picked<=79:
+                        print("1")
                         if i == pickedCar:
                             if store.removeEffect == 0:
+                                print("2")
                                 item[i].lose(i)
                                 item[i].portalX=car[i].x+screen.get_width()/5
                             else:
@@ -915,4 +915,4 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
         pygame.display.update()
 
     pygame.quit()
-play(0,0,0,0,0,0,"NotTun")
+play((1024,534),0,0,0,0,0,"NotTun")

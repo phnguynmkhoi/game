@@ -34,7 +34,7 @@ def responseChat(review_list):
           clean.append(new_w)
       clean_reviews.append(clean)
     return clean_reviews
-
+  review_list.append(["ok",0])
   #sua review_list
   # review_list = [["Game hay vai",0],["Game hay",0],["Không ổn cho lắm",0],["Chán",0]]
   # print(type(review_list))
