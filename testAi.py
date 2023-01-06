@@ -56,18 +56,24 @@ def responseChat(review_list):
   reviewtemp=reviews_input
   for i in range (1,len(review_list)):
     b=reviewtemp[i].split(" ")
+    temp1=""
     for j in b:
-      if j in ["chán", "Chán", "Xui", "xui", "dở", "Dở", "tệ", "Tệ", "cặc", "buồi", "lồn"]:
+      if j in ["chán", "Chán", "Xui", "xui", "dở", "Dở", "tệ", "Tệ", "hèn", "Hèn", "ngu", "Ngu", "Xấu","xấu"]:
         print(j)
+        temp1=j
         happiness+=-1
         break
-      elif j in ["Hên", "hên","tuyệt", "vời", "haha"]:
+      elif j in ["Hên", "hên","tuyệt", "vời", "haha", "đã", "Đã","ngon","Ngon"]:
         print(j)
+        temp1=j
         happiness+=1
         break
-      else:
-        happiness += np.argmax(prediction[i])-1
-        break
+    if temp1 in ["chán", "Chán", "Xui", "xui", "dở", "Dở", "tệ", "Tệ", "hèn", "Hèn", "ngu", "Ngu", "Xấu","xấu","Hên", "hên","tuyệt", "vời", "haha", "đã", "Đã","ngon","Ngon"]:
+      continue
+    else:
+      print(reviews_input[i])
+      print(np.argmax(prediction[i]))
+      happiness += np.argmax(prediction[i])-1
   if len(review_list) > 1:
     happiness=happiness/(len(review_list)-1)
     if -0.2<happiness<0.2:
