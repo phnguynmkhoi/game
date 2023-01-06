@@ -262,19 +262,19 @@ def choose_track(screen, username, selection_track):
 
     if SET_OBJECT[0].collidepoint(mouse): 
         click_sound.play()
-        function.choose_track(screen, username, 0)
+        function.choose_track(screen, username, 1)
     if SET_OBJECT[1].collidepoint(mouse): 
         click_sound.play()
-        function.choose_track(screen, username, 1)
+        function.choose_track(screen, username, 2)
     if SET_OBJECT[2].collidepoint(mouse): 
         click_sound.play()
-        function.choose_track(screen, username, 2)
+        function.choose_track(screen, username, 3)
     if SET_OBJECT[3].collidepoint(mouse): 
         click_sound.play()
-        function.choose_track(screen, username, 3)
+        function.choose_track(screen, username, 4)
     if SET_OBJECT[4].collidepoint(mouse): 
         click_sound.play()
-        function.choose_track(screen, username, 4)
+        function.choose_track(screen, username, 5)
     
     Width_1cell = WIDTH*0.12
     Height_1cell = HEIGHT*0.1
@@ -373,19 +373,19 @@ def choose_set(screen, username, selection_track, selection_set,selection_char):
     
     if CHA_OBJECT[0].collidepoint(mouse): 
         click_sound.play()
-        function.choose_set(screen, username, selection_track,selection_set, 0)
+        function.choose_set(screen, username, selection_track,selection_set, 1)
     if CHA_OBJECT[1].collidepoint(mouse): 
         click_sound.play()
-        function.choose_set(screen, username, selection_track, selection_set, 1)
+        function.choose_set(screen, username, selection_track, selection_set, 2)
     if CHA_OBJECT[2].collidepoint(mouse): 
         click_sound.play()
-        function.choose_set(screen, username, selection_track, selection_set, 2)
+        function.choose_set(screen, username, selection_track, selection_set, 3)
     if CHA_OBJECT[3].collidepoint(mouse): 
         click_sound.play()
-        function.choose_set(screen, username, selection_track, selection_set, 3)
+        function.choose_set(screen, username, selection_track, selection_set, 4)
     if CHA_OBJECT[4].collidepoint(mouse): 
         click_sound.play()
-        function.choose_set(screen, username, selection_track, selection_set, 4)
+        function.choose_set(screen, username, selection_track, selection_set, 5)
     
     Width_1cell = WIDTH*0.2
     Height_1cell = HEIGHT*0.06
