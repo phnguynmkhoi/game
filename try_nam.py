@@ -453,7 +453,6 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
             for i in range(len(self.crowdImg)):
                 self.crowdImg[i] = pygame.transform.scale(self.crowdImg[i],(screen.get_width()/3,screen.get_height()/5))
     #Background INITIALIZATION
-    mode=2
     bg=[]
     NumRound=mode#Số round của game (2->4)
     mapp=['city','desert','galaxy','painting','sea']
@@ -586,7 +585,6 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     #    car[i].velocity = 1000
     #player car
     nameDisplay = []
-    print(pickedCar)
     for i in range(5):
         if i == pickedCar:
             nameDisplay.append(fontName.render(playerName,True,(0,255,255)))
@@ -612,7 +610,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
                 running = False
                 pygame.quit()
                 sys.exit()
-            #Nhap text                
+            #Nhap text
                         
             if event.type == pygame.MOUSEBUTTONUP:
                 if (pygame.mouse.get_pos()[0]>=chatWidthMin) and (pygame.mouse.get_pos()[0]<=chatWidthMax) and (pygame.mouse.get_pos()[1]>=chatHeightMin) and (pygame.mouse.get_pos()[1]<=chatHeightMax):
@@ -755,7 +753,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
                     else: 
                         textInside = fontRank.render(text_lose,True,(0,0,0))
                     screen.blit(pygame.transform.scale(textInside,(screen.get_width()/4,screen.get_height()/5)),(screen.get_width()/2.7,screen.get_height()/6))
-                 
+                    
             else :
                 happiness= fontResponse.render(chatResponse[responseChat(chatPredict)],True,(204, 51, 153))
                 for i in range(5):
@@ -838,7 +836,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
                     if i == pickedCar and useMys == 1:
                         useMys = 0
                     picked=random.randint(0,99)
-                    picked = 70
+                    #picked =26
                     if picked < 25:
                         if i == pickedCar:
                             if store.removeEffect == 0:
@@ -915,6 +913,6 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
                     rank+=1
                     pivotTime=curTime
         pygame.display.update()
-
+    return finished[pickedCar]
     pygame.quit()
 # play((1024,534),0,0,0,0,0,"NotTun")

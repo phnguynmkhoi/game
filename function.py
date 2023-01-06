@@ -186,19 +186,19 @@ def choose_track(screen, username, selection_track):
                     print(selection_set)
                     '''
                 if event.key == pygame.K_UP and selection_track ==4:
-                    selection_track = 1
+                    selection_track = 0
                     print(selection_track)
                 if event.key == pygame.K_UP and selection_track ==5:
-                    selection_track = 2
+                    selection_track = 1
                     print(selection_track)      
                 if event.key == pygame.K_DOWN and selection_track == 1:
-                    selection_track = 4
+                    selection_track = 2
                     print(selection_track)
                 if event.key == pygame.K_DOWN and selection_track == 2:
-                    selection_track = 4
+                    selection_track = 3
                     print(selection_track)
                 if event.key == pygame.K_DOWN and selection_track == 3:
-                    selection_track = 5
+                    selection_track = 4
                     print(selection_track)
                     
             if event.type == pygame.KEYDOWN:
