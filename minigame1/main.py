@@ -5,8 +5,12 @@ import pygame
 #intialize pygame
 pygame.init()
 
-def playminigame():
+
+
+def playminigame1():
     #Adjust to resize screen
+    global maxW,maxH,score,enemyEdge,laserState,playerX,eX,diLaserX,playerY,eY,diLaserY,dis,disX,disY,laserX,laserY,coinState,coinX,coinY,restart,difficulty
+    global alive,playerX,playerY,scoreText
     maxW,maxH=900,500   
     screen= pygame.display.set_mode((maxW,maxH))
 
@@ -31,7 +35,7 @@ def playminigame():
 
     #Score
     textX,textY=5,5
-    score=-1
+    score=0
     scoreText=font.render(("Coin:"+ str(score)),True,(255,255,255))
 
     #Coin
@@ -39,9 +43,9 @@ def playminigame():
     for i in range(8):
         img=f"minigame1/img/coin_{i}.png"
         coinImg.append(pygame.image.load(img))# Trying to add a gif instead of png file
-    coinX,coinY=0,0
     coinEdge=24
-    coinState=0
+    coinX,coinY=random.randint(6,maxW-coinEdge),random.randint(6,maxH-coinEdge)
+    coinState=1
     difficulty=0
     curSprite=0
 
@@ -77,8 +81,7 @@ def playminigame():
     print(fontI.size("Click anywhere to continue"))
     #Continue
 
-
-    def updateDisplay(State,x,y):
+    def draw(State,x,y):
         screen.blit(State,(x,y))
 
     def fire(i):
@@ -94,7 +97,7 @@ def playminigame():
     def newCoin():
         global coinX,coinY,score,coinState
         coinState=1
-        score+=1
+        # score+=1
         coinX=random.randint(6,maxW-coinEdge)
         coinY=random.randint(6,maxH-coinEdge)
 
@@ -130,7 +133,7 @@ def playminigame():
         bounce(len(eX)-1)
 
     def setRestart():
-        global score,alive,playerX,playerY,difficulty
+        global score,alive,playerX,playerY,difficulty,scoreText
         eX.clear()
         eY.clear()
         diX.clear()
@@ -143,11 +146,11 @@ def playminigame():
         disY.clear()
         diLaserX.clear()
         diLaserY.clear()
-        print (len(eX))
-        score=-1
+        score=0
         alive=1
         playerX,playerY= 268,250
         difficulty=0
+        scoreText=font.render(("Coin:"+ str(score)),True,(255,255,255))
         
     #Game Loop
     running= True
@@ -183,7 +186,7 @@ def playminigame():
                     changeY=0
         
         #increaseDifficulty
-        if score>=difficulty*5 and len(eX)<5:
+        if score>=difficulty*5 and len(eX)<5 and score>=1:
             difficulty+=1
             increaseDifficulty()
 
@@ -192,7 +195,7 @@ def playminigame():
             bounce(i)
             eX[i] += 0.1*(maxW/600)*diX[i]
             eY[i] += 0.1*(maxW/600)*diY[i]
-            updateDisplay(enemiesImg,eX[i],eY[i])
+            draw(enemiesImg,eX[i],eY[i])
 
         #laserMovement
         for i in range (len(laserX)):
@@ -204,7 +207,7 @@ def playminigame():
             laserX[i]+= 0.3*(maxW/600)*disX[i]/dis[i] * diLaserX[i]
             laserY[i]+= 0.3*(maxW/600)*disY[i]/dis[i] * diLaserY[i]
             if laserState[i]!=2:
-                updateDisplay(laserImg,laserX[i],laserY[i])
+                draw(laserImg,laserX[i],laserY[i])
 
         #Collision
         for i in range (len(eX)):
@@ -214,28 +217,30 @@ def playminigame():
                 timeCnt=pygame.time.get_ticks()
                 explodeSound.play()
                 
-        if isCollide(playerX,playerY,coinX,coinY) or score==-1:
-            newCoin()
+        if isCollide(playerX,playerY,coinX,coinY) and coinState==1 :
+            score+=1
+            coinState=0
             scoreText=font.render(("Coin: "+ str(score)),True,(255,255,255))
+            newCoin()
 
-        if curSprite>=8:
+        if curSprite>=8 and coinState==1:
             curSprite=0    
         curSprite+=0.014
-        updateDisplay(coinImg[int(curSprite)%7],coinX,coinY)
+        draw(coinImg[int(curSprite)%7],coinX,coinY)
 
         #playerMovement
         if alive==1:
-            updateDisplay(playerImg,playerX,playerY)
+            draw(playerImg,playerX,playerY)
         else :
             # Lose
             
             if curTime - timeCnt <=1000:
-                updateDisplay(explode,playerX-48,playerY-48)
+                draw(explode,playerX-48,playerY-48)
             elif curTime- timeCnt >=1500:
-                updateDisplay(gameover,270,70)
+                draw(gameover,270,70)
             if curTime-timeCnt >=2000:
                 restart=1
-                updateDisplay(restartText,305,360)
+                draw(restartText,305,360)
             changeX,changeY=0,0
             
         if 0<playerX+changeX<maxW-laserEdge:
@@ -243,10 +248,10 @@ def playminigame():
         if 0<playerY+changeY<maxH-laserEdge:
             playerY+=changeY
         #Score
-        updateDisplay(scoreText,textX,textY)
+        draw(scoreText,textX,textY)
         #Time
         curTime=pygame.time.get_ticks()
 
         pygame.display.update()
         # break
-
+playminigame1()

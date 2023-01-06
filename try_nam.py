@@ -600,6 +600,7 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
     chatHeightMax = screen.get_height()/4.9+screen.get_height()/35
     chatChecked = 0
     chatPredict.append(["trung lập",1])
+    chat.activeInput = 0
     running = True
     while running:
         if curTime-pivotTime>100000:
@@ -837,7 +838,7 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
                     if i == pickedCar and useMys == 1:
                         useMys = 0
                     picked=random.randint(0,99)
-                    picked =24
+                    picked = 70
                     if picked < 25:
                         if i == pickedCar:
                             if store.removeEffect == 0:
@@ -864,10 +865,8 @@ def play(screen,mapSelected,pickedCar,transSelected,mode,manhinh,playerName):
                         item[i].win(i)
                         item[i].portalX=car[i].x+screen.get_width()/5
                     elif picked<=79:
-                        print("1")
                         if i == pickedCar:
                             if store.removeEffect == 0:
-                                print("2")
                                 item[i].lose(i)
                                 item[i].portalX=car[i].x+screen.get_width()/5
                             else:
