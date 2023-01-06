@@ -602,6 +602,47 @@ def main_menu(screen, selection,LeaF,Background,moving_sprite,player):
             temp_leaf = leaf()
             LeaF[i] = temp_leaf
 
+def help(screen, usernane, selection_help):
+    WIDTH, HEIGHT = screen.get_size()
+    Width_1cell = WIDTH*0.18
+    Height_1cell = HEIGHT*0.1
+    help_width = WIDTH*0.6
+    help_height = HEIGHT*0.8
+    Left = (WIDTH*0.5) - Width_1cell/2
+    Top = HEIGHT*0.8
+    
+    bg_help = pygame.image.load('Image/assets/Options/bg1.png')
+    bg_help = pygame.transform.scale(bg_help, (WIDTH, HEIGHT))
+    
+    OK = pygame.image.load('Image/assets/SetMenu/Back.png')
+    OK = pygame.transform.scale(OK, (Width_1cell,Height_1cell))
+    
+    Arrow_next = pygame.image.load('Image/assets/Help/left.png')
+    Arrow_next = pygame.transform.scale(Arrow_next, (Height_1cell,Height_1cell))
+    Arrow_back = pygame.image.load('Image/assets/Help/right.png')
+    Arrow_back = pygame.transform.scale(Arrow_back, (Height_1cell,Height_1cell))
+    
+    help = pygame.image.load('Image/assets/Help/Help2/' + str(selection_help) +'.png')
+    help = pygame.transform.scale(help, (WIDTH, HEIGHT))
+    
+    screen.blit(help, (0,0))
+    
+    # MINIGAME OBJECT
+    HELP_OBJECT = [
+    pygame.Rect(WIDTH*0.12, HEIGHT*0.45, Height_1cell, Height_1cell),
+    pygame.Rect(WIDTH*0.88 - Height_1cell, HEIGHT*0.45, Height_1cell, Height_1cell),
+    pygame.Rect(Left, Top, Width_1cell, Height_1cell)]
+    
+    # MINIGAME LOCATION
+    HELP_LOC = [
+    (WIDTH*0.12, HEIGHT*0.45),
+    (WIDTH*0.88 - Height_1cell, HEIGHT*0.45),
+    (Left, Top)]
+    
+    screen.blit(Arrow_back, HELP_LOC[0])
+    screen.blit(Arrow_next, HELP_LOC[1])
+    screen.blit(OK, HELP_LOC[2])
+
 def minigame(screen, usernane):
     WIDTH, HEIGHT = screen.get_size()
     Width_1cell = WIDTH*0.14
@@ -704,7 +745,7 @@ def options(screen, username):
     else:
         screen.blit(button_light, (WIDTH*0.7, Top+1*(Height_1Cell+Range)))
         screen.blit(OFF, (WIDTH*0.7, Top+1*(Height_1Cell+Range)))
-        
+
 def choose_bet(screen, set_char, char_name, rename, tiencuoc, mode):
     WIDTH, HEIGHT = screen.get_size()
     background = pygame.image.load('Image/bet/choose_bet.png').convert()
@@ -861,7 +902,7 @@ def choose_bet(screen, set_char, char_name, rename, tiencuoc, mode):
     pygame.transform.scale(mode4, (WIDTH*0.1, HEIGHT*0.08)),
     pygame.transform.scale(mode5, (WIDTH*0.1, HEIGHT*0.08)),
     pygame.transform.scale(mode6, (WIDTH*0.1, HEIGHT*0.08))]
-    checkmode = [2,5,10]
+    checkmode = [2,3,4]
     mouse = pygame.mouse.get_pos()
     
     for i in range(0, 3):

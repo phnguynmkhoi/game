@@ -23,11 +23,12 @@ def tongket(rank, manvcuoc, manvdoan, tongtien, tiencuoc):
     thongtin = rank + (checkwin, checkdoan, tongtien, tiengiaodong)
     return thongtin
 
-def gameplaymain(screen,track,username, nvcuoc, tennv, tiencuoc, tile, modedua):
+def gameplaymain(screen, username,selection_track, nvcuoc, tennv, tiencuoc, tile, modedua):
     tongtien = ioexcel.layTongtien(username)
-    trave = try_nam.play(screen,track, nvcuoc,tile,modedua,0,tennv)
-    thongtin = tongket(trave,nvcuoc,tongtien,tiencuoc)
-    ioexcel.writefile(username, luotdau)
-    ioexcel.cout(username)
-    function.score(screen, username, thongtin,tennv,nvcuoc,tile)
+    # trave = try_nam.play(screen,selection_track,nvcuoc/10,nvcuoc%10,modedua,username,tennv)
+    #trave = gameplay.game(screen, nvcuoc,tile,modedua,0,tennv)
+    # thongtin = tongket(trave,nvcuoc,tongtien,tiencuoc)
+    # ioexcel.writefile(username, luotdau)
+    # ioexcel.cout(username)
+    # function.score(screen, username, thongtin,tennv,nvcuoc,tile)
     # game_over_situation(thongtin,tennv,nvcuoc,tile)

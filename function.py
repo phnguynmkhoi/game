@@ -164,7 +164,7 @@ def choose_track(screen, username, selection_track):
                 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 #if minigame == 0: 
-                    #click.choose_set(screen, username,selection_set,selection_char)
+                    #click.choose_set(screen, username,selection_track, selection_set,selection_char)
                 #if minigame == 1:
                     #click.minigame(screen, username)
                 click.choose_track(screen,username,selection_track)
@@ -215,7 +215,7 @@ def choose_track(screen, username, selection_track):
         pygame.display.update()
         clock.tick(100)
 
-def choose_set(screen, username, selection_set, selection_char):
+def choose_set(screen, username, selection_track,selection_set, selection_char):
     global mode
     while True:
         cost = 0
@@ -226,7 +226,7 @@ def choose_set(screen, username, selection_set, selection_char):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 #if minigame == 0: 
-                    click.choose_set(screen, username,selection_set,selection_char)
+                    click.choose_set(screen, username,selection_track,selection_set,selection_char)
                 #if minigame == 1:
                     #click.minigame(screen, username)
             if event.type == pygame.KEYDOWN:
@@ -267,7 +267,7 @@ def choose_set(screen, username, selection_set, selection_char):
         pygame.display.update()
         clock.tick(100)
 
-def choose_bet(screen, username, set_char, char_name, rename, cost, mode):
+def choose_bet(screen, username, selection_track,set_char, char_name, rename, cost, mode):
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -275,7 +275,7 @@ def choose_bet(screen, username, set_char, char_name, rename, cost, mode):
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                click.bet(screen, username, set_char, char_name, rename, cost, mode)
+                click.bet(screen, username,selection_track, set_char, char_name, rename, cost, mode)
             if event.type == pygame.KEYDOWN:
                 if rename == 1 and len(char_name) < 10:
                     if event.key == pygame.K_BACKSPACE:
@@ -284,7 +284,7 @@ def choose_bet(screen, username, set_char, char_name, rename, cost, mode):
                         char_name += event.unicode 
                 if event.key == pygame.K_BACKSPACE:
                     char_name = char_name[:-1]                   
-        newdraw.choose_bet(screen, set_char,char_name, rename, cost, mode)
+        newdraw.choose_bet(screen,set_char,char_name, rename, cost, mode)
         newdraw.money(screen, username)
         pygame.display.update()
         clock.tick(60)
@@ -335,7 +335,33 @@ def history(screen, username):
         pygame.display.update()
         clock.tick(60)
 
-def gameplay(screen, username, set_char, char_name, rename, cost, mode):
+def help(screen, username, selection_help, goback):
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                ioexcel.writeExcel()
+                pygame.quit()
+                sys.exit()
+            if event.type == MOUSEBUTTONDOWN:
+                click.help(screen, username, selection_help, goback)
+        
+        newdraw.help(screen, username, selection_help)
+        pygame.display.update()
+        clock.tick(60)
+
+def score(screen, username, thongtin,tennv,nvcuoc,tile):
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            ioexcel.writeExcel()
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            click.score(screen, username, thongtin,tennv,nvcuoc,tile)
+        if event.type == pygame.KEYDOWN: pass
+    
+    maingameplay.game_over_situation(screen, username, thongtin,tennv,nvcuoc,tile)
+
+def gameplay(screen, username,selection_track, set_char, char_name, rename, cost, mode):
     WIDTH, HEIGHT = screen.get_size()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -343,7 +369,7 @@ def gameplay(screen, username, set_char, char_name, rename, cost, mode):
             pygame.quit()
             sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
-            click.bet(screen, username, set_char, char_name, rename, cost, mode)
+            click.bet(screen, username, selection_track,set_char, char_name, rename, cost, mode)
         if event.type == pygame.KEYDOWN:
             if rename == 1 and len(char_name) < 10:
                 if event.key == pygame.K_BACKSPACE:
@@ -351,4 +377,4 @@ def gameplay(screen, username, set_char, char_name, rename, cost, mode):
                 else:
                     char_name += event.unicode
     
-    maingameplay.gameplaymain(screen, username, str(set_char), char_name, str(set_char), cost, WIDTH/1920, mode)
+    maingameplay.gameplaymain(screen,selection_track, username, str(set_char), char_name, cost, WIDTH/1920, mode)
