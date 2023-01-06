@@ -15,7 +15,7 @@ MAX_VOCAB_SIZE = 10000 # HOW MANY UNIQUE WORDS TO USE
 MAX_SEQUENCE_LENGTH = 300 # MAX NUMBER OF WORDS IN A COMMENT TO USE
 
 def responseChat(review_list):
-  # review_list = [["Game chán vãi",0],["Game hay",0],["Không ổn cho lắm",0],["Chán",0]]
+  review_list = [["Game chán vãi",0],["Game hay",0],["Không ổn cho lắm",0],["Chán",0]]
   data_input = pd.DataFrame(review_list, columns = ['Text', 'Label'])
 
   labels_input = data_input.iloc[:, 1].values
@@ -53,7 +53,12 @@ def responseChat(review_list):
 
   #Xuat predic
   happiness=0
+  reviewtemp=reviews_input
   for i in range (1,len(review_list)):
+    b=reviewtemp[i].split(" ")
+    for j in b:
+      if j=="chán":
+        a=0
     print(reviews_input[i])
     print(np.argmax(prediction[i]))
     happiness += np.argmax(prediction[i])-1
@@ -67,3 +72,5 @@ def responseChat(review_list):
       return -1
   else:
     return 0
+
+responseChat("a")
