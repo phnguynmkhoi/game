@@ -354,10 +354,13 @@ def choose_track(screen, username, selection_track):
     pygame.Rect(Right-Width_1cell,Top,                             Width_1cell,2*Height_1cell),
     pygame.Rect(Left,             Top+(Height_1cell + Range_2cell),Width_1cell,Height_1cell)]
     if selection_track >=1 and selection_track <=5:
-        if ioexcel.layTongtien(username) >= 100:
-            if MENU_OBJECT[1].collidepoint(mouse):
+        if MENU_OBJECT[1].collidepoint(mouse):
+            if ioexcel.layTongtien(username) >= 100:
                 click_sound.play()
-                function.choose_minigame(screen,username,selection_mini=0)
+                function.choose_set(screen,username,selection_track,0,0)
+            else :
+                click_sound.play()
+                function.choose_track(screen,username,selection_track,1)
     if MENU_OBJECT[0].collidepoint(mouse): 
         click_sound.play()
         function.main_menu(screen, username, 0)

@@ -939,8 +939,10 @@ def choose_bet(screen, set_char, char_name, rename, tiencuoc, mode):
     pygame.transform.scale(bet5, (WIDTH*0.15, HEIGHT*0.1)),
     pygame.transform.scale(bet6, (WIDTH*0.15, HEIGHT*0.1))]
     
-    start     = pygame.image.load('Image/assets/Mode/play1.png')
+    start     = pygame.image.load('Image/assets/SetMenu/START.png') # start luc dau
     start     = pygame.transform.scale(start, (WIDTH*0.18, HEIGHT*0.15))
+    start1 = pygame.image.load('Image/assets/Mode/start-hover.png') # start luc sau
+    start1    = pygame.transform.scale(start, (WIDTH*0.18, HEIGHT*0.15))
     
     START_OBJECT = (5*WIDTH*0.13 + 100,HEIGHT*0.71,WIDTH*0.18, HEIGHT*0.15)
     screen.blit(start, (START_OBJECT[0], START_OBJECT[1]))
