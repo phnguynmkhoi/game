@@ -154,6 +154,108 @@ def store(screen, username, cart):
                 screen.blit(cart_item, (Left,Top))
                 Top += WIDTH*0.08
 
+def choose_minigame (screen,username,selection_mini):
+    WIDTH, HEIGHT = screen.get_size()
+    # image
+    background = pygame.image.load('Image/choose mini/choose mini.png').convert()
+    background = pygame.transform.scale(background, (WIDTH, HEIGHT))
+
+    screen.blit(background, (0,0))
+
+    # SET-BOARD LOCATION
+    Width_1cell = WIDTH*0.16
+    Height_1cell = HEIGHT*0.16
+    Range_2cell = (HEIGHT*0.6-3*Height_1cell)/2
+    Left = WIDTH*0.16
+    Right = Left + Width_1cell
+    Top = HEIGHT*0.3
+
+    # LOAD IMAGE
+    arrow = pygame.image.load('Image/assets/SetMenu/arrow.png')
+    arrow = pygame.transform.scale(arrow, (Height_1cell, Height_1cell))
+    minigame_1_img = pygame.image.load('minigame1/mini1.png')
+    minigame_2_img = pygame.image.load('minigame1/mini1.png')
+    minigame_01_img = pygame.image.load('minigame1/mini1.png')
+    minigame_02_img = pygame.image.load('minigame1/mini1.png')
+    # MINIGAME IMAGE
+    minigame_img = [ 
+    pygame.transform.scale(minigame_1_img, (Width_1cell*1.5, Height_1cell*2)),
+    pygame.transform.scale(minigame_2_img, (Width_1cell*1.5, Height_1cell*2)),
+    ]
+    minigame_click =[
+    pygame.transform.scale(minigame_01_img, (Width_1cell*1.5, Height_1cell*2)),
+    pygame.transform.scale(minigame_02_img, (Width_1cell*1.5, Height_1cell*2)),
+    ]
+    
+    # SET OBJECT BUTTON
+    SET_OBJECT = [
+    pygame.Rect(Left,Top                                                           ,Width_1cell*1.5, Height_1cell*2),
+    pygame.Rect(Left+2*(Width_1cell+Range_2cell),Top                                 ,Width_1cell*1.5,Height_1cell*2)]
+    
+    # SET LOCATION
+    SET_LOCATION = [
+    (Left,Top),
+    (Left+2*(Width_1cell+Range_2cell),Top)
+    ]
+    
+    # MOUSE LOCATION
+    mouse = pygame.mouse.get_pos()
+    # SET LIST===========================================================================
+    
+    for i in range(0, len(SET_OBJECT)):
+        if SET_OBJECT[i].collidepoint(mouse) or selection_mini == i+1:
+            selection_mini == i+1
+            screen.blit(minigame_click[i], (SET_LOCATION[i][0],SET_LOCATION[i][1]-10))
+            #screen.blit(set_img[5], SET_LOCATION[i])
+            #screen.blit(arrow, (WIDTH*0.62, Top))
+        else:
+            screen.blit(minigame_img[i], SET_LOCATION[i])
+        Top += Height_1cell + Range_2cell
+    # ====================================================================================
+    
+    # MENU-BOARD LOCATION
+    Width_1cell = WIDTH*0.15
+    Height_1cell = HEIGHT*0.08
+    Range_2cell = HEIGHT*0.02
+    Left = WIDTH*0.1
+    Right = WIDTH*0.9
+    Top = HEIGHT*0.75
+    # Truoc khi click
+    Back = pygame.image.load('img/background-menus/buttons/7.png')
+    Play = pygame.image.load('img/background-menus/buttons/1.png')
+    # Sau khi click
+    Back1 = pygame.image.load('img/background-menus/buttons/07.png')
+    Play1 = pygame.image.load('img/background-menus/buttons/01.png')
+
+    MENU_IMG = [
+    pygame.transform.scale(Back, (Width_1cell, Height_1cell)),
+    pygame.transform.scale(Play, (Width_1cell, Height_1cell)),
+    #pygame.transform.scale(Help, (1.2*Width_1cell, 1.8*Height_1cell)),
+    ]
+
+    MENU_CLICK = [
+    pygame.transform.scale(Back1, (Width_1cell, Height_1cell)),
+    pygame.transform.scale(Play1, (Width_1cell, Height_1cell)),
+    #pygame.transform.scale(Help1, (1.2*Width_1cell, 1.8*Height_1cell))]
+    ]
+    # MENU LOCATION
+    MENU_LOCATION = [
+    (Left,Top),
+    (Right-Width_1cell*1.1,Top),
+    #(Left,Top+(Height_1cell + Range_2cell))]
+    ]
+    
+    # MENU OBJECT BUTTON
+    MENU_OBJECT = [
+    pygame.Rect(Left,Top  ,Width_1cell,Height_1cell),
+    pygame.Rect(Right-Width_1cell,Top,  Width_1cell,Height_1cell),
+    ]
+    for i in range(0, len(MENU_OBJECT)):
+        if MENU_OBJECT[i].collidepoint(mouse):
+            screen.blit(MENU_CLICK[i], MENU_LOCATION[i])
+        else:
+            screen.blit(MENU_IMG[i], MENU_LOCATION[i])
+
 def choose_track(screen,username,selection_track):
     WIDTH, HEIGHT = screen.get_size()
     # image

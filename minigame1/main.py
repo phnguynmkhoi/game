@@ -254,4 +254,4 @@ def minigame1():
 
         pygame.display.update()
         # break
-playminigame1()
+minigame1()
