@@ -68,7 +68,7 @@ def responseChat(review_list):
         temp1=j
         happiness+=1
         break
-    if temp1 in ["chán", "Chán", "Xui", "xui", "dở", "Dở", "tệ", "Tệ", "hèn", "Hèn", "ngu", "Ngu", "Xấu","xấu","Hên", "hên","tuyệt", "vời", "haha", "đã", "Đã","ngon","Ngon","lỗi","loi","Lỗi","may","May"]:
+    if temp1 in ["chán", "Chán", "Xui", "xui", "dở", "Dở", "tệ", "Tệ", "hèn", "Hèn", "ngu", "Ngu", "Xấu","xấu","Hên", "hên","tuyệt", "vời", "haha", "đã","chan","Chan", "Đã","ngon","Ngon","lỗi","loi","Lỗi","may","May"]:
       continue
     else:
       print(reviews_input[i])
