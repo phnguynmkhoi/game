@@ -171,8 +171,6 @@ def choose_minigame (screen,username,selection_mini):
     Top = HEIGHT*0.3
 
     # LOAD IMAGE
-    arrow = pygame.image.load('Image/assets/SetMenu/arrow.png')
-    arrow = pygame.transform.scale(arrow, (Height_1cell, Height_1cell))
     minigame_1_img = pygame.image.load('minigame1/mini1.png')
     minigame_2_img = pygame.image.load('minigame1/mini1.png')
     minigame_01_img = pygame.image.load('minigame1/mini1.png')

@@ -255,30 +255,25 @@ def choose_minigame(screen, username, selection_mini):
         click_sound.play()
         function.choose_minigame(screen, username, 1)
 
-    Width_1cell = WIDTH*0.12
-    Height_1cell = HEIGHT*0.1
-    Range_2cell = (HEIGHT*0.6-5*Height_1cell)/5
-    Left = WIDTH*0.78
-    Top = HEIGHT*0.08
     #========#
-    Width_1cell = WIDTH*0.2
-    Height_1cell = HEIGHT*0.06
+    Width_1cell = WIDTH*0.15
+    Height_1cell = HEIGHT*0.08
     Range_2cell = HEIGHT*0.02
     Left = WIDTH*0.1
     Right = WIDTH*0.9
-    Top = HEIGHT*0.77
+    Top = HEIGHT*0.75
     
     # MENU LOCATION
     MENU_LOCATION = [
     (Left,Top),
-    (Right-Width_1cell,Top),
-    (Left,Top+(Height_1cell + Range_2cell)),
-    (Right-Width_1cell,Top+(Height_1cell + Range_2cell))]
+    (Right-Width_1cell*1.1,Top),
+    #(Left,Top+(Height_1cell + Range_2cell))]
+    ]
     
     # MENU OBJECT BUTTON
     MENU_OBJECT = [
     pygame.Rect(Left,Top                                          ,Width_1cell,Height_1cell),
-    pygame.Rect(Right-Width_1cell,Top,                             Width_1cell,2*Height_1cell),
+    pygame.Rect(Right-Width_1cell,Top,                             Width_1cell,Height_1cell),
     #pygame.Rect(Left,             Top+(Height_1cell + Range_2cell),Width_1cell,Height_1cell)]
     ]
     if MENU_OBJECT[1].collidepoint(mouse):
