@@ -58,17 +58,17 @@ def responseChat(review_list):
     b=reviewtemp[i].split(" ")
     temp1=""
     for j in b:
-      if j in ["chán", "Chán", "Xui", "xui", "dở", "Dở", "tệ", "Tệ", "hèn", "Hèn", "ngu", "Ngu", "Xấu","xấu"]:
+      if j in ["chán", "Chán", "Xui", "xui", "dở", "Dở", "tệ", "Tệ", "hèn", "Hèn", "ngu", "Ngu", "Xấu","xấu","chan","Chan","lỗi","loi","Lỗi"]:
         print(j)
         temp1=j
         happiness+=-1
         break
-      elif j in ["Hên", "hên","tuyệt", "vời", "haha", "đã", "Đã","ngon","Ngon"]:
+      elif j in ["Hên", "hên","tuyệt", "vời", "haha", "đã", "Đã","ngon","Ngon","may","May"]:
         print(j)
         temp1=j
         happiness+=1
         break
-    if temp1 in ["chán", "Chán", "Xui", "xui", "dở", "Dở", "tệ", "Tệ", "hèn", "Hèn", "ngu", "Ngu", "Xấu","xấu","Hên", "hên","tuyệt", "vời", "haha", "đã", "Đã","ngon","Ngon"]:
+    if temp1 in ["chán", "Chán", "Xui", "xui", "dở", "Dở", "tệ", "Tệ", "hèn", "Hèn", "ngu", "Ngu", "Xấu","xấu","Hên", "hên","tuyệt", "vời", "haha", "đã", "Đã","ngon","Ngon","lỗi","loi","Lỗi","may","May"]:
       continue
     else:
       print(reviews_input[i])
