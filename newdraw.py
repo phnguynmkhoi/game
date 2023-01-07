@@ -96,7 +96,7 @@ def store(screen, username, cart):
     (CENTER - 2*Width_1Cell , HEIGHT*0.05+2*Height_1Cell*3/5),
     (CENTER - 2*Width_1Cell , HEIGHT*0.05+3*Height_1Cell*3/5),]
     #vị trí seller
-    saler_loc = (CENTER - 2*Width_1Cell+650 , HEIGHT*0.15+100)
+    saler_loc = (CENTER + Width_1Cell*3/2 , HEIGHT*0.3)
 
     ITEM_OBJ = [
     pygame.Rect(CENTER - 2*Width_1Cell , HEIGHT*0.05,                    Width_1Cell, Height_1Cell*2/5),
@@ -138,9 +138,9 @@ def store(screen, username, cart):
             screen.blit(ITEM_CLICK[i], ITEM_LOC[i])
             screen.blit(NAME_ITEMS[i], (ITEM_LOC[i][0]+Width_1Cell, ITEM_LOC[i][1]+Height_1Cell/6))
             screen.blit(SALER_IMG[i],saler_loc)
-            screen.blit(msg,(ITEM_LOC[0][0]+470, ITEM_LOC[0][1] + Height_1Cell*0.3))
+            screen.blit(msg,(ITEM_LOC[0][0]+Width_1Cell*2, ITEM_LOC[0][1] + Height_1Cell*0.3))
             #screen.blit(MSG_ITEMS[i],(ITEM_LOC[0][0]+505, ITEM_LOC[0][1] + Height_1Cell*0.8-100))
-            screen.blit(message,(ITEM_LOC[0][0]+505, ITEM_LOC[0][1] + Height_1Cell*0.5))
+            screen.blit(message,(ITEM_LOC[0][0]+Width_1Cell*2, ITEM_LOC[0][1] + Height_1Cell*0.5))
             pygame.time.wait(200)
         else:
             screen.blit(ITEM_IMG[i], ITEM_LOC[i])
