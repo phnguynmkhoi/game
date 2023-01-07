@@ -4,14 +4,14 @@ username = str()
 def xuli():
     window = Tk()
     window.title('LOGIN N4')
-    window.geometry('500x300')
-
+    window.geometry('400x500')
+    window.configure(bg="#1a000d")
     #o username
-    lb1 = Label(window,text = 'Username:').place(x=100,y=20)
+    lb1 = Label(window,text = "Username:").place(x=100,y=20)
     username_box = Entry(window, width=20)
     username_box.place(x=165,y=20)
     #o password
-    lb2 = Label(window,text = 'Password').place(x=100,y=50)
+    lb2 = Label(window,text = "Password").place(x=100,y=50)
     password_box = Entry(window,width=20,show='*')
     password_box.place(x=165,y=50)
     tb = Label(window)

@@ -7,6 +7,8 @@ import math
 from testAi import responseChat
 pygame.init()
 def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
+    # print(type(screen))
+    # return
     pygame.mixer.music.load('sounds/backgroundmusic.wav')
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.2)
@@ -21,7 +23,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     rotateChecked = 0
     rotateCount = 0
     #set screen
-    WIDTH,HEIGHT = screen[0],screen[1]
+    WIDTH,HEIGHT = screen.get_size()
     screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.RESIZABLE)
     #set caption and icon and image and font
     pygame.display.set_caption("Game cua nha cai den tu Chau Au")

@@ -18,7 +18,7 @@ def main():
         WIDTH = 1024
         HEIGHT = 534
         RESOLUTION = (WIDTH,HEIGHT)
-        ioexcel.laythongtin(username)
+        ioexcel.laythongtin(username)   
         screen = pygame.display.set_mode(RESOLUTION)
         newdraw.fadein(screen)
         mixer.music.load('Music/bgm_menu.mp3')
@@ -29,4 +29,4 @@ def main():
         
 screen = (1024,534)
 main()
-try_nam.play(screen,2,3,4,4,0,"Tung")
+# try_nam.play(screen,2,3,4,4,0,"Tung")
