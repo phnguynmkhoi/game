@@ -753,9 +753,9 @@ def minigame(screen, usernane):
     bg_mini = pygame.image.load('Image/assets/set_0.png.png')
     bg_mini = pygame.transform.scale(bg_mini, (WIDTH, HEIGHT))
     
-    Back = pygame.image.load('Image/assets/SetMenu/Back.png')
+    Back = pygame.image.load('Image/assets/SetMenu/back.png')
     Back = pygame.transform.scale(Back, (Width_1cell,Height_1cell))
-    minigame = pygame.image.load('Image/assets/SetMenu/Start.png')
+    minigame = pygame.image.load('Image/assets/SetMenu/start.png')
     minigame = pygame.transform.scale(minigame, (Width_1cell,Height_1cell))
     
     # MINIGAME OBJECT
