@@ -53,32 +53,36 @@ def store(screen, username, cart):
     
     back = pygame.image.load('Image/assets/SetMenu/Back.png')
     back = pygame.transform.scale(back, (WIDTH*0.15, HEIGHT*0.1))
-    '''
-    price_light = pygame.image.load('Image/assets/Options/silver.png')
-    price_light = pygame.transform.scale(price_light, (Width_1Cell/2, Height_1Cell/2))
-    price_dark  = pygame.image.load('Image/assets/Options/blue.png')
-    price_dark  = pygame.transform.scale(price_dark, (Width_1Cell/2, Height_1Cell/2))
-    
-    cart_bg  = pygame.image.load('Image/assets/Options/blue.png')
-    cart_bg  = pygame.transform.scale(cart_bg, (Width_1Cell/2, Height_1Cell/2))
-    '''
+
     item1 = pygame.image.load('Image/store/items/1.png')
     item2 = pygame.image.load('Image/store/items/2.png')
     item3 = pygame.image.load('Image/store/items/3.png')
     item4 = pygame.image.load('Image/store/items/4.png')
     
+    item01 = pygame.image.load('Image/store/items/1-hover.png')
+    item02 = pygame.image.load('Image/store/items/2-hover.png')
+    item03 = pygame.image.load('Image/store/items/3-hover.png')
+    item04 = pygame.image.load('Image/store/items/4-hover.png')
+
     saler1 = pygame.image.load('Image/store/saler1.png')
     saler2 = pygame.image.load('Image/store/saler2.png')
     saler3 = pygame.image.load('Image/store/saler3.png')
     saler4 = pygame.image.load('Image/store/saler4.png')
 
     ITEM_IMG = [
-    pygame.transform.scale(item1, (Width_1Cell*2/3, Height_1Cell*2/3)),
-    pygame.transform.scale(item2, (Width_1Cell*2/3, Height_1Cell*2/3)),
-    pygame.transform.scale(item3, (Width_1Cell*2/3, Height_1Cell*2/3)),
-    pygame.transform.scale(item4, (Width_1Cell*2/3, Height_1Cell*2/3)),
+    pygame.transform.scale(item1, (Width_1Cell, Height_1Cell*2/5)),
+    pygame.transform.scale(item2, (Width_1Cell, Height_1Cell*2/5)),
+    pygame.transform.scale(item3, (Width_1Cell, Height_1Cell*2/5)),
+    pygame.transform.scale(item4, (Width_1Cell, Height_1Cell*2/5)),
     ]
     
+    ITEM_CLICK =[
+    pygame.transform.scale(item01, (Width_1Cell, Height_1Cell*2/5)),
+    pygame.transform.scale(item02, (Width_1Cell, Height_1Cell*2/5)),
+    pygame.transform.scale(item03, (Width_1Cell, Height_1Cell*2/5)),
+    pygame.transform.scale(item04, (Width_1Cell, Height_1Cell*2/5)),
+    ]
+
     SALER_IMG = [
     pygame.transform.scale(saler1, (Width_1Cell*3/2, Height_1Cell*3/2)),
     pygame.transform.scale(saler2, (Width_1Cell*3/2, Height_1Cell*3/2)),
@@ -87,20 +91,20 @@ def store(screen, username, cart):
     ]
 
     ITEM_LOC = [
-    (CENTER - 2*Width_1Cell , HEIGHT*0.15-80),
-    (CENTER - 2*Width_1Cell , HEIGHT*0.15+100),
-    (CENTER - 2*Width_1Cell , HEIGHT*0.15+280),
-    (CENTER - 2*Width_1Cell , HEIGHT*0.15+450),]
+    (CENTER - 2*Width_1Cell , HEIGHT*0.05),
+    (CENTER - 2*Width_1Cell , HEIGHT*0.05+Height_1Cell*3/5),
+    (CENTER - 2*Width_1Cell , HEIGHT*0.05+2*Height_1Cell*3/5),
+    (CENTER - 2*Width_1Cell , HEIGHT*0.05+3*Height_1Cell*3/5),]
     #vị trí seller
     saler_loc = (CENTER - 2*Width_1Cell+650 , HEIGHT*0.15+100)
 
     ITEM_OBJ = [
-    pygame.Rect(CENTER - 2*Width_1Cell , HEIGHT*0.15-80, Width_1Cell*2/3, Height_1Cell*2/3),
-    pygame.Rect(CENTER - 2*Width_1Cell , HEIGHT*0.15+100, Width_1Cell*2/3, Height_1Cell*2/3),
-    pygame.Rect(CENTER - 2*Width_1Cell , HEIGHT*0.15+280, Width_1Cell*2/3, Height_1Cell*2/3),
-    pygame.Rect(CENTER - 2*Width_1Cell , HEIGHT*0.15+450, Width_1Cell*2/3, Height_1Cell*2/3)
+    pygame.Rect(CENTER - 2*Width_1Cell , HEIGHT*0.05,                    Width_1Cell, Height_1Cell*2/5),
+    pygame.Rect(CENTER - 2*Width_1Cell , HEIGHT*0.05+Height_1Cell*3/5,   Width_1Cell, Height_1Cell*2/5),
+    pygame.Rect(CENTER - 2*Width_1Cell , HEIGHT*0.05+2*Height_1Cell*3/5, Width_1Cell, Height_1Cell*2/5),
+    pygame.Rect(CENTER - 2*Width_1Cell , HEIGHT*0.05+3*Height_1Cell*3/5, Width_1Cell, Height_1Cell*2/5)
     ]
-    
+
     font = pygame.font.Font('Font/Gamefont.ttf', int(WIDTH*0.024))
     font2 = pygame.font.Font('Font/Gamefont.ttf', int(WIDTH*0.018))
     NAME_ITEMS = [
@@ -120,7 +124,7 @@ def store(screen, username, cart):
     message = font2.render(random.choice(messages_list),True,(35, 140, 0))
 
     Left = WIDTH*0.02
-    Top = HEIGHT*0.75-350
+    Top = HEIGHT*0.5
     # tạo khung msg
     msg = pygame.image.load('Image/Store/chat_box.png')
     msg = pygame.transform.scale(msg, (Width_1Cell*5/4, Height_1Cell))
@@ -131,22 +135,22 @@ def store(screen, username, cart):
     
     for i in range(0, len(ITEM_OBJ)):
         if ITEM_OBJ[i].collidepoint(mouse):
-            screen.blit(ITEM_IMG[i], ITEM_LOC[i])
-            screen.blit(NAME_ITEMS[i], (ITEM_LOC[i][0]+170, ITEM_LOC[i][1] + Height_1Cell*0.8-180))
+            screen.blit(ITEM_CLICK[i], ITEM_LOC[i])
+            screen.blit(NAME_ITEMS[i], (ITEM_LOC[i][0]+Width_1Cell, ITEM_LOC[i][1]+Height_1Cell/6))
             screen.blit(SALER_IMG[i],saler_loc)
-            screen.blit(msg,(ITEM_LOC[0][0]+470, ITEM_LOC[0][1] + Height_1Cell*0.8-180))
+            screen.blit(msg,(ITEM_LOC[0][0]+470, ITEM_LOC[0][1] + Height_1Cell*0.3))
             #screen.blit(MSG_ITEMS[i],(ITEM_LOC[0][0]+505, ITEM_LOC[0][1] + Height_1Cell*0.8-100))
-            screen.blit(message,(ITEM_LOC[0][0]+505, ITEM_LOC[0][1] + Height_1Cell*0.8-100))
-            pygame.time.wait(250)
+            screen.blit(message,(ITEM_LOC[0][0]+505, ITEM_LOC[0][1] + Height_1Cell*0.5))
+            pygame.time.wait(200)
         else:
             screen.blit(ITEM_IMG[i], ITEM_LOC[i])
-            screen.blit(NAME_ITEMS[i], (ITEM_LOC[i][0]+170, ITEM_LOC[i][1] + Height_1Cell*0.8-170))
+            screen.blit(NAME_ITEMS[i], (ITEM_LOC[i][0]+Width_1Cell, ITEM_LOC[i][1]+Height_1Cell/6))
             #screen.blit(saler0,(ITEM_LOC[i][0]+470, ITEM_LOC[i][1] + Height_1Cell*0.8-170))
     #giỏ hàng
     if cart != None:
         for i in range(0, int(len(cart)/2)):
             if Top>=(HEIGHT-WIDTH*0.08):
-                Top = HEIGHT*0.75-350
+                Top = HEIGHT*0.5
                 Left += WIDTH*0.08
             cart_item = pygame.image.load('Image/Store/eff/' + cart[2*i+1] + '.png')
             cart_item = pygame.transform.scale(cart_item, (HEIGHT/10, HEIGHT/10))
@@ -753,9 +757,9 @@ def minigame(screen, usernane):
     bg_mini = pygame.image.load('Image/assets/set_0.png.png')
     bg_mini = pygame.transform.scale(bg_mini, (WIDTH, HEIGHT))
     
-    Back = pygame.image.load('Image/assets/SetMenu/back.png')
+    Back = pygame.image.load('Image/assets/SetMenu/Back.png')
     Back = pygame.transform.scale(Back, (Width_1cell,Height_1cell))
-    minigame = pygame.image.load('Image/assets/SetMenu/start.png')
+    minigame = pygame.image.load('Image/assets/SetMenu/Start.png')
     minigame = pygame.transform.scale(minigame, (Width_1cell,Height_1cell))
     
     # MINIGAME OBJECT
