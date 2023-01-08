@@ -25,7 +25,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
         pickedCar=0
     elif pickedCar==4:
         pickedCar=2
-    color={0:"red", 1:"blue", 2:"yellow", 3:"green", 4:"pink"}
+    color={0:"blue", 1:"green", 2:"pink", 3:"red", 4:"yellow"}
     #System Time
     curTime=0
     pivotTime=pygame.time.get_ticks()
@@ -932,6 +932,5 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
                     pivotTime=curTime
         pygame.display.update()
     
-    pygame.quit()
     
 # play((1024,534),0,0,0,0,0,"NotTun")
