@@ -11,6 +11,8 @@ print(vatpham)
 def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     # print(type(screen))
     # return
+    #vatpham = list(ioexcel.laymabua())
+    #print(vatpham)
     global rank
     pygame.mixer.music.load('sounds/backgroundmusic.wav')
     pygame.mixer.music.play(-1)
@@ -469,7 +471,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     #Background INITIALIZATION
     bg=[]
     NumRound=mode#Số round của game (2->4)
-    NumRound=2#Số round của game (2->4)
+    #NumRound=2#Số round của game (2->4)
     mapp=['city','desert','galaxy','painting','sea']
     for i in range(5):
         bg.append([])
