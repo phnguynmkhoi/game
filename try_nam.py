@@ -767,7 +767,8 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
                         surf = fontRank.render(textInside,True,(255,255,255))
                     else: 
                         surf = fontRank.render(textInside,True,(0,0,0))
-                    draw(pygame.transform.scale(surf,(screen.get_width()/4,screen.get_height()/5)),(screen.get_width()-surf.get_width())/2,(screen.get_height()-surf.get_height())/2.3)
+                    surf=pygame.transform.scale(surf,(screen.get_width()/4,screen.get_height()/5))
+                    draw(surf,(screen.get_width()-surf.get_width())/2,(screen.get_height()-surf.get_height())/2.3)
             else :
                 happiness= fontResponse.render(chatResponse[responseChat(chatPredict)],True,(204, 51, 153))
                 for i in range(5):

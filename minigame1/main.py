@@ -163,12 +163,14 @@ def minigame1():
         #Event
         for event in pygame.event.get():
             if  event.type == pygame.QUIT:
+                pygame.mixer.music.pause()
                 running=False
             # if event.type== pygame.VIDEORESIZE:
             #     screen=pygame.display.set_mode((event.h,event.w),pygame.VIDEORESIZE)
-            if event.type== pygame.MOUSEBUTTONDOWN and restart==1:
-                setRestart()
-                restart=0
+            if event.type== pygame.KEYDOWN and event.key==pygame.K_ESCAPE :
+                pygame.mixer.music.pause()
+                return score
+                running=False
             if alive==1 and event.type== pygame.KEYDOWN:
                 if event.key== pygame.K_LEFT:
                     changeX-=0.5*(maxW/600)
@@ -254,4 +256,3 @@ def minigame1():
 
         pygame.display.update()
         # break
-minigame1()

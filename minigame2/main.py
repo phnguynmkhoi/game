@@ -227,6 +227,11 @@ def minigame2():
         ##   
         for event in pygame.event.get():
             if  event.type == pygame.QUIT:
+                pygame.mixer.music.pause()
+                running=False
+            if event.type== pygame.KEYDOWN and event.key==pygame.K_ESCAPE :
+                pygame.mixer.music.pause()
+                return score
                 running=False
             if event.type == pygame.KEYDOWN and end ==0:
                 if event.key==pygame.K_LEFT :
@@ -290,8 +295,3 @@ def minigame2():
             pivotTime=curTime
             enemy.append(newEnemy())
         pygame.display.update()
-
-minigame2()
-    
-    
-        

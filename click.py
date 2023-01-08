@@ -151,7 +151,7 @@ def help(screen, username, selection_help, goback):
             click_sound.play()
             function.help(screen, username, selection_help-1, goback)
     if HELP_OBJECT[1].collidepoint(mouse):
-        if selection_help <= 10:
+        if selection_help <= 7:
             click_sound.play()
             function.help(screen, username, selection_help+1, goback)
     if HELP_OBJECT[2].collidepoint(mouse):
@@ -207,6 +207,7 @@ def store(screen, username):
         function.choose_track(screen, username,0,0)
     
     giohang = ioexcel.laymabua()
+    print(ioexcel.laymabua())
     tongtien = ioexcel.layTongtien(username)
     if giohang == None:
         giohang = ''
@@ -281,11 +282,9 @@ def choose_minigame(screen, username, selection_mini):
         if selection_mini == 0:
             pass
             #Minigame 1 cho nay
-            minigame1.minigame1()
         if selection_mini == 1:
             pass
             #Minigame 2 cho nay
-            minigame2.minigame2()
     if MENU_OBJECT[0].collidepoint(mouse): 
         click_sound.play()
         function.main_menu(screen, username, 0)
@@ -574,7 +573,7 @@ def bet(screen, username,selection_track,set_char, char_name, rename, cost, mode
             #maingameplay.gameplaymain(screen, username,selection_track, set_char,char_name, tiencuoc, WIDTH/1920, chedo)
             tongtien = ioexcel.layTongtien(username)
             print(set_char)
-            rank = try_nam.play(screen,selection_track-1,int(set_char/10),set_char%10,mode,username,char_name)
+            rank = try_nam.play(screen,selection_track-1,int(set_char/10),set_char%10,chedo,username,char_name)
             if rank == 1:
                 ioexcel.tong_tien(username,0)
             else:
