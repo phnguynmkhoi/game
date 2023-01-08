@@ -72,7 +72,7 @@ def updatelichsu (name, luotdau): # trả về lịch sử được update sau k
         solanthua += 1
         thangthua = thangthua + ";0"
         tanggiam += ";" + str(luotdau[1])
-    nhanvat += ";"+luotdau[2]
+    nhanvat += ";"+str(luotdau[2])
     return (name, tongtien, soluot, solanthang, solanthua, thangthua, nhanvat, tanggiam)
 def writefile(name, luotdau):#ghi vào file userhistory sau 1 lượt, luotdau là thông tin sau khi chơi, update biến lichsu
     global lichsu

@@ -372,7 +372,7 @@ def score(screen, username, thongtin,tennv,nvcuoc,tile):
             click.score(screen, username, thongtin,tennv,nvcuoc,tile)
         if event.type == pygame.KEYDOWN: pass
     
-    maingameplay.game_over_situation(screen, username, thongtin,tennv,nvcuoc,tile)
+    #maingameplay.game_over_situation(screen, username, thongtin,tennv,nvcuoc,tile)
 
 def gameplay(screen, username,selection_track, set_char, char_name, rename, cost, mode):
     WIDTH, HEIGHT = screen.get_size()

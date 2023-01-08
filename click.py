@@ -558,7 +558,7 @@ def bet(screen, username,selection_track,set_char, char_name, rename, cost, mode
             """ if rank == 1:
                 ioexcel.tong_tien(username,tiencuoc)
             else:
-                ioexcel.tong_tien(username,-tiencuoc) """
+                ioexcel.tong_tien(username,-tiencuoc)  """
             thongtin = maingameplay.tongket(rank,set_char,tongtien,tiencuoc)
             ioexcel.writefile(username, luotdau)
             function.score(screen, username, thongtin,char_name,set_char,screen.get_size())

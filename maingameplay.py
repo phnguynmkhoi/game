@@ -19,7 +19,7 @@ def tongket(rank, manvcuoc, tongtien, tiencuoc):
     luotdau = (checkwin, tiengiaodong, manvcuoc)
     tongtien += tiengiaodong
     thongtin = tuple(str(rank)) + (checkwin, checkdoan, tongtien, tiengiaodong)
-    return thongtin
+    return thongtin 
 
 def gameplaymain(screen, username,selection_track, nvcuoc, tennv, tiencuoc, tile, modedua):
     tongtien = ioexcel.layTongtien(username)
