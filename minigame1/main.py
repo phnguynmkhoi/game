@@ -15,7 +15,7 @@ def minigame1():
     screen= pygame.display.set_mode((maxW,maxH))
 
     #Background
-    background= pygame.image.load("minigame1/img/starbg.jpg")
+    background= pygame.image.load("minigame1/img/bg.jpg")
     pygame.mixer.music.load('minigame1/soundEffect/background.wav')
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.05)
@@ -50,7 +50,7 @@ def minigame1():
     curSprite=0
 
     #Laser
-    laserImg=pygame.image.load("minigame1/img/medical.png")
+    laserImg=pygame.image.load("minigame1/img/asterisk.png")
     laserState=[]
     laserX,laserY=[],[]
     disX,disY,dis=[],[],[]
@@ -60,7 +60,7 @@ def minigame1():
     laserSound.set_volume(0.05)
 
     #Player
-    playerImg=pygame.image.load("minigame1/img/worldwide.png")
+    playerImg=pygame.image.load("minigame1/img/earth.png")
     playerX,playerY= 268,250
     changeX,changeY=0,0
     playerEdge=24
