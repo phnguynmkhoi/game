@@ -7,15 +7,13 @@ from keras.preprocessing.text import Tokenizer
 import pandas as pd
 import numpy as np
 from string import digits
-from pyvi import ViTokenizer
-from keras.preprocessing.text import Tokenizer
 
 EMBEDDING_DIM = 400 # HOW BIG IS EACH WORD VECTOR
 MAX_VOCAB_SIZE = 10000 # HOW MANY UNIQUE WORDS TO USE
 MAX_SEQUENCE_LENGTH = 300 # MAX NUMBER OF WORDS IN A COMMENT TO USE
 
 def responseChat(review_list):
-  # review_list = [["Game chán vãi",0],["Game hay",0],["Không ổn cho lắm",0],["Chán",0]]
+  review_list = [["Game chán vãi",0],["Game hay",0],["Không ổn cho lắm",0],["Chán",0]]
   data_input = pd.DataFrame(review_list, columns = ['Text', 'Label'])
 
   labels_input = data_input.iloc[:, 1].values
@@ -37,9 +35,7 @@ def responseChat(review_list):
     reviews_processed.append(review_cool_one)
 
   word_reviews = []
-  all_words =[]
   for review in reviews_processed:
-    review = ViTokenizer.tokenize(review.lower())
     word_reviews.append(review.split())
 
   tokenizer = Tokenizer()
@@ -89,4 +85,4 @@ def responseChat(review_list):
   else:
     return 0
 
-# responseChat("a")
+responseChat("a")
