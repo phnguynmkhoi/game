@@ -9,7 +9,6 @@ pygame.init()
 vatpham = tuple(ioexcel.laymabua())
 print(vatpham)
 def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
-    # print(pickedCar)
     global rank
     pygame.mixer.music.load('sounds/backgroundmusic.wav')
     pygame.mixer.music.play(-1)
@@ -24,7 +23,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
         pickedCar=0
     elif pickedCar==4:
         pickedCar=2
-    color={0:"red", 1:"blue", 2:"yellow", 3:"green", 4:"pink"}
+    color={0:"blue", 1:"green", 2:"pink", 3:"red", 4:"yellow"}
     #System Time
     curTime=0
     pivotTime=pygame.time.get_ticks()
@@ -467,7 +466,6 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     #Background INITIALIZATION
     bg=[]
     NumRound=mode#Số round của game (2->4)
-    # NumRound=2#Số round của game (2->4)
     mapp=['city','desert','galaxy','painting','sea']
     for i in range(5):
         bg.append([])

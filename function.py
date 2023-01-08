@@ -365,8 +365,6 @@ def score(screen, username, thongtin,tennv,nvcuoc,tile):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             ioexcel.writeExcel()
-            pygame.quit()
-            sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
             click.score(screen, username, thongtin,tennv,nvcuoc,tile)
         if event.type == pygame.KEYDOWN: pass
