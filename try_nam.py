@@ -535,10 +535,11 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
             item[i].spriteLaser.append(img)
 
     #store item initialization
-    buffSpeed = 0
-    buffEffect = 0
-    removeEffect = 0
-    mysteryBox = 1
+    maBua = [0,0,0,1]
+    buffSpeed = maBua[0]
+    buffEffect = maBua[1]
+    removeEffect = maBua[2]
+    mysteryBox = maBua[3]
     runRemoveEffect = 0
     countdownChecked = 0
     useMys = 0
