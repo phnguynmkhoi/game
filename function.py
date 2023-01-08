@@ -221,6 +221,8 @@ def choose_track(screen, username, selection_track,minigame):
                 if event.key == pygame.K_KP_ENTER: main_menu(screen, selection_main_menu = 0)
                 
         newdraw.choose_track(screen,username, selection_track)
+        if minigame != 0: 
+            newdraw.choose_minigame(screen, username,0)
         '''
         newdraw.choose_set(screen, username, selection_set, selection_char)
         newdraw.choose_char(screen, selection_set, selection_char)
@@ -372,7 +374,7 @@ def score(screen, username, thongtin,tennv,nvcuoc,tile):
             click.score(screen, username, thongtin,tennv,nvcuoc,tile)
         if event.type == pygame.KEYDOWN: pass
     
-    maingameplay.game_over_situation(screen, username, thongtin,tennv,nvcuoc,tile)
+    #maingameplay.game_over_situation(screen, username, thongtin,tennv,nvcuoc,tile)
 
 def gameplay(screen, username,selection_track, set_char, char_name, rename, cost, mode):
     WIDTH, HEIGHT = screen.get_size()
