@@ -934,6 +934,5 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
                     pivotTime=curTime
         pygame.display.update()
     
-    pygame.quit()
     
 # play((1024,534),0,0,0,0,0,"NotTun")

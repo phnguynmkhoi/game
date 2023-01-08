@@ -122,7 +122,7 @@ def help(screen, username, selection_help, goback):
             click_sound.play()
             function.help(screen, username, selection_help-1, goback)
     if HELP_OBJECT[1].collidepoint(mouse):
-        if selection_help <= 10:
+        if selection_help <= 9:
             click_sound.play()
             function.help(screen, username, selection_help+1, goback)
     if HELP_OBJECT[2].collidepoint(mouse):
@@ -131,37 +131,6 @@ def help(screen, username, selection_help, goback):
             function.main_menu(screen, username, 0)
         if goback == 1:
             function.choose_track(screen, username,0)
-
-def help(screen, username, selection_help, goback):
-    mouse = pygame.mouse.get_pos()
-    WIDTH, HEIGHT = screen.get_size()
-    Width_1cell = WIDTH*0.14
-    Height_1cell = HEIGHT*0.08
-    help_width = WIDTH*0.6
-    help_height = HEIGHT*0.8
-    Left = (WIDTH*0.5) - Width_1cell/2
-    Top = HEIGHT*0.8
-    
-    # MINIGAME OBJECT
-    HELP_OBJECT = [
-    pygame.Rect(WIDTH*0.12, HEIGHT*0.45, Height_1cell, Height_1cell),
-    pygame.Rect(WIDTH*0.88 - Height_1cell, HEIGHT*0.45, Height_1cell, Height_1cell),
-    pygame.Rect(Left, Top, Width_1cell, Height_1cell)]
-    
-    if HELP_OBJECT[0].collidepoint(mouse):
-        if selection_help >= 1:
-            click_sound.play()
-            function.help(screen, username, selection_help-1, goback)
-    if HELP_OBJECT[1].collidepoint(mouse):
-        if selection_help <= 7:
-            click_sound.play()
-            function.help(screen, username, selection_help+1, goback)
-    if HELP_OBJECT[2].collidepoint(mouse):
-        click_sound.play()
-        if goback == 0:
-            function.main_menu(screen, username, 0)
-        if goback == 1:
-            function.choose_track(screen, username, 0)
 
 def minigame(screen, username):
     WIDTH, HEIGHT = screen.get_size()
