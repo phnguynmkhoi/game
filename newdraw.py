@@ -865,7 +865,7 @@ def choose_bet(screen, set_char, char_name, rename, tiencuoc, mode):
     maintext_box  = pygame.image.load('Image/assets/set_0.png')
     maintext_box  = pygame.transform.scale(maintext_box, (WIDTH*0.3, HEIGHT*0.05))
 
-    set = 'set' + str(set_char//10)
+    set = 'set' + str(set_char//10+1)
     char0 = pygame.image.load('Image/Gameplay/'+ set + '/car0.png')
     char1 = pygame.image.load('Image/Gameplay/'+ set + '/car1.png')
     char2 = pygame.image.load('Image/Gameplay/'+ set + '/car2.png')
