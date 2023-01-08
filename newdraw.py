@@ -705,7 +705,7 @@ def main_menu(screen, selection,LeaF,Background,moving_sprite,player):
     
     # MENU===============================================================================
     for i in range(0, len(MENU_OBJECT)):
-        if  selection == i+1:
+        if MENU_OBJECT[i].collidepoint(mouse) or selection == i+1:
             screen.blit(MENU_Click[i], MENU_LOC[i])
         else:
             screen.blit(MENU_IMG[i], MENU_LOC[i])
