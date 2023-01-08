@@ -54,21 +54,25 @@ def responseChat(review_list):
   #Xuat predic
   happiness=0
   reviewtemp=reviews_input
+  neg=["chán", "Chán", "Xui", "xui", "dở", "Dở", "tệ", "Tệ", "hèn", "Hèn", "ngu", "Ngu", "Xấu","xấu","chan","Chan","lỗi","loi","Lỗi","câm","Câm","Tạ","tạ"]
+  pos=["Hên", "hên","tuyệt", "vời", "haha", "đã", "Đã","ngon","Ngon","may","May"]
   for i in range (1,len(review_list)):
     b=reviewtemp[i].split(" ")
     temp1=""
     for j in b:
-      if j in ["chán", "Chán", "Xui", "xui", "dở", "Dở", "tệ", "Tệ", "hèn", "Hèn", "ngu", "Ngu", "Xấu","xấu","chan","Chan","lỗi","loi","Lỗi"]:
+      if j in neg:
         print(j)
+        print(0)
         temp1=j
         happiness+=-1
         break
-      elif j in ["Hên", "hên","tuyệt", "vời", "haha", "đã", "Đã","ngon","Ngon","may","May"]:
+      elif j in pos:
         print(j)
+        print(2)
         temp1=j
         happiness+=1
         break
-    if temp1 in ["chán", "Chán", "Xui", "xui", "dở", "Dở", "tệ", "Tệ", "hèn", "Hèn", "ngu", "Ngu", "Xấu","xấu","Hên", "hên","tuyệt", "vời", "haha", "đã","chan","Chan", "Đã","ngon","Ngon","lỗi","loi","Lỗi","may","May"]:
+    if temp1 in (neg+pos):
       continue
     else:
       print(reviews_input[i])

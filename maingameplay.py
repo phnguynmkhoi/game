@@ -5,22 +5,20 @@ from pygame.constants import KEYDOWN, MOUSEBUTTONDOWN, QUIT
 import ioexcel, try_nam
 from pygame import mixer
 
-def tongket(rank, manvcuoc, manvdoan, tongtien, tiencuoc):
+def tongket(rank, manvcuoc, tongtien, tiencuoc):
     global luotdau
     tiengiaodong = 0
     checkwin = 0
     checkdoan = 0
-    if manvcuoc == rank[0][0]:
+    #if manvcuoc == rank[0][0]:
+    if rank == 1:
         tiengiaodong += tiencuoc
         checkwin = 1
     else:
         tiengiaodong -= tiencuoc
-    if manvdoan == rank[0][0]:
-        tiengiaodong += 50
-        checkdoan = 1
     luotdau = (checkwin, tiengiaodong, manvcuoc)
     tongtien += tiengiaodong
-    thongtin = rank + (checkwin, checkdoan, tongtien, tiengiaodong)
+    thongtin = tuple(str(rank)) + (checkwin, checkdoan, tongtien, tiengiaodong)
     return thongtin
 
 def gameplaymain(screen, username,selection_track, nvcuoc, tennv, tiencuoc, tile, modedua):
