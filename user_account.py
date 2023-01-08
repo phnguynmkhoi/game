@@ -92,6 +92,7 @@ def xuli():
             elif (cfpw!=newpw):
                 tbdk.configure(text = "Confirm password is incorrect", fg='red')
             elif (check_signup()):
+                global username
                 info = str(newname) + ';' + str(newpw)
                 with open('data/info.txt', 'a') as f:
                     lines = ['\n',info]
