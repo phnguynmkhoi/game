@@ -322,19 +322,19 @@ def choose_track(screen, username, selection_track):
 
     if SET_OBJECT[0].collidepoint(mouse): 
         click_sound.play()
-        function.choose_track(screen, username, 1)
+        function.choose_track(screen, username, 0)
     if SET_OBJECT[1].collidepoint(mouse): 
         click_sound.play()
-        function.choose_track(screen, username, 2)
+        function.choose_track(screen, username, 1)
     if SET_OBJECT[2].collidepoint(mouse): 
         click_sound.play()
-        function.choose_track(screen, username, 3)
+        function.choose_track(screen, username, 2)
     if SET_OBJECT[3].collidepoint(mouse): 
         click_sound.play()
-        function.choose_track(screen, username, 4)
+        function.choose_track(screen, username, 3)
     if SET_OBJECT[4].collidepoint(mouse): 
         click_sound.play()
-        function.choose_track(screen, username, 5)
+        function.choose_track(screen, username, 4)
 
     #========#
     Width_1cell = WIDTH*0.2
@@ -466,7 +466,7 @@ def choose_set(screen, username, selection_track, selection_set,selection_char):
     pygame.Rect(Right-Width_1cell,Top,                             Width_1cell,2*Height_1cell),
     pygame.Rect(Left,             Top+(Height_1cell + Range_2cell),Width_1cell,Height_1cell)]
     
-    if selection_set != 0 and selection_char != -1:
+    if selection_set != -1 and selection_char != -1:
         if MENU_OBJECT[1].collidepoint(mouse):
             click_sound.play()
             function.choose_bet(screen, username,selection_track, selection_set*10 + selection_char, '', 1, 0 , 0)
@@ -508,7 +508,7 @@ def bet(screen, username,selection_track,set_char, char_name, rename, cost, mode
     
     BACK_BUTTON = pygame.Rect(WIDTH*0.08,HEIGHT*0.85, WIDTH*0.12, HEIGHT*0.07)
     if BACK_BUTTON.collidepoint(mouse):
-        function.choose_set(screen, username,0, 0, 0)
+        function.choose_set(screen, username,selection_track, set_char, char_name)
     
     # CHAR OBJECT BUTTON
     CHA_OBJECT = pygame.Rect(WIDTH*0.13,  HEIGHT*0.15,WIDTH*0.3,  HEIGHT*0.55)
@@ -575,7 +575,7 @@ def bet(screen, username,selection_track,set_char, char_name, rename, cost, mode
             #maingameplay.gameplaymain(screen, username,selection_track, set_char,char_name, tiencuoc, WIDTH/1920, chedo)
             tongtien = ioexcel.layTongtien(username)
             print(set_char)
-            rank = try_nam.play(screen,selection_track-1,int(set_char/10),set_char%10,chedo,username,char_name)
+            rank = try_nam.play(screen,selection_track,int(set_char/10),set_char%10,chedo,username,char_name)
             if rank == 1:
                 ioexcel.tong_tien(username,0)
             else:

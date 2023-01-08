@@ -271,7 +271,7 @@ def choose_set(screen, username, selection_track,selection_set, selection_char):
                     if selection_char != -1 and selection_set != -1: 
                         choose_bet(screen, username, selection_set*10+selection_char, char_name, 0, 0, 0)
 
-        newdraw.choose_set(screen, username, selection_set, selection_char)
+        newdraw.choose_set(screen, username, selection_set, selection_char, selection_track)
         newdraw.choose_char(screen, selection_set, selection_char)
         newdraw.money(screen, username)
         #if minigame != 0: 
