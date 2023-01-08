@@ -40,7 +40,7 @@ def minigame2():
     def resize(img,x,y):
         return pygame.transform.scale(img,(x,y))
 
-    bg=pygame.image.load("minigame2/img/bg2.png")
+    bg=pygame.image.load("minigame2/img/bg.png")
     bg=pygame.transform.scale(bg,(bg.get_width(),maxH))
     bgX=-300
     bgY=0
@@ -55,7 +55,7 @@ def minigame2():
     spriteEnemy=[]
     for i in range(3):
         img=f"minigame2/img/shuriken_{i}.png"
-        spriteEnemy.append(resize(pygame.image.load(f"minigame2/img/shuriken_{i}.png"),32,32))
+        spriteEnemy.append(resize(pygame.image.load(f"minigame2/img/shuriken-{i}.png"),32,32))
     di=[-1,1]
     def newEnemy():
         a=ENEMY(random.choice([-30,maxW]),random.choice([1,0]),random.uniform(3,4))

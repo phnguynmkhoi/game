@@ -3,14 +3,13 @@ from turtle import width
 import pygame,sys
 import random
 import time
-import math
+import math,ioexcel
 from testAi import responseChat
 pygame.init()
 def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     # print(type(screen))
     # return
     global rank
-    transSelected-=1
     pygame.mixer.music.load('sounds/backgroundmusic.wav')
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.2)
@@ -546,10 +545,11 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
             item[i].spriteLaser.append(img)
 
     #store item initialization
-    buffSpeed = 0
-    buffEffect = 0
-    removeEffect = 0
-    mysteryBox = 1
+    maBua = [0,0,0,1]
+    buffSpeed = maBua[0]
+    buffEffect = maBua[1]
+    removeEffect = maBua[2]
+    mysteryBox = maBua[3]
     runRemoveEffect = 0
     countdownChecked = 0
     useMys = 0
@@ -621,6 +621,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+                ioexcel.writeExcel()
                 pygame.quit()
                 sys.exit()
             #Nhap text
@@ -648,6 +649,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
                             chat.inputText+= event.unicode
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
+                    ioexcel.writeExcel()
                     if rank == 5:
                         if  checkMenu==1:
                             pygame.mixer.music.pause()
@@ -925,6 +927,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
                     rank+=1
                     pivotTime=curTime
         pygame.display.update()
-    return finished[pickedCar]
+    
     pygame.quit()
+    
 # play((1024,534),0,0,0,0,0,"NotTun")

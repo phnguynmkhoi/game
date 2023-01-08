@@ -13,7 +13,7 @@ vitri = 1
 namee =''
 music_on = 1
 giohang = ''
-
+luotdau = ()
 #
 
 def main_menu(screen, username, selection):
@@ -196,10 +196,10 @@ def store(screen, username):
     BACK_OBJ = pygame.Rect(20,20, WIDTH*0.18, HEIGHT*0.1)
     
     ITEM_OBJ = [
-    pygame.Rect(CENTER - 2*Width_1Cell , HEIGHT*0.15-80, Width_1Cell*2/3, Height_1Cell*2/3),
-    pygame.Rect(CENTER - 2*Width_1Cell , HEIGHT*0.15+100, Width_1Cell*2/3, Height_1Cell*2/3),
-    pygame.Rect(CENTER - 2*Width_1Cell , HEIGHT*0.15+280, Width_1Cell*2/3, Height_1Cell*2/3),
-    pygame.Rect(CENTER - 2*Width_1Cell , HEIGHT*0.15+450, Width_1Cell*2/3, Height_1Cell*2/3)
+    pygame.Rect(CENTER - 2*Width_1Cell , HEIGHT*0.05,                    Width_1Cell, Height_1Cell*2/5),
+    pygame.Rect(CENTER - 2*Width_1Cell , HEIGHT*0.05+Height_1Cell*3/5,   Width_1Cell, Height_1Cell*2/5),
+    pygame.Rect(CENTER - 2*Width_1Cell , HEIGHT*0.05+2*Height_1Cell*3/5, Width_1Cell, Height_1Cell*2/5),
+    pygame.Rect(CENTER - 2*Width_1Cell , HEIGHT*0.05+3*Height_1Cell*3/5, Width_1Cell, Height_1Cell*2/5)
     ]
     
     if BACK_OBJ.collidepoint(mouse):
@@ -255,30 +255,25 @@ def choose_minigame(screen, username, selection_mini):
         click_sound.play()
         function.choose_minigame(screen, username, 1)
 
-    Width_1cell = WIDTH*0.12
-    Height_1cell = HEIGHT*0.1
-    Range_2cell = (HEIGHT*0.6-5*Height_1cell)/5
-    Left = WIDTH*0.78
-    Top = HEIGHT*0.08
     #========#
-    Width_1cell = WIDTH*0.2
-    Height_1cell = HEIGHT*0.06
+    Width_1cell = WIDTH*0.15
+    Height_1cell = HEIGHT*0.08
     Range_2cell = HEIGHT*0.02
     Left = WIDTH*0.1
     Right = WIDTH*0.9
-    Top = HEIGHT*0.77
+    Top = HEIGHT*0.75
     
     # MENU LOCATION
     MENU_LOCATION = [
     (Left,Top),
-    (Right-Width_1cell,Top),
-    (Left,Top+(Height_1cell + Range_2cell)),
-    (Right-Width_1cell,Top+(Height_1cell + Range_2cell))]
+    (Right-Width_1cell*1.1,Top),
+    #(Left,Top+(Height_1cell + Range_2cell))]
+    ]
     
     # MENU OBJECT BUTTON
     MENU_OBJECT = [
     pygame.Rect(Left,Top                                          ,Width_1cell,Height_1cell),
-    pygame.Rect(Right-Width_1cell,Top,                             Width_1cell,2*Height_1cell),
+    pygame.Rect(Right-Width_1cell,Top,                             Width_1cell,Height_1cell),
     #pygame.Rect(Left,             Top+(Height_1cell + Range_2cell),Width_1cell,Height_1cell)]
     ]
     if MENU_OBJECT[1].collidepoint(mouse):
@@ -294,11 +289,7 @@ def choose_minigame(screen, username, selection_mini):
     if MENU_OBJECT[0].collidepoint(mouse): 
         click_sound.play()
         function.main_menu(screen, username, 0)
-        '''
-    if MENU_OBJECT[2].collidepoint(mouse): 
-        click_sound.play()
-        function.help(screen, username, 0, 1)
-        '''
+
 def choose_track(screen, username, selection_track):
     WIDTH, HEIGHT = screen.get_size()
     mouse = pygame.mouse.get_pos()
@@ -330,25 +321,20 @@ def choose_track(screen, username, selection_track):
 
     if SET_OBJECT[0].collidepoint(mouse): 
         click_sound.play()
-        function.choose_track(screen, username, 0,0)
+        function.choose_track(screen, username, 1,0)
     if SET_OBJECT[1].collidepoint(mouse): 
         click_sound.play()
-        function.choose_track(screen, username, 1,0)
+        function.choose_track(screen, username, 2,0)
     if SET_OBJECT[2].collidepoint(mouse): 
         click_sound.play()
-        function.choose_track(screen, username, 2,0)
+        function.choose_track(screen, username, 3,0)
     if SET_OBJECT[3].collidepoint(mouse): 
         click_sound.play()
-        function.choose_track(screen, username, 3,0)
+        function.choose_track(screen, username, 4,0)
     if SET_OBJECT[4].collidepoint(mouse): 
         click_sound.play()
-        function.choose_track(screen, username, 4,0)
-    
-    Width_1cell = WIDTH*0.12
-    Height_1cell = HEIGHT*0.1
-    Range_2cell = (HEIGHT*0.6-5*Height_1cell)/5
-    Left = WIDTH*0.78
-    Top = HEIGHT*0.08
+        function.choose_track(screen, username, 5,0)
+
     #========#
     Width_1cell = WIDTH*0.2
     Height_1cell = HEIGHT*0.06
@@ -369,10 +355,14 @@ def choose_track(screen, username, selection_track):
     pygame.Rect(Left,Top                                          ,Width_1cell,Height_1cell),
     pygame.Rect(Right-Width_1cell,Top,                             Width_1cell,2*Height_1cell),
     pygame.Rect(Left,             Top+(Height_1cell + Range_2cell),Width_1cell,Height_1cell)]
-    
-    if MENU_OBJECT[1].collidepoint(mouse):
-        click_sound.play()
-        function.choose_set(screen,username,selection_track,0,0)
+    if selection_track >=0 and selection_track <=4:
+        if MENU_OBJECT[1].collidepoint(mouse):
+            if ioexcel.layTongtien(username) >= 100:
+                click_sound.play()
+                function.choose_set(screen,username,selection_track,0,0)
+            else :
+                click_sound.play()
+                function.choose_track(screen,username,selection_track,1) #else thì vô minigame
     if MENU_OBJECT[0].collidepoint(mouse): 
         click_sound.play()
         function.main_menu(screen, username, 0)
@@ -411,19 +401,19 @@ def choose_set(screen, username, selection_track, selection_set,selection_char):
 
     if SET_OBJECT[0].collidepoint(mouse): 
         click_sound.play()
-        function.choose_set(screen, username,selection_track, 1, selection_char)
+        function.choose_set(screen, username,selection_track, 0, selection_char)
     if SET_OBJECT[1].collidepoint(mouse): 
         click_sound.play()
-        function.choose_set(screen, username,selection_track, 2, selection_char)
+        function.choose_set(screen, username,selection_track, 1, selection_char)
     if SET_OBJECT[2].collidepoint(mouse): 
         click_sound.play()
-        function.choose_set(screen, username,selection_track, 3, selection_char)
+        function.choose_set(screen, username,selection_track, 2, selection_char)
     if SET_OBJECT[3].collidepoint(mouse): 
         click_sound.play()
-        function.choose_set(screen, username,selection_track, 4, selection_char)
+        function.choose_set(screen, username,selection_track, 3, selection_char)
     if SET_OBJECT[4].collidepoint(mouse): 
         click_sound.play()
-        function.choose_set(screen, username,selection_track, 5, selection_char)
+        function.choose_set(screen, username,selection_track, 4, selection_char)
     
     Width_1cell = WIDTH*0.12
     Height_1cell = HEIGHT*0.1
@@ -477,19 +467,38 @@ def choose_set(screen, username, selection_track, selection_set,selection_char):
     
     if selection_set != 0 and selection_char != -1:
         if MENU_OBJECT[1].collidepoint(mouse):
-            if ioexcel.layTongtien(username) >= 100:
-                click_sound.play()
-                function.choose_bet(screen, username,selection_track, selection_set*10 + selection_char, '', 1, 0 , 0)
+            click_sound.play()
+            function.choose_bet(screen, username,selection_track, selection_set*10 + selection_char, '', 1, 0 , 0)
+        '''
             else:
                 click_sound.play()
                 function.choose_track(screen, username,selection_track, 1)
                 #choose_minigame(screen, username,0)
+        '''
     if MENU_OBJECT[0].collidepoint(mouse): 
         click_sound.play()
         function.choose_track(screen, username, 0,0)
     if MENU_OBJECT[2].collidepoint(mouse): 
         click_sound.play()
         function.help(screen, username, 0, 1)
+
+def tongket(rank, manvcuoc, tongtien, tiencuoc):
+    global luotdau
+    tiengiaodong = 0
+    checkwin = 0
+    checkdoan = 0
+    #if manvcuoc == rank[0][0]:
+    if rank == 1:
+        tiengiaodong += tiencuoc
+        checkwin = 1
+    else:
+        tiengiaodong -= tiencuoc
+    luotdau = (checkwin, tiengiaodong, manvcuoc)
+    tongtien += tiengiaodong
+    thongtin = tuple(str(rank)) + (checkwin, checkdoan, tongtien, tiengiaodong)
+    
+    return thongtin
+
 
 def bet(screen, username,selection_track,set_char, char_name, rename, cost, mode):
     global chedo, tiencuoc, vitri
@@ -563,12 +572,16 @@ def bet(screen, username,selection_track,set_char, char_name, rename, cost, mode
             click_sound.play()
             #maingameplay.gameplaymain(screen,selection_track,username, str(set_char),char_name, tiencuoc, WIDTH/1920, chedo)
             #maingameplay.gameplaymain(screen, username,selection_track, set_char,char_name, tiencuoc, WIDTH/1920, chedo)
+            tongtien = ioexcel.layTongtien(username)
             print(set_char)
-            rank = try_nam.play(screen,selection_track,int(set_char/10),set_char%10,mode,username,char_name)
+            rank = try_nam.play(screen,selection_track-1,int(set_char/10),set_char%10,mode,username,char_name)
             if rank == 1:
-                ioexcel.tong_tien(username,tiencuoc)
+                ioexcel.tong_tien(username,0)
             else:
-                ioexcel.tong_tien(username,-tiencuoc)
+                ioexcel.tong_tien(username,-0) 
+            thongtin = tongket(rank,set_char,tongtien,tiencuoc)
+            ioexcel.writefile(username, luotdau)
+            function.score(screen, username, thongtin,char_name,set_char,screen.get_size())
 
 def score(screen, username, thongtin,tennv,nvcuoc,tile):
     mouse = pygame.mouse.get_pos()
