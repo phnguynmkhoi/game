@@ -207,6 +207,7 @@ def store(screen, username):
         function.choose_track(screen, username,0,0)
     
     giohang = ioexcel.laymabua()
+    print(ioexcel.laymabua())
     tongtien = ioexcel.layTongtien(username)
     if giohang == None:
         giohang = ''
