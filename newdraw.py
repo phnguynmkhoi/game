@@ -326,7 +326,7 @@ def choose_track(screen,username,selection_track):
     # SET LIST===========================================================================
     
     for i in range(0, len(SET_OBJECT)):
-        if  selection_track == i+1:
+        if  selection_track == i:
             screen.blit(track_img_c[i], (SET_LOCATION[i][0],SET_LOCATION[i][1]-10))
             #screen.blit(set_img[5], SET_LOCATION[i])
             #screen.blit(arrow, (WIDTH*0.62, Top))
@@ -370,15 +370,21 @@ def choose_track(screen,username,selection_track):
         else:
             screen.blit(MENU_IMG[i], MENU_LOCATION[i])
 
-def choose_set(screen, username, selection_set,selection_char):
+def choose_set(screen, username, selection_set,selection_char,selection_track):
     WIDTH, HEIGHT = screen.get_size()
     # image
-    background = pygame.image.load('Image/choose set/choose_set.png').convert()
-    background = pygame.transform.scale(background, (WIDTH, HEIGHT))
+    background=[]
+    for i in range(5):
+        img=f"Image/choose set/bg{i}.png"
+        img=pygame.image.load(img)
+        img=pygame.transform.scale(img, (WIDTH, HEIGHT))
+        background.append(img)
+    # background = pygame.image.load('Image/choose set/choose_set.png').convert()
+    # background = pygame.transform.scale(background, (WIDTH, HEIGHT))
     Store = pygame.image.load('Image/Store/store_ico.png')
     Store = pygame.transform.scale(Store, (WIDTH*0.07,WIDTH*0.07))
     
-    screen.blit(background, (0,0))
+    screen.blit(background[selection_track], (0,0))
     screen.blit(Store, (0,0))
     
     # SET-BOARD LOCATION
@@ -428,8 +434,7 @@ def choose_set(screen, username, selection_set,selection_char):
     mouse = pygame.mouse.get_pos()
     # SET LIST===========================================================================
     for i in range(0, len(SET_OBJECT)):
-        if SET_OBJECT[i].collidepoint(mouse) or selection_set == i+1:
-            selection_set == i+1
+        if  selection_set == i:
             screen.blit(set_img[i], SET_LOCATION[i])
             # screen.blit(set_img[5], SET_LOCATION[i])
             screen.blit(arrow, (WIDTH*0.62, Top))
@@ -700,7 +705,7 @@ def main_menu(screen, selection,LeaF,Background,moving_sprite,player):
     
     # MENU===============================================================================
     for i in range(0, len(MENU_OBJECT)):
-        if MENU_OBJECT[i].collidepoint(mouse) or selection == i+1:
+        if  selection == i+1:
             screen.blit(MENU_Click[i], MENU_LOC[i])
         else:
             screen.blit(MENU_IMG[i], MENU_LOC[i])

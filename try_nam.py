@@ -11,23 +11,21 @@ vatpham = list(ioexcel.laymabua())
 print(vatpham)
 
 def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
-    # print(type(screen))
-    # return
     global rank
     pygame.mixer.music.load('sounds/backgroundmusic.wav')
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.2)
     if pickedCar==0:
-        pickedCar=1
+        pickedCar=2
     elif pickedCar==1:
         pickedCar=3
     elif pickedCar==2:
-        pickedCar=3
+        pickedCar=4
     elif pickedCar==3:
         pickedCar=0
     elif pickedCar==4:
         pickedCar=2
-    color={0:"red", 1:"blue", 2:"yellow", 3:"green", 4:"pink"}
+    color={0:"blue", 1:"green", 2:"pink", 3:"red", 4:"yellow"}
     #System Time
     curTime=0
     pivotTime=pygame.time.get_ticks()
@@ -460,9 +458,8 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
             self.crowdX,self.crowdY=x,y
             self.curSprite=0
         def runAnimation(self):
-            for i in range (len(self.crowdImg)):
-                self.curSprite+=0.05
-                draw(self.crowdImg[int(self.curSprite)%len(self.crowdImg)],self.crowdX,self.crowdY)
+            self.curSprite+=0.05
+            draw(self.crowdImg[int(self.curSprite)%len(self.crowdImg)],self.crowdX,self.crowdY)
         def resize(self):
             self.crowdX = self.crowdX * screen.get_width() / oldWidth
             self.crowdY = self.crowdY * screen.get_height() / oldHeight
@@ -471,7 +468,6 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     #Background INITIALIZATION
     bg=[]
     NumRound=mode#Số round của game (2->4)
-    NumRound=2#Số round của game (2->4)
     mapp=['city','desert','galaxy','painting','sea']
     for i in range(5):
         bg.append([])
@@ -486,7 +482,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
         4:("spaceship",1,4,"fire"),
         2:("scooters",3,9,"smoke"),
         3:("motorcycles",3,9,"smoke"),
-        0:("car",4,9,"smoke"),
+        0:("cars",4,9,"smoke"),
     }
     carName = ["Khoi","Nam","Huy","Tung","Android"]
     # transSelected=0# Change Transportation here

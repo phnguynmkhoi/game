@@ -271,7 +271,7 @@ def choose_set(screen, username, selection_track,selection_set, selection_char):
                     if selection_char != -1 and selection_set != -1: 
                         choose_bet(screen, username, selection_set*10+selection_char, char_name, 0, 0, 0)
 
-        newdraw.choose_set(screen, username, selection_set, selection_char)
+        newdraw.choose_set(screen, username, selection_set, selection_char, selection_track)
         newdraw.choose_char(screen, selection_set, selection_char)
         newdraw.money(screen, username)
         #if minigame != 0: 
@@ -365,8 +365,6 @@ def score(screen, username, thongtin,tennv,nvcuoc,tile):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             ioexcel.writeExcel()
-            pygame.quit()
-            sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
             click.score(screen, username, thongtin,tennv,nvcuoc,tile)
         if event.type == pygame.KEYDOWN: pass
