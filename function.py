@@ -162,14 +162,15 @@ def choose_minigame(screen, username, selection_mini):
                 pygame.quit()
                 sys.exit()
                 
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT  or event.key == pygame.K_LEFT and selection_mini==0:
-                    selection_mini += 1
-                    print (selection_mini)
-                if event.key == pygame.K_LEFT  or event.key == pygame.K_LEFT and selection_mini==1: 
-                    selection_mini -= 1
-                    print (selection_mini)
-        
+            # if event.type == pygame.KEYDOWN:
+            #     if event.key == pygame.K_RIGHT  or event.key == pygame.K_LEFT and selection_mini==0:
+            #         selection_mini += 1
+            #         print (selection_mini)
+            #     if event.key == pygame.K_LEFT  or event.key == pygame.K_LEFT and selection_mini==1: 
+            #         selection_mini -= 1
+            #         print (selection_mini)
+            if event.type==pygame.MOUSEBUTTONDOWN:
+                click.choose_minigame(screen,username,selection_mini)
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_KP_ENTER: main_menu(screen, selection_main_menu = 0)
             
@@ -177,7 +178,7 @@ def choose_minigame(screen, username, selection_mini):
         pygame.display.update()
         clock.tick(100)
 
-def choose_track(screen, username, selection_track,minigame):
+def choose_track(screen, username, selection_track):
     global mode
     while True:
         cost = 0
@@ -188,10 +189,8 @@ def choose_track(screen, username, selection_track,minigame):
                 sys.exit()
                 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if minigame == 0: 
-                    click.choose_track(screen, username,selection_track)
-                if minigame == 1:
-                    click.choose_minigame(screen, username, 1) #Co the phai sua cho nay (7/1/2023)
+                click.choose_track(screen, username,selection_track)
+
                 
             #click.choose_track(screen, username,selection_track)
             if event.type == pygame.KEYDOWN:

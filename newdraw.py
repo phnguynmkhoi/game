@@ -205,8 +205,7 @@ def choose_minigame (screen,username,selection_mini):
     # SET LIST===========================================================================
     
     for i in range(0, len(SET_OBJECT)):
-        if SET_OBJECT[i].collidepoint(mouse) or selection_mini == i+1:
-            selection_mini == i+1
+        if  selection_mini == i:
             screen.blit(minigame_click[i], (SET_LOCATION[i][0],SET_LOCATION[i][1]-10))
             #screen.blit(set_img[5], SET_LOCATION[i])
             #screen.blit(arrow, (WIDTH*0.62, Top))
@@ -279,11 +278,16 @@ def choose_track(screen,username,selection_track):
 
     # LOAD IMAGE
     #hover = pygame.image.load()
-    track_1_img = pygame.image.load('img/background-levels/background-city.png')
-    track_2_img = pygame.image.load('img/background-levels/background-desert.png')
+    track_1_img = pygame.image.load('img/background-levels/background-city-0.png')
+    track_2_img = pygame.image.load('img/background-levels/background-desert-0.png')
     track_3_img = pygame.image.load('img/background-levels/background-galaxy-0.png')
     track_4_img = pygame.image.load('img/background-levels/background-painting-0.png')
     track_5_img = pygame.image.load('img/background-levels/background-sea-0.png')
+    track_1_img_c = pygame.image.load('img/background-levels/background-city-0-c.png')
+    track_2_img_c = pygame.image.load('img/background-levels/background-desert-0-c.png')
+    track_3_img_c = pygame.image.load('img/background-levels/background-galaxy-0-c.png')
+    track_4_img_c = pygame.image.load('img/background-levels/background-painting-0-c.png')
+    track_5_img_c = pygame.image.load('img/background-levels/background-sea-0-c.png')
     
     # TRACK IMAGE
     track_img = [ 
@@ -293,7 +297,13 @@ def choose_track(screen,username,selection_track):
     pygame.transform.scale(track_4_img, (Width_1cell, Height_1cell)),
     pygame.transform.scale(track_5_img, (Width_1cell, Height_1cell)),
     ]
-    
+    track_img_c=[
+    pygame.transform.scale(track_1_img_c, (Width_1cell, Height_1cell)),
+    pygame.transform.scale(track_2_img_c, (Width_1cell, Height_1cell)),
+    pygame.transform.scale(track_3_img_c, (Width_1cell, Height_1cell)),
+    pygame.transform.scale(track_4_img_c, (Width_1cell, Height_1cell)),
+    pygame.transform.scale(track_5_img_c, (Width_1cell, Height_1cell)),
+    ]
     # SET OBJECT BUTTON
     SET_OBJECT = [
     pygame.Rect(Left,Top                                                           ,Width_1cell,Height_1cell),
@@ -316,9 +326,8 @@ def choose_track(screen,username,selection_track):
     # SET LIST===========================================================================
     
     for i in range(0, len(SET_OBJECT)):
-        if SET_OBJECT[i].collidepoint(mouse) or selection_track == i+1:
-            selection_track == i+1
-            screen.blit(track_img[i], (SET_LOCATION[i][0],SET_LOCATION[i][1]-10))
+        if  selection_track == i+1:
+            screen.blit(track_img_c[i], (SET_LOCATION[i][0],SET_LOCATION[i][1]-10))
             #screen.blit(set_img[5], SET_LOCATION[i])
             #screen.blit(arrow, (WIDTH*0.62, Top))
         else:
