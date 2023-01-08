@@ -3,7 +3,7 @@ from turtle import width
 import pygame,sys
 import random
 import time
-import math
+import math,ioexcel
 from testAi import responseChat
 pygame.init()
 def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
@@ -610,6 +610,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+                ioexcel.writeExcel()
                 pygame.quit()
                 sys.exit()
             #Nhap text
@@ -637,6 +638,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
                             chat.inputText+= event.unicode
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
+                    ioexcel.writeExcel()
                     if rank == 5:
                         if  checkMenu==1:
                             running=False

@@ -201,15 +201,6 @@ def choose_track(screen, username, selection_track,minigame):
                 if event.key == pygame.K_LEFT and selection_track>1: 
                     selection_track -= 1
                     print (selection_track)
-                    '''
-                if event.key == pygame.K_UP and selection_char == 0:
-                    if selection_set > 1: selection_set -= 1
-                    print(selection_set)  
-                          
-                if event.key == pygame.K_DOWN and selection_char == 0:
-                    if selection_set < 5: selection_set += 1
-                    print(selection_set)
-                    '''
                 if event.key == pygame.K_UP and selection_track ==4:
                     selection_track = 0
                     print(selection_track)
@@ -250,10 +241,7 @@ def choose_set(screen, username, selection_track,selection_set, selection_char):
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                #if minigame == 0: 
-                    click.choose_set(screen, username,selection_track,selection_set,selection_char)
-                #if minigame == 1:
-                    #click.minigame(screen, username)
+                click.choose_set(screen, username,selection_track,selection_set,selection_char)
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:
                     selection_char = 1
@@ -263,11 +251,11 @@ def choose_set(screen, username, selection_track,selection_set, selection_char):
                     newdraw.choose_char(screen,selection_set, 0)
                     
                 if event.key == pygame.K_UP and selection_char == 0:
-                    if selection_set > 1: selection_set -= 1
+                    if selection_set > 0: selection_set -= 1
                     print(selection_set)  
                           
-                if event.key == pygame.K_DOWN and selection_char == 0:
-                    if selection_set < 5: selection_set += 1
+                if event.key == pygame.K_DOWN and selection_char == 4:
+                    if selection_set < 4: selection_set += 1
                     print(selection_set)
                     
                 if event.key == pygame.K_UP and selection_char != 0:
@@ -281,7 +269,7 @@ def choose_set(screen, username, selection_track,selection_set, selection_char):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE: main_menu(screen, selection_main_menu = 0)
                 if event.key == pygame.K_KP_ENTER or event.key == pygame.K_SPACE:
-                    if selection_char != -1 and selection_set != 0: 
+                    if selection_char != -1 and selection_set != -1: 
                         choose_bet(screen, username, selection_set*10+selection_char, char_name, 0, 0, 0)
 
         newdraw.choose_set(screen, username, selection_set, selection_char)

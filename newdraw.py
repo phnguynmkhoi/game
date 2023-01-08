@@ -286,8 +286,8 @@ def choose_track(screen,username,selection_track):
     track_4_img = pygame.image.load('img/background-levels/background-painting-0.png')
     track_5_img = pygame.image.load('img/background-levels/background-sea-0.png')
     
-    # SET IMAGE
-    set_img = [ 
+    # TRACK IMAGE
+    track_img = [ 
     pygame.transform.scale(track_1_img, (Width_1cell, Height_1cell)),
     pygame.transform.scale(track_2_img, (Width_1cell, Height_1cell)),
     pygame.transform.scale(track_3_img, (Width_1cell, Height_1cell)),
@@ -319,11 +319,11 @@ def choose_track(screen,username,selection_track):
     for i in range(0, len(SET_OBJECT)):
         if SET_OBJECT[i].collidepoint(mouse) or selection_track == i+1:
             selection_track == i+1
-            screen.blit(set_img[i], (SET_LOCATION[i][0],SET_LOCATION[i][1]-10))
+            screen.blit(track_img[i], (SET_LOCATION[i][0],SET_LOCATION[i][1]-10))
             #screen.blit(set_img[5], SET_LOCATION[i])
             #screen.blit(arrow, (WIDTH*0.62, Top))
         else:
-            screen.blit(set_img[i], SET_LOCATION[i])
+            screen.blit(track_img[i], SET_LOCATION[i])
         Top += Height_1cell + Range_2cell
     # ====================================================================================
     
@@ -480,71 +480,71 @@ def choose_char(screen, selection_set, selection_char):
     light = pygame.image.load('Image/Characters/ava/light.png')
     light = pygame.transform.scale(light, (Width_1cell, Height_1cell))
     
-    char_11 = pygame.image.load('Image/Gameplay/set1/car0.png')
-    char_12 = pygame.image.load('Image/Gameplay/set1/car1.png')
-    char_13 = pygame.image.load('Image/Gameplay/set1/car2.png')
-    char_14 = pygame.image.load('Image/Gameplay/set1/car3.png')
-    char_15 = pygame.image.load('Image/Gameplay/set1/car4.png')
+    char_10 = pygame.image.load('Image/Gameplay/set1/car0.png')
+    char_11 = pygame.image.load('Image/Gameplay/set1/car1.png')
+    char_12 = pygame.image.load('Image/Gameplay/set1/car2.png')
+    char_13 = pygame.image.load('Image/Gameplay/set1/car3.png')
+    char_14 = pygame.image.load('Image/Gameplay/set1/car4.png')
     
-    char_21 = pygame.image.load('Image/Gameplay/set2/car0.png')
-    char_22 = pygame.image.load('Image/Gameplay/set2/car1.png')
-    char_23 = pygame.image.load('Image/Gameplay/set2/car2.png')
-    char_24 = pygame.image.load('Image/Gameplay/set2/car3.png')
-    char_25 = pygame.image.load('Image/Gameplay/set2/car4.png')
+    char_20 = pygame.image.load('Image/Gameplay/set2/car0.png')
+    char_21 = pygame.image.load('Image/Gameplay/set2/car1.png')
+    char_22 = pygame.image.load('Image/Gameplay/set2/car2.png')
+    char_23 = pygame.image.load('Image/Gameplay/set2/car3.png')
+    char_24 = pygame.image.load('Image/Gameplay/set2/car4.png')
     
-    char_31 = pygame.image.load('Image/Gameplay/set3/car0.png')
-    char_32 = pygame.image.load('Image/Gameplay/set3/car1.png')
-    char_33 = pygame.image.load('Image/Gameplay/set3/car2.png')
-    char_34 = pygame.image.load('Image/Gameplay/set3/car3.png')
-    char_35 = pygame.image.load('Image/Gameplay/set3/car4.png') 
+    char_30 = pygame.image.load('Image/Gameplay/set3/car0.png')
+    char_31 = pygame.image.load('Image/Gameplay/set3/car1.png')
+    char_32 = pygame.image.load('Image/Gameplay/set3/car2.png')
+    char_33 = pygame.image.load('Image/Gameplay/set3/car3.png')
+    char_34 = pygame.image.load('Image/Gameplay/set3/car4.png') 
    
     
-    char_41 = pygame.image.load('Image/Gameplay/set4/car0.png')
-    char_42 = pygame.image.load('Image/Gameplay/set4/car1.png')
-    char_43 = pygame.image.load('Image/Gameplay/set4/car2.png')
-    char_44 = pygame.image.load('Image/Gameplay/set4/car3.png')
-    char_45 = pygame.image.load('Image/Gameplay/set4/car4.png')
+    char_40 = pygame.image.load('Image/Gameplay/set4/car0.png')
+    char_41 = pygame.image.load('Image/Gameplay/set4/car1.png')
+    char_42 = pygame.image.load('Image/Gameplay/set4/car2.png')
+    char_43 = pygame.image.load('Image/Gameplay/set4/car3.png')
+    char_44 = pygame.image.load('Image/Gameplay/set4/car4.png')
     
-    char_51 = pygame.image.load('Image/Gameplay/set5/car0.png')
-    char_52 = pygame.image.load('Image/Gameplay/set5/car1.png')
-    char_53 = pygame.image.load('Image/Gameplay/set5/car2.png')
-    char_54 = pygame.image.load('Image/Gameplay/set5/car3.png')
-    char_55 = pygame.image.load('Image/Gameplay/set5/car4.png')
+    char_50 = pygame.image.load('Image/Gameplay/set5/car0.png')
+    char_51 = pygame.image.load('Image/Gameplay/set5/car1.png')
+    char_52 = pygame.image.load('Image/Gameplay/set5/car2.png')
+    char_53 = pygame.image.load('Image/Gameplay/set5/car3.png')
+    char_54 = pygame.image.load('Image/Gameplay/set5/car4.png')
     
     set1_img = [ 
+    pygame.transform.scale(char_10, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_11, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_12, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_13, (Width_1cell, Height_1cell)),
-    pygame.transform.scale(char_14, (Width_1cell, Height_1cell)),
-    pygame.transform.scale(char_15, (Width_1cell, Height_1cell))]
+    pygame.transform.scale(char_14, (Width_1cell, Height_1cell))]
     
     set2_img = [ 
+    pygame.transform.scale(char_20, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_21, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_22, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_23, (Width_1cell, Height_1cell)),
-    pygame.transform.scale(char_24, (Width_1cell, Height_1cell)),
-    pygame.transform.scale(char_25, (Width_1cell, Height_1cell))]
+    pygame.transform.scale(char_24, (Width_1cell, Height_1cell))]
     
     set3_img = [ 
+    pygame.transform.scale(char_30, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_31, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_32, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_33, (Width_1cell, Height_1cell)),
-    pygame.transform.scale(char_34, (Width_1cell, Height_1cell)),
-    pygame.transform.scale(char_35, (Width_1cell, Height_1cell))]
+    pygame.transform.scale(char_34, (Width_1cell, Height_1cell))]
     
     set4_img = [ 
+    pygame.transform.scale(char_40, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_41, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_42, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_43, (Width_1cell, Height_1cell)),
-    pygame.transform.scale(char_44, (Width_1cell, Height_1cell)),
-    pygame.transform.scale(char_45, (Width_1cell, Height_1cell))]
+    pygame.transform.scale(char_44, (Width_1cell, Height_1cell))]
     
     set5_img = [ 
+    pygame.transform.scale(char_50, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_51, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_52, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_53, (Width_1cell, Height_1cell)),
-    pygame.transform.scale(char_54, (Width_1cell, Height_1cell)),
-    pygame.transform.scale(char_55, (Width_1cell, Height_1cell))]
+    pygame.transform.scale(char_54, (Width_1cell, Height_1cell))]
     
     list_char = set1_img
     
@@ -564,12 +564,12 @@ def choose_char(screen, selection_set, selection_char):
     pygame.Rect(Left,Top+3*(Height_1cell + Range_2cell),Width_1cell,Height_1cell),
     pygame.Rect(Left,Top+4*(Height_1cell + Range_2cell),Width_1cell,Height_1cell)]
     
-    if selection_set != 0:
-        if selection_set == 1: list_char = set1_img
-        if selection_set == 2: list_char = set2_img
-        if selection_set == 3: list_char = set3_img
-        if selection_set == 4: list_char = set4_img
-        if selection_set == 5: list_char = set5_img
+    if selection_set != -1:
+        if selection_set == 0: list_char = set1_img
+        if selection_set == 1: list_char = set2_img
+        if selection_set == 2: list_char = set3_img
+        if selection_set == 3: list_char = set4_img
+        if selection_set == 4: list_char = set5_img
         for i in range(0, len(CHA_OBJECT)):
             if i == selection_char:
                 screen.blit(light, CHA_LOCATION[i])
