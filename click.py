@@ -575,6 +575,7 @@ def bet(screen, username,selection_track,set_char, char_name, rename, cost, mode
             #maingameplay.gameplaymain(screen, username,selection_track, set_char,char_name, tiencuoc, WIDTH/1920, chedo)
             tongtien = ioexcel.layTongtien(username)
             print(set_char)
+            print(chedo)
             rank = try_nam.play(screen,selection_track-1,int(set_char/10),set_char%10,chedo,username,char_name)
             if rank == 1:
                 ioexcel.tong_tien(username,0)
