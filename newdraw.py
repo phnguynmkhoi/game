@@ -175,10 +175,10 @@ def choose_minigame (screen,username,selection_mini):
     Top = HEIGHT*0.3
 
     # LOAD IMAGE
-    minigame_1_img = pygame.image.load('minigame1/mini1.png')
-    minigame_2_img = pygame.image.load('minigame1/mini1.png')
-    minigame_01_img = pygame.image.load('minigame1/mini1.png')
-    minigame_02_img = pygame.image.load('minigame1/mini1.png')
+    minigame_1_img = pygame.image.load('Image/choose mini/minigame1.png')
+    minigame_2_img = pygame.image.load('Image/choose mini/minigame2.png')
+    minigame_01_img = pygame.image.load('Image/choose mini/minigame1-hover.png')
+    minigame_02_img = pygame.image.load('Image/choose mini/minigame2-hover.png')
     # MINIGAME IMAGE
     minigame_img = [ 
     pygame.transform.scale(minigame_1_img, (Width_1cell*1.5, Height_1cell*2)),
@@ -278,8 +278,7 @@ def choose_track(screen,username,selection_track):
     Top = HEIGHT*0.1
 
     # LOAD IMAGE
-    arrow = pygame.image.load('Image/assets/SetMenu/arrow.png')
-    arrow = pygame.transform.scale(arrow, (Height_1cell, Height_1cell))
+    #hover = pygame.image.load()
     track_1_img = pygame.image.load('img/background-levels/background-city.png')
     track_2_img = pygame.image.load('img/background-levels/background-desert.png')
     track_3_img = pygame.image.load('img/background-levels/background-galaxy-0.png')
@@ -718,8 +717,10 @@ def help(screen, usernane, selection_help):
     bg_help = pygame.image.load('Image/assets/Options/bg1.png')
     bg_help = pygame.transform.scale(bg_help, (WIDTH, HEIGHT))
     
-    OK = pygame.image.load('Image/assets/SetMenu/Back.png')
-    OK = pygame.transform.scale(OK, (Width_1cell,Height_1cell))
+    Back = pygame.image.load('Image/assets/SetMenu/Back.png')
+    Back = pygame.transform.scale(Back, (Width_1cell,Height_1cell))
+    Back1 = pygame.image.load('Image/assets/Mode/back-hover.png')
+    Back1 = pygame.transform.scale(Back1, (Width_1cell,Height_1cell))
     
     Arrow_next = pygame.image.load('Image/assets/Help/left.png')
     Arrow_next = pygame.transform.scale(Arrow_next, (Height_1cell,Height_1cell))
@@ -731,21 +732,24 @@ def help(screen, usernane, selection_help):
     
     screen.blit(help, (0,0))
     
-    # MINIGAME OBJECT
+    #  OBJECT
     HELP_OBJECT = [
     pygame.Rect(WIDTH*0.12, HEIGHT*0.45, Height_1cell, Height_1cell),
     pygame.Rect(WIDTH*0.88 - Height_1cell, HEIGHT*0.45, Height_1cell, Height_1cell),
     pygame.Rect(Left, Top, Width_1cell, Height_1cell)]
     
-    # MINIGAME LOCATION
+    #  LOCATION
     HELP_LOC = [
     (WIDTH*0.12, HEIGHT*0.45),
     (WIDTH*0.88 - Height_1cell, HEIGHT*0.45),
     (Left, Top)]
-    
-    screen.blit(Arrow_back, HELP_LOC[0])
-    screen.blit(Arrow_next, HELP_LOC[1])
-    screen.blit(OK, HELP_LOC[2])
+    # MOUSE LOCATION
+    mouse = pygame.mouse.get_pos()
+    for i in range(0, len(HELP_OBJECT)):
+        if HELP_OBJECT[i].collidepoint(mouse):
+            screen.blit(Arrow_back, HELP_LOC[0])
+            screen.blit(Arrow_next, HELP_LOC[1])
+            screen.blit(Back1, HELP_LOC[2])
 
 def minigame(screen, usernane):
     WIDTH, HEIGHT = screen.get_size()
