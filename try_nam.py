@@ -6,8 +6,10 @@ import time
 import math,ioexcel
 from testAi import responseChat
 pygame.init()
-vatpham = tuple(ioexcel.laymabua())
+
+vatpham = list(ioexcel.laymabua())
 print(vatpham)
+
 def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     # print(type(screen))
     # return

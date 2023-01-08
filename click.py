@@ -284,9 +284,10 @@ def choose_minigame(screen, username, selection_mini):
         click_sound.play()
         if selection_mini == 0:
             score+= mn1.minigame1()
+            ioexcel.tong_tien(username,score)
         if selection_mini == 1:
             score+= mn2.minigame2()
-            #Minigame 2 cho nay
+            ioexcel.tong_tien(username,score)
     if MENU_OBJECT[0].collidepoint(mouse): 
         click_sound.play()
         function.choose_track(screen, username,0)
