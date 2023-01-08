@@ -480,6 +480,22 @@ def choose_set(screen, username, selection_track, selection_set,selection_char):
         click_sound.play()
         function.help(screen, username, 0, 1)
 
+def tongket(rank, manvcuoc, tongtien, tiencuoc):
+    global luotdau
+    tiengiaodong = 0
+    checkwin = 0
+    checkdoan = 0
+    #if manvcuoc == rank[0][0]:
+    if rank == 1:
+        tiengiaodong += tiencuoc
+        checkwin = 1
+    else:
+        tiengiaodong -= tiencuoc
+    luotdau = (checkwin, tiengiaodong, manvcuoc)
+    tongtien += tiengiaodong
+    thongtin = tuple(str(rank)) + (checkwin, checkdoan, tongtien, tiengiaodong)
+    return thongtin
+
 def bet(screen, username,selection_track,set_char, char_name, rename, cost, mode):
     global chedo, tiencuoc, vitri
     WIDTH, HEIGHT = screen.get_size()
@@ -557,8 +573,8 @@ def bet(screen, username,selection_track,set_char, char_name, rename, cost, mode
             """ if rank == 1:
                 ioexcel.tong_tien(username,tiencuoc)
             else:
-                ioexcel.tong_tien(username,-tiencuoc) """
-            thongtin = maingameplay.tongket(rank,set_char,tongtien,tiencuoc)
+                ioexcel.tong_tien(username,-tiencuoc)  """
+            thongtin = tongket(rank,set_char,tongtien,tiencuoc)
             ioexcel.writefile(username, luotdau)
             function.score(screen, username, thongtin,char_name,set_char,screen.get_size())
 
