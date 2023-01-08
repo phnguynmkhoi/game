@@ -30,6 +30,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     icon = pygame.image.load('img/mics/car.png')
     pygame.display.set_icon(icon)
     arrow = pygame.image.load('img/mics/arrow.png')
+    arrow = pygame.transform.smoothscale(arrow,(screen.get_width()/20,screen.get_height()/10))
     font = pygame.font.Font('./font/Audiowide-Regular.ttf',int(screen.get_width()/6.667))
     fontRank = pygame.font.Font('./font/Audiowide-Regular.ttf',int(screen.get_width()/16))
     fontChat = pygame.font.Font('./font/Arial.ttf',int(screen.get_width()/69))
