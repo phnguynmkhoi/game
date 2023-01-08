@@ -1,22 +1,26 @@
 from tkinter import *
+from PIL import ImageTk,Image
 
 username = str()
 def xuli():
     window = Tk()
     window.title('LOGIN N4')
-    window.geometry('400x500')
-    window.configure(bg="#1a000d")
+    window.geometry('800x500')
+    window.configure(bg="#e0ebeb")
+    img1=Image.open("Image\\login\\sidebg2.png").resize((500,500),Image.ANTIALIAS)
+    bg1=ImageTk.PhotoImage(img1)
+    bg=Label(window,image=bg1,bd=0)
+    bg.place (x=0,y=0)
     #o username
-    lb1 = Label(window,text = "Username:").place(x=100,y=20)
-    username_box = Entry(window, width=20)
-    username_box.place(x=165,y=20)
+    lb1 = Label(window,text = "Username:",font=("Arial",14),bg="#e0ebeb").place(x=520,y=20)
+    username_box = Entry(window, width=14,font=("Arial",14))
+    username_box.place(x=630,y=20)
     #o password
-    lb2 = Label(window,text = "Password").place(x=100,y=50)
-    password_box = Entry(window,width=20,show='*')
-    password_box.place(x=165,y=50)
-    tb = Label(window)
-    tb.place(x=100,y=80)
-
+    lb2 = Label(window,text = "Password:",font=("Arial",14),bg="#e0ebeb").place(x=520,y=50)
+    password_box = Entry(window,width=14,show='*',font=("Arial",14))
+    password_box.place(x=630,y=50)
+    tbdn = Label(window)
+    tbdn.place(x=510,y=80)
     def checklogin():
         name = username_box.get()
         password = password_box.get()
@@ -33,8 +37,7 @@ def xuli():
         global username
         name = username_box.get()
         password = password_box.get()
-        tbdn = Label(window)
-        tbdn.place(x=100, y=80)
+        
         if (password == '' or name == ''):
             tbdn.configure(text = "Username or Password cannot be empty", fg = 'red')
         elif (' ' in name):
@@ -51,17 +54,17 @@ def xuli():
             tbdn.configure(text="Username or password is incorrect", fg='red')
 
     def create_account():
-        lb1  = Label(window, text="Username:").place(x=100,y=140)
-        user2 = Entry(window,width=20)
-        user2.place(x=220, y=140)
-        lb2 = Label(window, text="Password:").place(x=100, y=170)
-        password1 = Entry(window,width=20, show = '*')
-        password1.place(x=220, y=170)
-        lb3 = Label(window, text="Confirm Password:").place(x=100, y=200)
-        confirm_pw = Entry(window,width=20, show = '*')
-        confirm_pw.place(x=220, y=200)
-        tbdk = Label(window)
-        tbdk.place(x=100, y=230)
+        lb1  = Label(window, text="Username:",font=("Arial",14),bg="#e0ebeb").place(x=510,y=180)
+        user2 = Entry(window, width=14,font=("Arial",14))
+        user2.place(x=630, y=180)
+        lb2 = Label(window, text="Password:",font=("Arial",14),bg="#e0ebeb").place(x=510, y=210)
+        password1 = Entry(window, width=14,font=("Arial",14), show = '*')
+        password1.place(x=630, y=210)
+        lb3 = Label(window, text="Confirm Password:",font=("Arial",14),bg="#e0ebeb").place(x=510, y=240)
+        confirm_pw = Entry(window, width=14,font=("Arial",14), show = '*')
+        confirm_pw.place(x=630, y=270)
+        tbdk = Label(window,bg="#e0ebeb")
+        tbdk.place(x=630, y=300)
 
         def check_signup():
             name = user2.get()
@@ -99,12 +102,12 @@ def xuli():
             else:
                 tbdk.configure(text = "Username already exists", fg='red')
                 #nut sign up
-        signup_button = Button(window, text = 'Sign up', command=create, fg='gold', bg='black').place(x=165,y=260)
+        signup_button = Button(window, text = 'Sign up', command=create, fg='gold', bg='black',font=("Consolas",14)).place(x=600,y=350)
 
     #nut login
-    login_button = Button(window, text = 'Login',command=login, fg='gold', bg='black').place(x=165,y=110)
+    login_button = Button(window, text = 'Login',command=login, fg='gold', bg='black',font=("Consolas",14)).place(x=690,y=110)
     #nut create account
-    Createaccount_button = Button(window, text = 'Create account',command = create_account ,fg='gold', bg='black').place(x=240,y=110)
+    Createaccount_button = Button(window, text = 'Create account',command = create_account ,fg='gold', bg='black',font=("Arial",14)).place(x=510,y=110)
 
     window.mainloop()
 

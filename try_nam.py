@@ -9,9 +9,21 @@ pygame.init()
 def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     # print(type(screen))
     # return
+    global rank
+    transSelected-=1
     pygame.mixer.music.load('sounds/backgroundmusic.wav')
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.2)
+    if pickedCar==0:
+        pickedCar=1
+    elif pickedCar==1:
+        pickedCar=3
+    elif pickedCar==2:
+        pickedCar=3
+    elif pickedCar==3:
+        pickedCar=0
+    elif pickedCar==4:
+        pickedCar=2
     color={0:"red", 1:"blue", 2:"yellow", 3:"green", 4:"pink"}
     #System Time
     curTime=0
@@ -52,7 +64,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     countdown.append(-1)
     bgwin=[]
     bgwin.append(pygame.transform.scale(pygame.image.load("img/celebrate/bg1.jpg"),(screen.get_width(),screen.get_height())))
-    bgwin.append(pygame.transform.scale(pygame.image.load("img/celebrate/bgwin.png"),(screen.get_width(),screen.get_height())))
+ 
     #End
     rankImg=[]
     for i in range(5):
@@ -413,14 +425,12 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
                 self.pivotTime=curTime
                 self.smokeX=self.x-screen.get_width()/33.34
             self.x+=self.velocity
-        def runAnimation(self,ok):
-            if ok:
-                self.curSpriteWheel+=0.4
-            if self.curSpriteWheel>=len(self.spriteWheel):
-                self.curSpriteWheel=0
-            draw(self.spriteWheel[int(self.curSpriteWheel)] ,self.x,self.y)
-            # if rank==5:
-            #     return
+        def runAnimation(self):
+            global rank
+            self.curSpriteWheel+=0.4
+            draw(self.spriteWheel[int(self.curSpriteWheel)%len(self.spriteWheel)] ,self.x,screen.get_height()/self.ratio)
+            if rank==5:
+                return
             self.curSpriteSmoke+=0.2
             if self.curSpriteSmoke<len(self.spriteSmoke) :
                 if int(self.curSpriteSmoke)<=5  :
@@ -457,6 +467,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     #Background INITIALIZATION
     bg=[]
     NumRound=mode#Số round của game (2->4)
+    NumRound=2#Số round của game (2->4)
     mapp=['city','desert','galaxy','painting','sea']
     for i in range(5):
         bg.append([])
@@ -467,11 +478,11 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     # Car INITIALIZATION
     car=[]
     transportation={
-        0:("formula ones",4,9,"smoke"), # loai phuong tien/so sprite phuong tien/ so sprite animation hieu ung/ten hieu ung
-        1:("spaceship",1,4,"fire"),
-        2:("trucks",4,9,"smoke"),
-        3:("scooters",3,9,"smoke"),
-        4:("motorcycles",3,9,"smoke")
+        1:("formula ones",4,9,"smoke"), # loai phuong tien/so sprite phuong tien/ so sprite animation hieu ung/ten hieu ung
+        4:("spaceship",1,4,"fire"),
+        2:("scooters",3,9,"smoke"),
+        3:("motorcycles",3,9,"smoke"),
+        0:("car",4,9,"smoke"),
     }
     carName = ["Khoi","Nam","Huy","Tung","Android"]
     # transSelected=0# Change Transportation here
@@ -482,16 +493,16 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     for i in range (5):
         trans= transportation[transSelected]
         car.append(CAR(HEIGHT,r[i], random.uniform(first_velocity,second_velocity), 0))
-        if transSelected == 4 or transSelected == 1:
-            for j in range(trans[1]): # Add animation
-                img=pygame.image.load(f"img/{trans[0]}/{j}_{color[i]}.png")
-                img =pygame.transform.scale(img,(WIDTH/12.5,HEIGHT/12))
-                car[i].spriteWheel.append(img)
-        else:
-            for j in range(trans[1]-1,0,-1): # Add animation
-                img=pygame.image.load(f"img/{trans[0]}/{j}_{color[i]}.png")
-                img =pygame.transform.scale(img,(WIDTH/12.5,HEIGHT/12))
-                car[i].spriteWheel.append(img)
+        # if transSelected == 4 or transSelected == 1:
+        for j in range(trans[1]): # Add animation
+            img=pygame.image.load(f"img/{trans[0]}/{j}_{color[i]}.png")
+            img =pygame.transform.scale(img,(WIDTH/12.5,HEIGHT/12))
+            car[i].spriteWheel.append(img)
+        # else:
+        #     for j in range(trans[1]-1,0,-1): # Add animation
+        #         img=pygame.image.load(f"img/{trans[0]}/{j}_{color[i]}.png")
+        #         img =pygame.transform.scale(img,(WIDTH/12.5,HEIGHT/12))
+        #         car[i].spriteWheel.append(img)
         for j in range(trans[2]):
             img=pygame.transform.scale(pygame.image.load(f"./img/mics/{trans[3]}_{j}.png"),(screen.get_width()/20,screen.get_height()/20))
             car[i].spriteSmoke.append(img)
@@ -572,7 +583,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
 
     #Initalize
     r=0
-    carSelected=0 
+    carSelected=pickedCar
     #mapSelected=#Change map here
     pressed=0
     checkMenu=0
@@ -639,6 +650,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
                 if event.key == pygame.K_ESCAPE:
                     if rank == 5:
                         if  checkMenu==1:
+                            pygame.mixer.music.pause()
                             running=False
                         checkMenu=1
                 if event.key == pygame.K_SPACE and store.mysteryBox == 1 and countdownChecked == 1 and chat.activeInput == 0:
@@ -705,22 +717,24 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
             if rotateChecked == 0:
                 for i in range(5):
                     if finished[i] == 1:
-                        winTrans = transportation[transSelected]
-                        img = pygame.image.load(f"img/{winTrans[0]}/0_{color[i]}.png")
-                        img = pygame.transform.scale(img,(screen.get_width()/12.5,screen.get_height()/12))
-                        img = pygame.transform.rotate(img,2*rotateCount)
-                        car[i].spriteWheel[0] = img
+                        for j in range(len(car[i].spriteWheel)):
+                            winTrans = transportation[transSelected]
+                            img = pygame.image.load(f"img/{winTrans[0]}/{j}_{color[i]}.png")
+                            img = pygame.transform.scale(img,(screen.get_width()/12.5,screen.get_height()/12))
+                            img = pygame.transform.rotate(img,2*rotateCount)
+                            car[i].spriteWheel[j] = img
                 rotateCount+=1
                 if rotateCount >= 5:
                     rotateChecked = 1
             else:
                 for i in range(5):
                     if finished[i] == 1:
-                        winTrans = transportation[transSelected]
-                        img = pygame.image.load(f"img/{winTrans[0]}/0_{color[i]}.png")
-                        img = pygame.transform.scale(img,(screen.get_width()/12.5,screen.get_height()/12))
-                        img = pygame.transform.rotate(img,2*rotateCount)
-                        car[i].spriteWheel[0] = img
+                        for j in range(len(car[i].spriteWheel)):
+                            winTrans = transportation[transSelected]
+                            img = pygame.image.load(f"img/{winTrans[0]}/{j}_{color[i]}.png")
+                            img = pygame.transform.scale(img,(screen.get_width()/12.5,screen.get_height()/12))
+                            img = pygame.transform.rotate(img,2*rotateCount)
+                            car[i].spriteWheel[j] = img
                 rotateCount-=1
                 if rotateCount <= -5:
                     rotateChecked = 0
@@ -733,29 +747,25 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
                     car[i].ratio=1.7
                     car[i].bigger()
                     car[i].run()
-                    draw(car[i].spriteWheel[0],car[i].x,screen.get_height()/car[i].ratio)
+                    car[i].runAnimation()
+                    # draw(car[i].spriteWheel[0],car[i].x,screen.get_height()/car[i].ratio)
                     if finished[i]<=3:
                         draw(prize[finished[i]-1],car[i].x+screen.get_width()/300,screen.get_height()/2)
-                if checkMenu==1:
-                    draw(countdownbg,0,(screen.get_height()-screen.get_height()/2)/2)
-                    draw(happiness,(screen.get_width()-happiness.get_width())/2,(screen.get_height()-happiness.get_height())/2)
                 if finished[pickedCar]==1:
+                    textInside=text_win
+                else :
+                    textInside=text_lose
+                if checkMenu==1:
+                    countdownbg=pygame.transform.scale(countdownbg,(screen.get_width(),screen.get_height()/2))
+                    draw(countdownbg,0,(screen.get_height()-screen.get_height()/2)/2)
+                    draw(happiness,(screen.get_width()-happiness.get_width())/2,(screen.get_height()-happiness.get_height())/1.5)
                     if curTime%1000<333:
-                        textInside = fontRank.render(text_win,True,(220,20,60))
+                        surf = fontRank.render(textInside,True,(220,20,60))
                     elif curTime%1000<=667:
-                        textInside = fontRank.render(text_win,True,(255,255,255))
+                        surf = fontRank.render(textInside,True,(255,255,255))
                     else: 
-                        textInside = fontRank.render(text_win,True,(0,0,0))
-                    screen.blit(pygame.transform.scale(textInside,(screen.get_width()/4,screen.get_height()/5)),(screen.get_width()/2.7,screen.get_height()/6))
-                else:
-                    if curTime%1000<333:
-                        textInside = fontRank.render(text_lose,True,(220,20,60))
-                    elif curTime%1000<=667:
-                        textInside = fontRank.render(text_lose,True,(255,255,255))
-                    else: 
-                        textInside = fontRank.render(text_lose,True,(0,0,0))
-                    screen.blit(pygame.transform.scale(textInside,(screen.get_width()/4,screen.get_height()/5)),(screen.get_width()/2.7,screen.get_height()/6))
-                    
+                        surf = fontRank.render(textInside,True,(0,0,0))
+                    draw(pygame.transform.scale(surf,(screen.get_width()/4,screen.get_height()/5)),(screen.get_width()-surf.get_width())/2,(screen.get_height()-surf.get_height())/2.3)
             else :
                 happiness= fontResponse.render(chatResponse[responseChat(chatPredict)],True,(204, 51, 153))
                 for i in range(5):
@@ -776,9 +786,9 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
         #draw 5 car
         for i in bg[mapSelected][car[carSelected].curRound].car:
             if car[i].x <= bg[mapSelected][car[carSelected].curRound].end: # check finished 
-                car[i].runAnimation(1)
+                car[i].runAnimation()
             else:
-                car[i].runAnimation(0)
+                car[i].runAnimation()
         #draw item
         for i in range(5):
             for j in range (2):

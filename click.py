@@ -286,9 +286,11 @@ def choose_minigame(screen, username, selection_mini):
         if selection_mini == 0:
             pass
             #Minigame 1 cho nay
+            minigame1.minigame1()
         if selection_mini == 1:
             pass
             #Minigame 2 cho nay
+            minigame2.minigame2()
     if MENU_OBJECT[0].collidepoint(mouse): 
         click_sound.play()
         function.main_menu(screen, username, 0)
@@ -561,6 +563,7 @@ def bet(screen, username,selection_track,set_char, char_name, rename, cost, mode
             click_sound.play()
             #maingameplay.gameplaymain(screen,selection_track,username, str(set_char),char_name, tiencuoc, WIDTH/1920, chedo)
             #maingameplay.gameplaymain(screen, username,selection_track, set_char,char_name, tiencuoc, WIDTH/1920, chedo)
+            print(set_char)
             rank = try_nam.play(screen,selection_track,int(set_char/10),set_char%10,mode,username,char_name)
             if rank == 1:
                 ioexcel.tong_tien(username,tiencuoc)

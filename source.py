@@ -29,7 +29,7 @@ running = True
 while running:
     main()
     for event in pygame.event.get():
-        if event.type == pygame.quit:
+        if event.type == pygame.QUIT:
             running = False
             pygame.quit()
             sys.exit()
