@@ -7,9 +7,11 @@ import math,ioexcel
 from testAi import responseChat
 pygame.init()
 
-vatpham = list(ioexcel.laymabua())
-print(vatpham)
-
+""" vatpham = list(ioexcel.laymabua())
+print(vatpham) """
+def vatpham(giohang):
+    print (giohang)
+    return list(giohang)
 def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     global rank
     pygame.mixer.music.load('sounds/backgroundmusic.wav')

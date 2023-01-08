@@ -1,9 +1,10 @@
 import pygame,sys,ioexcel
 from pygame import mixer
-import random,click
+import random,click,ioexcel
 pygame.init()
 
-screen = pygame.display.set_mode((1152,645))
+#screen = pygame.display.set_mode((1152,645)
+tien = 0
 
 def fadein(screen):
     WIDTH,HEIGHT = screen.get_size()

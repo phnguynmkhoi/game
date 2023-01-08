@@ -187,6 +187,7 @@ def store(screen, username):
             click_sound.play()
             giohang += ';1'
             ioexcel.tong_tien(username, -300)
+            try_nam.vatpham()
         if ITEM_OBJ[1].collidepoint(mouse) and tongtien>= 100: # Mien khong
             click_sound.play()
             giohang += ';2'
