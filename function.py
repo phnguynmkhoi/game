@@ -296,7 +296,7 @@ def choose_bet(screen, username, selection_track,set_char, char_name, rename, co
                     else:
                         char_name += event.unicode 
                 if event.key == pygame.K_BACKSPACE:
-                    char_name = char_name[:-1]                   
+                    char_name = char_name[:-1] 
         newdraw.choose_bet(screen,set_char,char_name, rename, cost, mode)
         newdraw.money(screen, username)
         pygame.display.update()

@@ -12,7 +12,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     pygame.mixer.music.load('sounds/backgroundmusic.wav')
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.2)
-    color={0:"red", 1:"blue", 2:"yellow", 3:"green", 4:"pink"}
+    color={0:"blue", 1:"green", 2:"pink", 3:"red", 4:"yellow"}
     #System Time
     curTime=0
     pivotTime=pygame.time.get_ticks()
@@ -467,11 +467,11 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     # Car INITIALIZATION
     car=[]
     transportation={
-        0:("formula ones",4,9,"smoke"), # loai phuong tien/so sprite phuong tien/ so sprite animation hieu ung/ten hieu ung
-        1:("spaceship",1,4,"fire"),
-        2:("trucks",4,9,"smoke"),
-        3:("scooters",3,9,"smoke"),
-        4:("motorcycles",3,9,"smoke")
+        1:("formula ones",4,9,"smoke"), # loai phuong tien/so sprite phuong tien/ so sprite animation hieu ung/ten hieu ung
+        4:("spaceship",1,4,"fire"),
+        0:("trucks",4,9,"smoke"),
+        2:("scooters",3,9,"smoke"),
+        3:("motorcycles",3,9,"smoke")
     }
     carName = ["Khoi","Nam","Huy","Tung","Android"]
     # transSelected=0# Change Transportation here
