@@ -347,6 +347,8 @@ def history(screen, username):
         pygame.display.update()
         clock.tick(60)
 
+
+
 def help(screen, username, selection_help, goback):
     while True:
         for event in pygame.event.get():
@@ -388,3 +390,4 @@ def gameplay(screen, username,selection_track, set_char, char_name, rename, cost
                     char_name += event.unicode
     
     maingameplay.gameplaymain(screen,selection_track, username, str(set_char), char_name, cost, WIDTH/1920, mode)
+
