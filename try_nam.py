@@ -951,4 +951,4 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
         pygame.display.update()
     return finished[pickedCar]
     
-play(pygame.display.set_mode((1024,500)),0,0,0,0,0,"NotTun")
+# play(pygame.display.set_mode((1024,500)),0,0,0,0,0,"NotTun")
