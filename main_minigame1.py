@@ -1,13 +1,12 @@
 from math import sqrt
 import random
 import pygame
+import ioexcel
 
 #intialize pygame
 pygame.init()
 
-
-
-def minigame1():
+def minigame1(username):
     #Adjust to resize screen
     global maxW,maxH,score,enemyEdge,laserState,playerX,eX,diLaserX,playerY,eY,diLaserY,dis,disX,disY,laserX,laserY,coinState,coinX,coinY,restart,difficulty
     global alive,playerX,playerY,scoreText,totalScore
@@ -168,12 +167,13 @@ def minigame1():
             if  event.type == pygame.QUIT:
                 pygame.mixer.music.pause()
                 running=False
-            if event.type == pygame.KEYDOWN and event.key== pygame.K_RETURN:
-                setRestart()
 
+            if event.type == pygame.KEYDOWN and event.key== pygame.K_RETURN:
+                ioexcel.tong_tien(username, score*10)
+                setRestart()
             if event.type== pygame.KEYDOWN and event.key==pygame.K_ESCAPE :
                 pygame.mixer.music.pause()
-                print(totalScore)
+                ioexcel.tong_tien(username, score*10)
                 running=False
                 return totalScore
                 
@@ -228,7 +228,7 @@ def minigame1():
         if isCollide(playerX,playerY,coinX,coinY) and coinState==1 :
             score+=1
             coinState=0
-            scoreText=font.render(("Coin: "+ str(score)),True,(255,255,255))
+            scoreText=font.render(("Coin: "+ str(score*10)),True,(255,255,255))
             newCoin()
 
         if curSprite>=8 and coinState==1:

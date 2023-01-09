@@ -1,7 +1,7 @@
 import openpyxl
 import xlwings
 maUser = 0 #biến toàn cục mã User
-Tongtien = 2000 #biến toàn cục tổng tiền
+Tongtien = 0 #biến toàn cục tổng tiền
 lichsu = ()#biến toàn cục lịch sử
 mabua = str()
 def laythongtin(name):

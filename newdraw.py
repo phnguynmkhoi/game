@@ -167,7 +167,7 @@ def choose_minigame (screen,username,selection_mini):
 
     screen.blit(background, (0,0))
 
-    # SET-BOARD LOCATION
+    # MINIGAME-BOARD LOCATION
     Width_1cell = WIDTH*0.16
     Height_1cell = HEIGHT*0.16
     Range_2cell = (HEIGHT*0.6-3*Height_1cell)/2
@@ -190,13 +190,13 @@ def choose_minigame (screen,username,selection_mini):
     pygame.transform.scale(minigame_02_img, (Width_1cell*1.5, Height_1cell*2)),
     ]
     
-    # SET OBJECT BUTTON
-    SET_OBJECT = [
+    # MINIGAME OBJECT BUTTON
+    MNG_OBJECT = [
     pygame.Rect(Left,Top                                                           ,Width_1cell*1.5, Height_1cell*2),
     pygame.Rect(Left+2*(Width_1cell+Range_2cell),Top                                 ,Width_1cell*1.5,Height_1cell*2)]
     
-    # SET LOCATION
-    SET_LOCATION = [
+    # MINIGAME LOCATION
+    MNG_LOCATION = [
     (Left,Top),
     (Left+2*(Width_1cell+Range_2cell),Top)
     ]
@@ -205,13 +205,13 @@ def choose_minigame (screen,username,selection_mini):
     mouse = pygame.mouse.get_pos()
     # SET LIST===========================================================================
     
-    for i in range(0, len(SET_OBJECT)):
+    for i in range(0, len(MNG_OBJECT)):
         if  selection_mini == i:
-            screen.blit(minigame_click[i], (SET_LOCATION[i][0],SET_LOCATION[i][1]-10))
+            screen.blit(minigame_click[i], (MNG_LOCATION[i][0],MNG_LOCATION[i][1]-10))
             #screen.blit(set_img[5], SET_LOCATION[i])
             #screen.blit(arrow, (WIDTH*0.62, Top))
         else:
-            screen.blit(minigame_img[i], SET_LOCATION[i])
+            screen.blit(minigame_img[i], MNG_LOCATION[i])
         Top += Height_1cell + Range_2cell
     # ====================================================================================
     
@@ -269,7 +269,7 @@ def choose_track(screen,username,selection_track):
     screen.blit(background, (0,0))
     screen.blit(Store, (0,0))
 
-    # SET-BOARD LOCATION
+    # TRACK-BOARD LOCATION
     Width_1cell = WIDTH*0.16
     Height_1cell = HEIGHT*0.16
     Range_2cell = (HEIGHT*0.6-3*Height_1cell)/2
@@ -305,16 +305,16 @@ def choose_track(screen,username,selection_track):
     pygame.transform.scale(track_4_img_c, (Width_1cell, Height_1cell)),
     pygame.transform.scale(track_5_img_c, (Width_1cell, Height_1cell)),
     ]
-    # SET OBJECT BUTTON
-    SET_OBJECT = [
+    # TRACK OBJECT BUTTON
+    TRACK_OBJECT = [
     pygame.Rect(Left,Top                                                           ,Width_1cell,Height_1cell),
     pygame.Rect(Left+Width_1cell+2*Range_2cell,Top                                 ,Width_1cell,Height_1cell),
     pygame.Rect(Left+2*(Width_1cell+2*Range_2cell),Top                             ,Width_1cell,Height_1cell),
     pygame.Rect(Left+Width_1cell/2,Top+1*(Height_1cell + 2*Range_2cell)            ,Width_1cell,Height_1cell),
     pygame.Rect(Left+2*Width_1cell+Range_2cell,Top+1*(Height_1cell + 2*Range_2cell),Width_1cell,Height_1cell)]
     
-    # SET LOCATION
-    SET_LOCATION = [
+    # TRACK LOCATION
+    TRACK_LOCATION = [
     (Left,Top),
     (Left+Width_1cell+2*Range_2cell,Top),
     (Left+2*(Width_1cell+2*Range_2cell),Top),
@@ -324,15 +324,15 @@ def choose_track(screen,username,selection_track):
     
     # MOUSE LOCATION
     mouse = pygame.mouse.get_pos()
-    # SET LIST===========================================================================
+    # TRACK LIST===========================================================================
     
-    for i in range(0, len(SET_OBJECT)):
+    for i in range(0, len(TRACK_OBJECT)):
         if  selection_track == i:
-            screen.blit(track_img_c[i], (SET_LOCATION[i][0],SET_LOCATION[i][1]-10))
+            screen.blit(track_img_c[i], (TRACK_LOCATION[i][0],TRACK_LOCATION[i][1]-10))
             #screen.blit(set_img[5], SET_LOCATION[i])
             #screen.blit(arrow, (WIDTH*0.62, Top))
         else:
-            screen.blit(track_img[i], SET_LOCATION[i])
+            screen.blit(track_img[i], TRACK_LOCATION[i])
         Top += Height_1cell + Range_2cell
     # ====================================================================================
     
@@ -765,19 +765,48 @@ def help(screen, usernane, selection_help):
             screen.blit(Arrow_next, HELP_LOC[1])
             screen.blit(Back1, HELP_LOC[2])
 
-def minigame(screen, usernane):
+def minigame1(screen, usernane):
     WIDTH, HEIGHT = screen.get_size()
     Width_1cell = WIDTH*0.14
     Height_1cell = HEIGHT*0.08
     Left = (WIDTH*0.48) - Width_1cell
     Top = HEIGHT*0.87
     #huong dan choi minigame
-    bg_mini = pygame.image.load('Image/assets/set_0.png.png')
+    bg_mini = pygame.image.load('Image/assets/Help/Help2/9.png')
     bg_mini = pygame.transform.scale(bg_mini, (WIDTH, HEIGHT))
     
-    Back = pygame.image.load('Image/assets/SetMenu/Back.png')
+    Back = pygame.image.load('Image/assets/Mode/back-hover.png')
     Back = pygame.transform.scale(Back, (Width_1cell,Height_1cell))
-    minigame = pygame.image.load('Image/assets/SetMenu/Start.png')
+    minigame = pygame.image.load('Image/assets/Mode/start-hover.png')
+    minigame = pygame.transform.scale(minigame, (Width_1cell,Height_1cell))
+    
+    # MINIGAME OBJECT
+    MNG_OBJECT = [
+    pygame.Rect(Left,                            Top, Width_1cell, Height_1cell),
+    pygame.Rect(Left + Width_1cell + 0.04*WIDTH, Top, Width_1cell, Height_1cell)]
+    
+    # MINIGAME LOCATION
+    MNG_LOC = [
+    (Left                           , Top),
+    (Left + Width_1cell + WIDTH*0.04, Top)]
+    
+    screen.blit(bg_mini, (0, 0))
+    screen.blit(Back, MNG_LOC[0])
+    screen.blit(minigame, MNG_LOC[1])
+
+def minigame2(screen, usernane):
+    WIDTH, HEIGHT = screen.get_size()
+    Width_1cell = WIDTH*0.14
+    Height_1cell = HEIGHT*0.08
+    Left = (WIDTH*0.48) - Width_1cell
+    Top = HEIGHT*0.87
+    #huong dan choi minigame
+    bg_mini = pygame.image.load('Image/assets/Help/Help2/10.png')
+    bg_mini = pygame.transform.scale(bg_mini, (WIDTH, HEIGHT))
+    
+    Back = pygame.image.load('Image/assets/Mode/back-hover.png')
+    Back = pygame.transform.scale(Back, (Width_1cell,Height_1cell))
+    minigame = pygame.image.load('Image/assets/Mode/start-hover.png')
     minigame = pygame.transform.scale(minigame, (Width_1cell,Height_1cell))
     
     # MINIGAME OBJECT

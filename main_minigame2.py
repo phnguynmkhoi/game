@@ -2,10 +2,11 @@ from math import sqrt
 import random
 import pygame
 import math
+import ioexcel
 
 #intialize pygame
 pygame.init()
-def minigame2():
+def minigame2(username):
     global bgX,end
     maxW,maxH=900,500   
     screen= pygame.display.set_mode((maxW,maxH))
@@ -245,14 +246,16 @@ def minigame2():
         draw(wood,0,0)
         for i in range(int(fighter.health)):
             draw(heart,(i)*36+10,10)
-        scoreDisplay=fontscore.render(f"Blocked: {score}",True,(230,230,190))
+        scoreDisplay=fontscore.render(f"Blocked: {score*10}",True,(230,230,190))
         draw (scoreDisplay,10,50)
         ##   
         for event in pygame.event.get():
             if  event.type == pygame.QUIT:
                 pygame.mixer.music.pause()
                 running=False
+
             if event.type==pygame.KEYDOWN and event.key==pygame.K_RETURN:
+                ioexcel.tong_tien(username,score*10)
                 fighter.curStandSprite=0
                 totalScore+=score
                 score=0
@@ -260,6 +263,7 @@ def minigame2():
                 fighter.setRestart=1
             if event.type== pygame.KEYDOWN and event.key==pygame.K_ESCAPE :
                 pygame.mixer.music.pause()
+                ioexcel.tong_tien(username,score*10)
                 running=False
                 return totalScore
                 
