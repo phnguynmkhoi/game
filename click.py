@@ -187,7 +187,6 @@ def store(screen, username):
             click_sound.play()
             giohang += ';1'
             ioexcel.tong_tien(username, -300)
-            try_nam.vatpham()
         if ITEM_OBJ[1].collidepoint(mouse) and tongtien>= 100: # Mien khong
             click_sound.play()
             giohang += ';2'
@@ -254,10 +253,10 @@ def choose_minigame(screen, username, selection_mini):
         click_sound.play()
         if selection_mini == 0:
             score+= mn1.minigame1()
-            ioexcel.tong_tien(username,score)
+            ioexcel.tong_tien(username,score*10)
         if selection_mini == 1:
             score+= mn2.minigame2()
-            ioexcel.tong_tien(username,score)
+            ioexcel.tong_tien(username,score*10)
     if MENU_OBJECT[0].collidepoint(mouse): 
         click_sound.play()
         function.choose_track(screen, username,0)
@@ -460,11 +459,13 @@ def tongket(rank, manvcuoc, tongtien, tiencuoc):
     checkwin = 0
     checkdoan = 0
     #if manvcuoc == rank[0][0]:
+    print(rank)
     if rank == 1:
         tiengiaodong += tiencuoc
         checkwin = 1
     else:
         tiengiaodong -= tiencuoc
+    print(tiengiaodong)
     luotdau = (checkwin, tiengiaodong, manvcuoc)
     tongtien += tiengiaodong
     thongtin = tuple(str(rank)) + (checkwin, checkdoan, tongtien, tiengiaodong)
@@ -547,10 +548,7 @@ def bet(screen, username,selection_track,set_char, char_name, rename, cost, mode
             tongtien = ioexcel.layTongtien(username)
             print(set_char)
             rank = try_nam.play(screen,selection_track,int(set_char/10),set_char%10,chedo,username,char_name)
-            if rank == 1:
-                ioexcel.tong_tien(username,0)
-            else:
-                ioexcel.tong_tien(username,-0) 
+            print(rank)
             thongtin = tongket(rank,set_char,tongtien,tiencuoc)
             ioexcel.writefile(username, luotdau)
             function.score(screen, username, thongtin,char_name,set_char,screen.get_size())

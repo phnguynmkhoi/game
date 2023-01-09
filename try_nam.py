@@ -7,26 +7,21 @@ import math,ioexcel
 from testAi import responseChat
 pygame.init()
 
-""" vatpham = list(ioexcel.laymabua())
-print(vatpham) """
-def vatpham(giohang):
-    print (giohang)
-    return list(giohang)
 def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     global rank
     pygame.mixer.music.load('sounds/backgroundmusic.wav')
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.2)
-    if pickedCar==0:
-        pickedCar=2
-    elif pickedCar==1:
-        pickedCar=3
-    elif pickedCar==2:
-        pickedCar=4
-    elif pickedCar==3:
-        pickedCar=0
-    elif pickedCar==4:
-        pickedCar=2
+    # if pickedCar==0:
+    #     pickedCar=2
+    # elif pickedCar==1:
+    #     pickedCar=3
+    # elif pickedCar==2:
+    #     pickedCar=4
+    # elif pickedCar==3:
+    #     pickedCar=0
+    # elif pickedCar==4:
+    #     pickedCar=2
     color={0:"blue", 1:"green", 2:"pink", 3:"red", 4:"yellow"}
     #System Time
     curTime=0
@@ -548,7 +543,24 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
             item[i].spriteLaser.append(img)
 
     #store item initialization
-    maBua = [0,0,0,1]
+    vatpham = ioexcel.laymabua()
+    maBua = [0,0,0,0]
+    if vatpham != None:
+        for i in range(len(vatpham)):
+            if vatpham[i] == '1':
+                maBua[0] = 1
+                vatpham = vatpham.replace(';1','  ',1)
+            if vatpham[i] == '2':
+                maBua[1] = 1
+                vatpham = vatpham.replace(';2','  ',1)
+            if vatpham[i] == '3':
+                maBua[2] = 1
+                vatpham = vatpham.replace(';3','  ',1)
+            if vatpham[i] == '4':
+                maBua[3] = 1
+                vatpham = vatpham.replace(';4','  ',1)
+        vatpham = vatpham.replace(' ','')
+        ioexcel.updatemabua(vatpham)
     buffSpeed = maBua[0]
     buffEffect = maBua[1]
     removeEffect = maBua[2]
@@ -615,6 +627,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     chatChecked = 0
     chatPredict.append(["trung lập",1])
     chat.activeInput = 0
+    car[pickedCar].velocity = 100
     running = True
     while running:
         if curTime-pivotTime>100000:
@@ -931,6 +944,6 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
                     rank+=1
                     pivotTime=curTime
         pygame.display.update()
-    
+    return finished[pickedCar]
     
 # play((1024,534),0,0,0,0,0,"NotTun")
