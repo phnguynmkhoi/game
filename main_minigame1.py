@@ -10,7 +10,7 @@ pygame.init()
 def minigame1():
     #Adjust to resize screen
     global maxW,maxH,score,enemyEdge,laserState,playerX,eX,diLaserX,playerY,eY,diLaserY,dis,disX,disY,laserX,laserY,coinState,coinX,coinY,restart,difficulty
-    global alive,playerX,playerY,scoreText
+    global alive,playerX,playerY,scoreText,totalScore
     maxW,maxH=900,500   
     screen= pygame.display.set_mode((maxW,maxH))
 
@@ -26,7 +26,7 @@ def minigame1():
     pygame.display.set_icon(icon)
     gameover= pygame.image.load('minigame1/img/gameover.png')
     font = pygame.font.Font('freesansbold.ttf',32)
-    fontI= pygame.font.Font('minigame1/font/static/Nunito-Italic.ttf',24)
+    fontI= pygame.font.Font('minigame1/font/Pixel Coleco.otf',24)
 
     #Animation
     explode = pygame.image.load('minigame1/img/explode.png')
@@ -36,6 +36,7 @@ def minigame1():
     #Score
     textX,textY=5,5
     score=0
+    totalScore=0
     scoreText=font.render(("Coin:"+ str(score)),True,(255,255,255))
 
     #Coin
@@ -76,9 +77,10 @@ def minigame1():
 
     #Restart
     restart=0
-    restartText= fontI.render('Click anywhere to restart',True, (120,255,255))
+    restartText= fontI.render('Press Enter to restart',True, (120,255,255))
 
-    print(fontI.size("Click anywhere to continue"))
+  
+    
     #Continue
 
     def draw(State,x,y):
@@ -133,7 +135,7 @@ def minigame1():
         bounce(len(eX)-1)
 
     def setRestart():
-        global score,alive,playerX,playerY,difficulty,scoreText
+        global score,alive,playerX,playerY,difficulty,scoreText,totalScore
         eX.clear()
         eY.clear()
         diX.clear()
@@ -146,6 +148,7 @@ def minigame1():
         disY.clear()
         diLaserX.clear()
         diLaserY.clear()
+        totalScore+=score
         score=0
         alive=1
         playerX,playerY= 268,250
@@ -165,12 +168,14 @@ def minigame1():
             if  event.type == pygame.QUIT:
                 pygame.mixer.music.pause()
                 running=False
-            # if event.type== pygame.VIDEORESIZE:
-            #     screen=pygame.display.set_mode((event.h,event.w),pygame.VIDEORESIZE)
+            if event.type == pygame.KEYDOWN and event.key== pygame.K_RETURN:
+                setRestart()
+
             if event.type== pygame.KEYDOWN and event.key==pygame.K_ESCAPE :
                 pygame.mixer.music.pause()
-                return score
                 running=False
+                return totalScore
+                
             if alive==1 and event.type== pygame.KEYDOWN:
                 if event.key== pygame.K_LEFT:
                     changeX-=0.5*(maxW/600)
@@ -242,7 +247,9 @@ def minigame1():
                 draw(gameover,270,70)
             if curTime-timeCnt >=2000:
                 restart=1
-                draw(restartText,305,360)
+                draw(restartText,(maxW-restartText.get_width())/2,(maxH-restartText.get_height())/1.4)
+                surf=fontI.render("Press Esc to exit",True,(120,255,255))
+                draw(surf,(maxW-surf.get_width())/2,(maxH-surf.get_height())/1.25)
             changeX,changeY=0,0
             
         if 0<playerX+changeX<maxW-laserEdge:
@@ -256,3 +263,4 @@ def minigame1():
 
         pygame.display.update()
         # break
+minigame1()
