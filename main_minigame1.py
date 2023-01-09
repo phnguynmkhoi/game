@@ -173,6 +173,7 @@ def minigame1():
 
             if event.type== pygame.KEYDOWN and event.key==pygame.K_ESCAPE :
                 pygame.mixer.music.pause()
+                print(totalScore)
                 running=False
                 return totalScore
                 
