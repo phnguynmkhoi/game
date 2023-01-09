@@ -263,4 +263,3 @@ def minigame1():
 
         pygame.display.update()
         # break
-minigame1()

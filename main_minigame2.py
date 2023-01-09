@@ -336,4 +336,3 @@ def minigame2():
             enemy.append(newEnemy())
         pygame.display.update()
 
-minigame2()
