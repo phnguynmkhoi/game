@@ -494,6 +494,12 @@ def choose_char(screen, selection_set, selection_char):
     light = pygame.image.load('Image/Characters/ava/light.png')
     light = pygame.transform.scale(light, (Width_1cell, Height_1cell))
     
+    char_0 = pygame.image.load('Image/Gameplay/set0/car0.png')
+    char_01 = pygame.image.load('Image/Gameplay/set0/car1.png')
+    char_02 = pygame.image.load('Image/Gameplay/set0/car2.png')
+    char_03 = pygame.image.load('Image/Gameplay/set0/car3.png')
+    char_04 = pygame.image.load('Image/Gameplay/set0/car4.png')
+    
     char_10 = pygame.image.load('Image/Gameplay/set1/car0.png')
     char_11 = pygame.image.load('Image/Gameplay/set1/car1.png')
     char_12 = pygame.image.load('Image/Gameplay/set1/car2.png')
@@ -504,61 +510,55 @@ def choose_char(screen, selection_set, selection_char):
     char_21 = pygame.image.load('Image/Gameplay/set2/car1.png')
     char_22 = pygame.image.load('Image/Gameplay/set2/car2.png')
     char_23 = pygame.image.load('Image/Gameplay/set2/car3.png')
-    char_24 = pygame.image.load('Image/Gameplay/set2/car4.png')
+    char_24 = pygame.image.load('Image/Gameplay/set2/car4.png') 
+   
     
     char_30 = pygame.image.load('Image/Gameplay/set3/car0.png')
     char_31 = pygame.image.load('Image/Gameplay/set3/car1.png')
     char_32 = pygame.image.load('Image/Gameplay/set3/car2.png')
     char_33 = pygame.image.load('Image/Gameplay/set3/car3.png')
-    char_34 = pygame.image.load('Image/Gameplay/set3/car4.png') 
-   
-    
+    char_34 = pygame.image.load('Image/Gameplay/set3/car4.png')
+
     char_40 = pygame.image.load('Image/Gameplay/set4/car0.png')
     char_41 = pygame.image.load('Image/Gameplay/set4/car1.png')
     char_42 = pygame.image.load('Image/Gameplay/set4/car2.png')
     char_43 = pygame.image.load('Image/Gameplay/set4/car3.png')
     char_44 = pygame.image.load('Image/Gameplay/set4/car4.png')
     
-    char_50 = pygame.image.load('Image/Gameplay/set5/car0.png')
-    char_51 = pygame.image.load('Image/Gameplay/set5/car1.png')
-    char_52 = pygame.image.load('Image/Gameplay/set5/car2.png')
-    char_53 = pygame.image.load('Image/Gameplay/set5/car3.png')
-    char_54 = pygame.image.load('Image/Gameplay/set5/car4.png')
-    
     set1_img = [ 
+    pygame.transform.scale(char_0, (Width_1cell, Height_1cell)),
+    pygame.transform.scale(char_01, (Width_1cell, Height_1cell)),
+    pygame.transform.scale(char_02, (Width_1cell, Height_1cell)),
+    pygame.transform.scale(char_03, (Width_1cell, Height_1cell)),
+    pygame.transform.scale(char_04, (Width_1cell, Height_1cell))]
+    
+    set2_img = [
     pygame.transform.scale(char_10, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_11, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_12, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_13, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_14, (Width_1cell, Height_1cell))]
-    
-    set2_img = [ 
+
+    set3_img = [ 
     pygame.transform.scale(char_20, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_21, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_22, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_23, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_24, (Width_1cell, Height_1cell))]
     
-    set3_img = [ 
+    set4_img = [ 
     pygame.transform.scale(char_30, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_31, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_32, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_33, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_34, (Width_1cell, Height_1cell))]
     
-    set4_img = [ 
+    set5_img = [ 
     pygame.transform.scale(char_40, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_41, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_42, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_43, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_44, (Width_1cell, Height_1cell))]
-    
-    set5_img = [ 
-    pygame.transform.scale(char_50, (Width_1cell, Height_1cell)),
-    pygame.transform.scale(char_51, (Width_1cell, Height_1cell)),
-    pygame.transform.scale(char_52, (Width_1cell, Height_1cell)),
-    pygame.transform.scale(char_53, (Width_1cell, Height_1cell)),
-    pygame.transform.scale(char_54, (Width_1cell, Height_1cell))]
     
     list_char = set1_img
     
@@ -883,7 +883,7 @@ def choose_bet(screen, set_char, char_name, rename, tiencuoc, mode):
     maintext_box  = pygame.image.load('Image/assets/set_0.png')
     maintext_box  = pygame.transform.scale(maintext_box, (WIDTH*0.3, HEIGHT*0.05))
 
-    set = 'set' + str(set_char//10+1)
+    set = 'set' + str(set_char//10)
     char0 = pygame.image.load('Image/Gameplay/'+ set + '/car0.png')
     char1 = pygame.image.load('Image/Gameplay/'+ set + '/car1.png')
     char2 = pygame.image.load('Image/Gameplay/'+ set + '/car2.png')
