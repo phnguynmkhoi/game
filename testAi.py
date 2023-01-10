@@ -13,7 +13,7 @@ MAX_VOCAB_SIZE = 10000 # HOW MANY UNIQUE WORDS TO USE
 MAX_SEQUENCE_LENGTH = 300 # MAX NUMBER OF WORDS IN A COMMENT TO USE
 
 def responseChat(review_list):
-  review_list = [["Game chán vãi",0],["Game hay",0],["Không ổn cho lắm",0],["Chán",0]]
+  # review_list = [["Game chán vãi",0],["Game hay",0],["Không ổn cho lắm",0],["Chán vãi ò",0]]
   data_input = pd.DataFrame(review_list, columns = ['Text', 'Label'])
 
   labels_input = data_input.iloc[:, 1].values
@@ -50,7 +50,7 @@ def responseChat(review_list):
   #Xuat predic
   happiness=0
   reviewtemp=reviews_input
-  neg=["chán", "Chán", "Xui", "xui", "dở", "Dở", "tệ", "Tệ", "hèn", "Hèn", "ngu","bug", "Ngu", "Xấu","xấu","chan","Chan","lỗi","loi","Lỗi","câm","Câm","Tạ","tạ","đần","khó","Khó"]
+  neg=["chán", "Chán", "Xui", "xui", "dở", "Dở", "tệ", "Tệ", "hèn", "Hèn", "ngu","bug", "Ngu", "Xấu","xấu","chan","Chan","lỗi","loi","Lỗi","câm","Câm","Tạ","tạ","đần","khó","Khó","chó","Chó"]
   pos=["Hên", "hên","tuyệt", "vời", "haha", "đã", "Đã","ngon","Ngon","may","May","dễ","de","tuyet","voi"]
   for i in range (1,len(review_list)):
     b=reviewtemp[i].split(" ")
@@ -85,4 +85,4 @@ def responseChat(review_list):
   else:
     return 0
 
-responseChat("a")
+# responseChat("a")

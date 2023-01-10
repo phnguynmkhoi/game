@@ -34,7 +34,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     rotateCount = 0
     #set screen
     WIDTH,HEIGHT = screen.get_size()
-    screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.RESIZABLE)
+    screen = pygame.display.set_mode((WIDTH,HEIGHT))
     #set caption and icon and image and font
     pygame.display.set_caption("Game cua nha cai den tu Chau Au")
     icon = pygame.image.load('img/mics/car.png')
@@ -634,6 +634,8 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     chatPredict.append(["trung lập",1])
     chat.activeInput = 0
     running = True
+    for i in range(5):
+        car[i].velocity = 100
     while running:
         if curTime-pivotTime>100000:
             running=False

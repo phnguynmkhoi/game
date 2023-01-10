@@ -342,7 +342,6 @@ def history(screen, username):
                 pygame.quit()
                 sys.exit()
 
-        print(ioexcel.laythongtinhienthi(username))
         lichsuchoi.history(screen, username, WIDTH/1920, ioexcel.laythongtinhienthi(username))
         pygame.display.update()
         clock.tick(60)
