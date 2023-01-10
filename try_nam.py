@@ -1,5 +1,4 @@
 # from pygame.locals import *
-from turtle import width
 import pygame,sys
 import random
 import time

@@ -1,9 +1,8 @@
-import tensorflow as tf
 from tensorflow import keras
 import numpy as np
 import pandas as pd
-from tensorflow.keras.preprocessing.sequence import pad_sequences
-from keras.preprocessing.text import Tokenizer
+# from tensorflow.keras.preprocessing.sequence import pad_sequences
+# from keras.preprocessing.text import Tokenizer
 import pandas as pd
 import numpy as np
 from string import digits
@@ -13,7 +12,7 @@ MAX_VOCAB_SIZE = 10000 # HOW MANY UNIQUE WORDS TO USE
 MAX_SEQUENCE_LENGTH = 300 # MAX NUMBER OF WORDS IN A COMMENT TO USE
 
 def responseChat(review_list):
-  # review_list = [["Game chán vãi",0],["Game hay",0],["Không ổn cho lắm",0],["Chán vãi ò",0]]
+  review_list = [["Game chán vãi",0],["Game hay",0],["Không ổn cho lắm",0],["Chán vãi ò",0]]
   data_input = pd.DataFrame(review_list, columns = ['Text', 'Label'])
 
   labels_input = data_input.iloc[:, 1].values
@@ -37,13 +36,13 @@ def responseChat(review_list):
   for review in reviews_processed:
     word_reviews.append(review.split())
 
-  tokenizer = Tokenizer()
+  tokenizer = keras.preprocessing.text.Tokenizer()
   tokenizer.fit_on_texts(word_reviews)
   sequences_input = tokenizer.texts_to_sequences(word_reviews)
-  data_input = pad_sequences(sequences_input, maxlen=300)
+  data_input = keras.preprocessing.sequence.pad_sequences(sequences_input, maxlen=300)
   labels_input = encoded_labels_input
 
-  print(data_input)
+  # print(data_input)
   cnn_model = keras.models.load_model(".\AI_final.h5")
   prediction = cnn_model.predict(data_input)
 
@@ -57,14 +56,14 @@ def responseChat(review_list):
     temp1=""
     for j in b:
       if j in neg:
-        print(j)
-        print(0)
+        # print(j)
+        # print(0)
         temp1=j
         happiness+=-1
         break
       elif j in pos:
-        print(j)
-        print(2)
+        # print(j)
+        # print(2)
         temp1=j
         happiness+=1
         break
@@ -85,4 +84,4 @@ def responseChat(review_list):
   else:
     return 0
 
-responseChat("a")
+responseChat([["a",0]])

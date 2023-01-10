@@ -1,5 +1,4 @@
 import pygame,sys,ioexcel
-from pygame import mixer
 import random,click,ioexcel
 pygame.init()
 
@@ -491,8 +490,8 @@ def choose_char(screen, selection_set, selection_char):
     
     char_select = pygame.image.load('Image/Characters/ava/0.png')
     char_select = pygame.transform.scale(char_select, (Width_1cell, Height_1cell))
-    light = pygame.image.load('Image/Characters/ava/light.png')
-    light = pygame.transform.scale(light, (Width_1cell, Height_1cell))
+    light = pygame.image.load('Image/Characters/ava/ava0.png')
+    light = pygame.transform.scale(light, (Width_1cell*1.2, Height_1cell*1.2))
     
     char_00 = pygame.image.load('Image/Gameplay/set0/car0.png')
     char_01 = pygame.image.load('Image/Gameplay/set0/car1.png')

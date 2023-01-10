@@ -1,9 +1,6 @@
-from os import rename
 import pygame,sys,ioexcel,random
-import click, newdraw, try_nam,maingameplay,lichsuchoi
+import click, newdraw,maingameplay,lichsuchoi
 from pygame.constants import MOUSEBUTTONDOWN
-from pygame.time import Clock
-from pygame import mixer
 
 pygame.init()
 

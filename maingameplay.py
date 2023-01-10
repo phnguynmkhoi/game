@@ -1,9 +1,7 @@
-import pygame, sys
-import function
+
 from pygame.locals import *
 from pygame.constants import KEYDOWN, MOUSEBUTTONDOWN, QUIT
-import ioexcel, try_nam
-from pygame import mixer
+import ioexcel
 
 def tongket(rank, manvcuoc, tongtien, tiencuoc):
     global luotdau
