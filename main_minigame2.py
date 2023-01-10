@@ -2,11 +2,12 @@ from math import sqrt
 import random
 import pygame
 import math
+import ioexcel
 
 #intialize pygame
 pygame.init()
-def minigame2():
-    global bgX
+def minigame2(username):
+    global bgX,end
     maxW,maxH=900,500   
     screen= pygame.display.set_mode((maxW,maxH))
     pygame.display.set_caption("Training Lee")
@@ -17,14 +18,16 @@ def minigame2():
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.7)
     parrySound=[]
-    for i in range (1,19):
+    for i in range (1,6):
         parrySound .append( pygame.mixer.Sound(f"minigame2/sound/{i}.ogg"))
     hitted = pygame.mixer.Sound('minigame2/sound/tribe_f.wav')
     hitted.set_volume(2)
+    missed= pygame.mixer.Sound('minigame2/sound/swosh-01.flac')
     #FONT
-    fontEnd = pygame.font.Font('minigame2/font/Audiowide-Regular.ttf',104)
+    fontEnd = pygame.font.Font('minigame2/font/Audiowide-Regular.ttf',90)
     fontscore=pygame.font.Font('minigame2/font/Audiowide-Regular.ttf',20)
-    # fontI= pygame.font.Font('font/static/Nunito-Italic.ttf',24)
+    fontI= pygame.font.Font('minigame2/font/Pixel Coleco.otf',24)
+
 
     #LINE
     gameover=fontEnd.render("Wasted",True,(200,10,10))
@@ -84,6 +87,7 @@ def minigame2():
 
     class FIGHTER:
         def __init__(self):
+            self.setRestart=0
             self.health=3
             self.width=80
             self.height=125
@@ -102,6 +106,8 @@ def minigame2():
             self.cnt=4
             self.death=[]
             self.curDeath=0
+            self.standSprite=[]
+            self.curStandSprite=0
         def recover(self): #Chay khi active=0
             if self.curAttRange<self.attRange :
                 self.curAttRange +=2.3   
@@ -115,7 +121,6 @@ def minigame2():
             #Right
             draw(resize(self.rangeImg,self.curAttRange,10),self.x+self.width*0.8,self.y+self.height*1.05)
         def setAttack(self,idi,x):
-            parrySound[random.randint(0,17)].play()
             self.curAttSprite=random.choice([0,5,10,15])
             self.idi=idi
             self.active=1
@@ -160,6 +165,21 @@ def minigame2():
             #     draw(self.death[11],self.x,self.y+self.death[11].get_height()+self.height)
             if self.curDeath>20:
                 draw(gameover,(maxW-gameover.get_width())/2,(maxH-gameover.get_height())/2)
+                surf=fontI.render("Press Enter to Restart",True,(230,30,30))
+                draw(surf,(maxW-surf.get_width())/2,(maxH-surf.get_height())/1.5)
+                surf=fontI.render("Press Esc to Exit",True,(230,30,30))
+                draw(surf,(maxW-surf.get_width())/2,(maxH-surf.get_height())/1.3)
+        def restart(self):
+            global end
+            self.health+=0.01
+            if self.health>=3:
+                self.health=3
+                end=0
+                self.setRestart=0
+            self.curStandSprite+=0.03
+            maxS=len(self.standSprite)-1
+            draw(resize(shadow,self.standSprite[min(maxS,int(self.curStandSprite))].get_width(),shadow.get_height()),self.x*1.01,self.y+self.height*0.85)
+            draw(self.standSprite[min(maxS,int(self.curStandSprite))],self.x,self.y-self.standSprite[min(maxS,int(self.curStandSprite))].get_height()+self.height)
 
     #INITIALIZE
     fighter=FIGHTER()
@@ -171,6 +191,9 @@ def minigame2():
             for j in range(1,13,1):
                 img = pygame.image.load(f"minigame2/img/deathLee-{j}.png")
                 fighter.death.append(img)
+            for j in range(1,9,1):
+                img = pygame.image.load(f"minigame2/img/standLee-{j}.png")
+                fighter.standSprite.append(img)
         for j in range(1,6,1):
             img = pygame.image.load(f"minigame2/img/lee-{j}.png")
             # img = resize(img,56,fighter.height)
@@ -210,9 +233,10 @@ def minigame2():
     clock=pygame.time.Clock()
     pivotTime=0
     end=0
+    start=0
     duration=random.uniform(500,900)
     fps = 120
-
+    totalScore=0
     while running:
         clock.tick(fps)
         curTime=pygame.time.get_ticks()
@@ -220,22 +244,33 @@ def minigame2():
         draw(bg,bgX,0)
         #
         draw(wood,0,0)
-        for i in range(fighter.health):
+        for i in range(int(fighter.health)):
             draw(heart,(i)*36+10,10)
-        scoreDisplay=fontscore.render(f"Blocked: {score}",True,(230,230,190))
+        scoreDisplay=fontscore.render(f"Blocked: {score*10}",True,(230,230,190))
         draw (scoreDisplay,10,50)
         ##   
         for event in pygame.event.get():
             if  event.type == pygame.QUIT:
                 pygame.mixer.music.pause()
                 running=False
+
+            if event.type==pygame.KEYDOWN and event.key==pygame.K_RETURN:
+                ioexcel.tong_tien(username,score*10)
+                fighter.curStandSprite=0
+                totalScore+=score
+                score=0
+                start=0
+                fighter.setRestart=1
             if event.type== pygame.KEYDOWN and event.key==pygame.K_ESCAPE :
                 pygame.mixer.music.pause()
-                return score
+                ioexcel.tong_tien(username,score*10)
                 running=False
+                return totalScore
+                
             if event.type == pygame.KEYDOWN and end ==0:
                 if event.key==pygame.K_LEFT :
                     # fighter.setAttack(0,fighter.x)
+                    start=1
                     maxx=0
                     ko=None
                     for e in enemy: 
@@ -249,10 +284,14 @@ def minigame2():
                                 score+=1
                                 e.kickedd()
                                 break
+                        parrySound[random.randint(1,4)].play()
+                    else:
+                        missed.play()
                     
                 if event.key==pygame.K_RIGHT :
                     minn=1300
                     ko=None
+                    start=1
                     for e in enemy: 
                         if e.x>=fighter.x and e.x-fighter.x<=fighter.curAttRange:
                             minn=min(minn,e.x)
@@ -267,15 +306,19 @@ def minigame2():
                                 score+=1
                                 e.kickedd()
                                 break
-                        
+                        parrySound[random.randint(1,4)].play()
+                    else:
+                        missed.play()
 
         if end==0:
             if fighter.active:
                 fighter.Attack()
 
             fighter.recover()
-        else :
+        elif fighter.setRestart==0:
             fighter.die()
+        elif fighter.setRestart==1:
+            fighter.restart()
         # img = pygame.image.load("img/lee-9.png")
         # img = resize(img,fighter.width,fighter.height)
         # draw(img,fighter.x,fighter.y)
@@ -288,10 +331,12 @@ def minigame2():
                 hitted.play()
                 fighter.health-=1
                 if fighter.health==0:
+                    fighter.curDeath=0
                     end=1
-        if curTime-pivotTime>=duration and end==0:
+        if curTime-pivotTime>=duration and end==0 and start==1:
             duration=duration=duration=random.uniform(300,500)
 
             pivotTime=curTime
             enemy.append(newEnemy())
         pygame.display.update()
+

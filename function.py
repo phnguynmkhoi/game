@@ -60,8 +60,8 @@ def main_menu(screen,username,selection_main_mennu = 0):
 
     class BackgrounD: 
         def __init__(self):
-            background = pygame.image.load('Image/menugame2.png')
-            background = pygame.transform.scale(background,(background.get_width(),HEIGHT))
+            background = pygame.image.load('Image/menugame1.jpg')
+            background = pygame.transform.scale(background,(background.get_width()/3,HEIGHT))
             self.x = 0
             self.y = 0
             self.speed = 3

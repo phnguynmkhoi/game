@@ -1,5 +1,5 @@
 import pygame,sys
-import function, ioexcel,try_nam,maingameplay
+import function, ioexcel,try_nam,maingameplay,newdraw
 import main_minigame1 as mn1
 import main_minigame2 as mn2
 from pygame import mixer
@@ -39,7 +39,6 @@ def main_menu(screen, username, selection):
     
     if MENU_OBJECT[0].collidepoint(mouse):
         click_sound.play()
-        #sửa chỗ này rồi
         function.choose_track(screen,username,0)
     if MENU_OBJECT[1].collidepoint(mouse):
         click_sound.play()
@@ -132,7 +131,7 @@ def help(screen, username, selection_help, goback):
         if goback == 1:
             function.choose_track(screen, username,0)
 
-def minigame(screen, username):
+def minigame1(screen, username):
     WIDTH, HEIGHT = screen.get_size()
     mouse = pygame.mouse.get_pos()
 
@@ -148,11 +147,32 @@ def minigame(screen, username):
 
     if MNG_OBJECT[0].collidepoint(mouse):
         click_sound.play()
-        function.main_menu(screen, username, 0)
+        function.choose_minigame(screen, username, 0)
     if MNG_OBJECT[1].collidepoint(mouse):
         click_sound.play()
-        minigame.layminigame(screen, username, WIDTH/1920)
+        mn1.minigame1(username)
 
+def minigame2(screen, username):
+    WIDTH, HEIGHT = screen.get_size()
+    mouse = pygame.mouse.get_pos()
+
+    Width_1cell = WIDTH*0.14
+    Height_1cell = HEIGHT*0.08
+    Left = (WIDTH*0.48) - Width_1cell
+    Top = HEIGHT*0.87
+    
+    # MINIGAME OBJECT
+    MNG_OBJECT = [
+    pygame.Rect(Left,                            Top, Width_1cell, Height_1cell),
+    pygame.Rect(Left + Width_1cell + 0.04*WIDTH, Top, Width_1cell, Height_1cell)]
+
+    if MNG_OBJECT[0].collidepoint(mouse):
+        click_sound.play()
+        function.choose_minigame(screen, username, 0)
+    if MNG_OBJECT[1].collidepoint(mouse):
+        click_sound.play()
+        mn2.minigame2(username)
+        
 def store(screen, username):
     global giohang
     mouse = pygame.mouse.get_pos()
@@ -213,17 +233,17 @@ def choose_minigame(screen, username, selection_mini):
     Right = Left + Width_1cell
     Top = HEIGHT*0.3
     
-    # SET OBJECT BUTTON
-    SET_OBJECT = [
+    # MNG OBJECT BUTTON
+    MNG_OBJECT = [
     pygame.Rect(Left,Top                                                           ,Width_1cell*1.5, Height_1cell*2),
     pygame.Rect(Left+2*(Width_1cell+Range_2cell),Top                                 ,Width_1cell*1.5,Height_1cell*2)
     ]
 
-    # SET LIST====================================================================
-    if SET_OBJECT[0].collidepoint(mouse): 
+    # MINIGAME LIST====================================================================
+    if MNG_OBJECT[0].collidepoint(mouse): 
         click_sound.play()
         function.choose_minigame(screen, username, 0)
-    if SET_OBJECT[1].collidepoint(mouse): 
+    if MNG_OBJECT[1].collidepoint(mouse): 
         click_sound.play()
         function.choose_minigame(screen, username, 1)
 
@@ -252,11 +272,13 @@ def choose_minigame(screen, username, selection_mini):
     if MENU_OBJECT[1].collidepoint(mouse):
         click_sound.play()
         if selection_mini == 0:
-            score+= mn1.minigame1()
-            ioexcel.tong_tien(username,score*10)
+            mn1.minigame1(username)
+        """  newdraw.minigame1(screen,username)
+            minigame1(screen,username) """
         if selection_mini == 1:
-            score+= mn2.minigame2()
-            ioexcel.tong_tien(username,score*10)
+            mn2.minigame2(username)
+        """  newdraw.minigame1(screen,username)
+            minigame2(screen,username) """
     if MENU_OBJECT[0].collidepoint(mouse): 
         click_sound.play()
         function.choose_track(screen, username,0)
@@ -279,8 +301,8 @@ def choose_track(screen, username, selection_track):
         click_sound.play()
         function.store(screen, username, cart)
     
-    # SET OBJECT BUTTON
-    SET_OBJECT = [
+    # MAP OBJECT BUTTON
+    MAP_OBJECT = [
     pygame.Rect(Left,Top                                                           ,Width_1cell,Height_1cell),
     pygame.Rect(Left+Width_1cell+2*Range_2cell,Top                                 ,Width_1cell,Height_1cell),
     pygame.Rect(Left+2*(Width_1cell+2*Range_2cell),Top                             ,Width_1cell,Height_1cell),
@@ -288,21 +310,21 @@ def choose_track(screen, username, selection_track):
     pygame.Rect(Left+2*Width_1cell+Range_2cell,Top+1*(Height_1cell + 2*Range_2cell),Width_1cell,Height_1cell)
     ]
     
-    # SET LIST====================================================================
+    # MAP LIST====================================================================
 
-    if SET_OBJECT[0].collidepoint(mouse): 
+    if MAP_OBJECT[0].collidepoint(mouse): 
         click_sound.play()
         function.choose_track(screen, username, 0)
-    if SET_OBJECT[1].collidepoint(mouse): 
+    if MAP_OBJECT[1].collidepoint(mouse): 
         click_sound.play()
         function.choose_track(screen, username, 1)
-    if SET_OBJECT[2].collidepoint(mouse): 
+    if MAP_OBJECT[2].collidepoint(mouse): 
         click_sound.play()
         function.choose_track(screen, username, 2)
-    if SET_OBJECT[3].collidepoint(mouse): 
+    if MAP_OBJECT[3].collidepoint(mouse): 
         click_sound.play()
         function.choose_track(screen, username, 3)
-    if SET_OBJECT[4].collidepoint(mouse): 
+    if MAP_OBJECT[4].collidepoint(mouse): 
         click_sound.play()
         function.choose_track(screen, username, 4)
 

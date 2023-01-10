@@ -12,17 +12,17 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     pygame.mixer.music.load('sounds/backgroundmusic.wav')
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.2)
-    # if pickedCar==0:
-    #     pickedCar=2
-    # elif pickedCar==1:
-    #     pickedCar=3
-    # elif pickedCar==2:
-    #     pickedCar=4
-    # elif pickedCar==3:
-    #     pickedCar=0
-    # elif pickedCar==4:
-    #     pickedCar=2
-    color={0:"blue", 1:"green", 2:"pink", 3:"red", 4:"yellow"}
+    if pickedCar==0:
+        pickedCar=2
+    elif pickedCar==1:
+        pickedCar=3
+    elif pickedCar==2:
+        pickedCar=4
+    elif pickedCar==3:
+        pickedCar=0
+    elif pickedCar==4:
+        pickedCar=2
+    color={0:"red", 1:"blue", 2:"yellow", 3:"green", 4:"pink"}
     #System Time
     curTime=0
     pivotTime=pygame.time.get_ticks()
@@ -46,6 +46,10 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     fontChat = pygame.font.Font('./font/Arial.ttf',int(screen.get_width()/69))
     fontName = pygame.font.Font('./font/Arial.ttf',int(screen.get_width()/70))
     fontResponse = pygame.font.Font('./font/Arial.ttf',int(screen.get_width()/15))
+    chatbox=pygame.image.load('img/decorations/chat.png')
+    chatbox=pygame.transform.scale(chatbox,(280,110))
+    chatbox.set_alpha(200)
+    chatObject= pygame.Rect(0,20,250,130)
     #Mystery Box
     mysbox=[] 
     for i in range(4):
@@ -82,7 +86,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     chatList = ["VN vô địch","Cầm sổ đỏ rồi","đừng thua nữa bán xe rồi","MU vô hang","Arg vô địch","non quá","xin cái tuổi","ez game","nhảy cầu thôi","tạm biệt mọi người","cược nhầm xe rồi","đau lưng quá","nhà mình còn gì đâu"]
     botList = ["Khoi","Nam Android","Huy","Tung","Uong Nam"]
     vowel=["á","à","ả","ã","ạ","ă","ắ","ằ","ẳ","ẵ","ặ","â","ấ","ầ","ẩ","ẫ","ậ","é","è","ẻ","ẽ","ẹ","ê","ế","ề","ể","ễ","ệ","ó","ò","ỏ","õ","ọ","ô","ố","ồ","ổ","ỗ","ộ","ơ","ớ","ờ","ở","ỡ","ợ","í","ì","ỉ","ĩ","ị","ú","ù","ủ","ũ","ụ","ư","ứ","ừ","ử","ữ","ự","ý","ỳ","ỷ","ỹ","ỵ","đ"]
-
+    print(fontChat.render(chatList[2],True,(255,255,255)).get_size())
 
     #Sound
     pickedSound= pygame.mixer.Sound('Music/ding2.wav')
@@ -100,8 +104,10 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
         def randomChatScript(self):
             randomChat = chatList[random.randint(0,12)]
             randomName = botList[random.randint(0,4)]
-            self.chatScript.append(fontChat.render(randomName+": "+randomChat,True,(115,147,179)))
+            self.chatScript.append(fontChat.render(randomName+": "+randomChat,True,(55,57,59)))
         def runChat(self):
+            if  chatObject.collidepoint(pygame.mouse.get_pos()):
+                draw(chatbox,chatObject.left,chatObject.top)
             self.chatTime+=50
             if self.chatTime%5000==0:
                 self.randomChatScript()
@@ -112,11 +118,11 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
                     draw(self.chatScript[j],screen.get_width()/60,screen.get_height()/30+(n-i)*screen.get_height()/30)
                 self.displayInputChat()
         def displayInputChat(self):
-            surf=fontChat.render("Chat: "+ self.inputText,True,(115,147,179))
+            surf=fontChat.render("Chat: "+ self.inputText,True,(55,57,59))
             draw(surf,screen.get_width()/60,screen.get_height()/30+5*screen.get_height()/30)
         def pubChat(self):
             if self.inputText!="":
-                surf=fontChat.render("You: "+self.inputText,True,(115,147,179))
+                surf=fontChat.render("You: "+self.inputText,True,(55,57,59))
                 self.chatScript.append(surf)
                 chatPredict.append([self.inputText,0])
                 self.inputText=""
@@ -646,6 +652,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
                     chat.activeInput = 1
                 else:
                     chat.activeInput = 0
+            
             if chat.activeInput == 1:
                 ok=0
                 if event.type==pygame.KEYDOWN:
@@ -720,7 +727,6 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
                 for i in range(5):
                     rankImg[i] = pygame.transform.scale(rankImg[i],(screen.get_width()/25,screen.get_height()/10))
                 bgwin[0] = pygame.transform.scale(bgwin[0],(screen.get_width(),screen.get_height()))
-                bgwin[1] = pygame.transform.scale(bgwin[1],(screen.get_width(),screen.get_height()))
                 pygame.transform.scale(pygame.image.load("img/celebrate/first.png"),(screen.get_width()/15,screen.get_height()/9))
                 pygame.transform.scale(pygame.image.load("img/celebrate/second.png"),(screen.get_width()/15,screen.get_height()/9))
                 pygame.transform.scale(pygame.image.load("img/celebrate/third.png"),(screen.get_width()/15,screen.get_height()/9))
@@ -945,4 +951,4 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
         pygame.display.update()
     return finished[pickedCar]
     
-# play((1024,534),0,0,0,0,0,"NotTun")
+# play(pygame.display.set_mode((1024,500)),0,0,0,0,0,"NotTun")
