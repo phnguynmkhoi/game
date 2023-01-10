@@ -51,8 +51,10 @@ def history(screen, username, tyle, thongtin):
             Text1 = str(Match) + '.' + Result
             Text2 = Change
             Text3 = Character
-            
-            ava = pygame.image.load('Image/Gameplay/set'+ Character[0] + '/car'+ Character[1]+'.png')
+            if len(Character)==2:
+                ava = pygame.image.load('Image/Gameplay/set'+ Character[0] + '/car'+ Character[1]+'.png')
+            else:
+                ava = pygame.image.load('Image/Gameplay/car'+ Character[0]+'.png')
             ava = pygame.transform.scale(ava, (tyle*100,tyle*100))
             
             Text1_surface = self.font.render(Text1,True,pygame.Color('black'))

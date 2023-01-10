@@ -494,7 +494,7 @@ def choose_char(screen, selection_set, selection_char):
     light = pygame.image.load('Image/Characters/ava/light.png')
     light = pygame.transform.scale(light, (Width_1cell, Height_1cell))
     
-    char_0 = pygame.image.load('Image/Gameplay/set0/car0.png')
+    char_00 = pygame.image.load('Image/Gameplay/set0/car0.png')
     char_01 = pygame.image.load('Image/Gameplay/set0/car1.png')
     char_02 = pygame.image.load('Image/Gameplay/set0/car2.png')
     char_03 = pygame.image.load('Image/Gameplay/set0/car3.png')
@@ -526,7 +526,7 @@ def choose_char(screen, selection_set, selection_char):
     char_44 = pygame.image.load('Image/Gameplay/set4/car4.png')
     
     set1_img = [ 
-    pygame.transform.scale(char_0, (Width_1cell, Height_1cell)),
+    pygame.transform.scale(char_00, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_01, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_02, (Width_1cell, Height_1cell)),
     pygame.transform.scale(char_03, (Width_1cell, Height_1cell)),

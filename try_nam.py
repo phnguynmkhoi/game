@@ -13,7 +13,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.2)
     if pickedCar==0:
-        pickedCar=2
+        pickedCar=1
     elif pickedCar==1:
         pickedCar=3
     elif pickedCar==2:
@@ -83,8 +83,8 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     prize.append(pygame.transform.scale(pygame.image.load("img/celebrate/second.png"),(WIDTH/15,HEIGHT/9)))
     prize.append(pygame.transform.scale(pygame.image.load("img/celebrate/third.png"),(WIDTH/15,HEIGHT/9)))
     #chat
-    chatList = ["VN vô địch","Cầm sổ đỏ rồi","đừng thua nữa bán xe rồi","MU vô hang","Arg vô địch","non quá","xin cái tuổi","ez game","nhảy cầu thôi","tạm biệt mọi người","cược nhầm xe rồi","đau lưng quá","nhà mình còn gì đâu"]
-    botList = ["Khoi","Nam Android","Huy","Tung","Uong Nam"]
+    chatList = ["VN vô địch","Cầm sổ đỏ rồi","đừng thua nữa bán xe rồi","MU vô hang","Arg vô địch","non quá","xin cái tuổi","ez game","nhảy cầu thôi","tạm biệt mọi người","cược nhầm xe rồi","đau lưng quá","nhà mình còn gì đâu","game dễ vãi","haha","cay thật","siuuuuuu"]
+    botList = ["Khoi có ny","Nam k có ny","Huy","Tung","Nam có ny"]
     vowel=["á","à","ả","ã","ạ","ă","ắ","ằ","ẳ","ẵ","ặ","â","ấ","ầ","ẩ","ẫ","ậ","é","è","ẻ","ẽ","ẹ","ê","ế","ề","ể","ễ","ệ","ó","ò","ỏ","õ","ọ","ô","ố","ồ","ổ","ỗ","ộ","ơ","ớ","ờ","ở","ỡ","ợ","í","ì","ỉ","ĩ","ị","ú","ù","ủ","ũ","ụ","ư","ứ","ừ","ử","ữ","ự","ý","ỳ","ỷ","ỹ","ỵ","đ"]
     print(fontChat.render(chatList[2],True,(255,255,255)).get_size())
 
@@ -487,7 +487,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
         3:("motorcycles",3,9,"smoke"),
         0:("cars",4,9,"smoke"),
     }
-    carName = ["Khoi","Nam","Huy","Tung","Android"]
+    carName = ["Khoi co ny","Nam co ny","Huy","Tung","Nam k co ny"]
     # transSelected=0# Change Transportation here
     # pickedCar = 1
     # mapSelected = 4
