@@ -71,8 +71,8 @@ def responseChat(review_list):
     if temp1 in (neg+pos):
       continue
     else:
-      print(reviews_input[i])
-      print(np.argmax(prediction[i]))
+      # print(reviews_input[i])
+      # print(np.argmax(prediction[i]))
       happiness += np.argmax(prediction[i])-1
   if len(review_list) > 1:
     happiness=happiness/(len(review_list)-1)
