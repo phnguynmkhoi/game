@@ -50,12 +50,10 @@ def responseChat(review_list):
   #Xuat predic
   happiness=0
   reviewtemp=reviews_input
-  # neg=["chán", "Chán", "Xui", "xui", "dở", "Dở", "tệ", "Tệ", "hèn", "Hèn", "ngu","bug", "Ngu", "Xấu","xấu","chan","Chan","lỗi","loi","Lỗi","câm","Câm","Tạ","tạ","đần","khó","Khó"]
-  # pos=["Hên", "hên","tuyệt", "vời", "haha", "đã", "Đã","ngon","Ngon","may","May","dễ","de","tuyet","voi"]
+  neg=["chán", "Chán", "Xui", "xui", "dở", "Dở", "tệ", "Tệ", "hèn", "Hèn", "ngu","bug", "Ngu", "Xấu","xấu","chan","Chan","lỗi","loi","Lỗi","câm","Câm","Tạ","tạ","đần","khó","Khó","chó","Chó"]
+  pos=["Hên", "hên","tuyệt", "vời", "haha", "đã", "Đã","ngon","Ngon","may","May","dễ","de","tuyet","voi"]
   for i in range (1,len(review_list)):
     b=reviewtemp[i].split(" ")
-    neg=[]
-    pos=[]
     temp1=""
     for j in b:
       if j in neg:
