@@ -627,7 +627,6 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     chatChecked = 0
     chatPredict.append(["trung lập",1])
     chat.activeInput = 0
-    car[pickedCar].velocity = 100
     running = True
     while running:
         if curTime-pivotTime>100000:
