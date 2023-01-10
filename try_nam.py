@@ -1,5 +1,4 @@
 # from pygame.locals import *
-from turtle import width
 import pygame,sys
 import random
 import time
@@ -422,7 +421,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
                 self.x += WIDTH/400
                 return
             if curTime-self.pivotTime>= self.duration and self.velocity!=0:
-                tmp=random.uniform(self.velocity-0.3,second_velocity)
+                tmp=random.uniform(self.velocity+0.3,second_velocity)
                 if tmp>=self.velocity:
                     self.curSpriteSmoke=0
                     self.velocity=tmp

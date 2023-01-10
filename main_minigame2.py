@@ -1,7 +1,6 @@
 from math import sqrt
 import random
 import pygame
-import math
 import ioexcel
 
 #intialize pygame

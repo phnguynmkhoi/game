@@ -2,7 +2,7 @@ import pygame,sys, function
 
 from pygame.constants import MOUSEBUTTONDOWN
 from pygame import mixer
-
+import ioexcel
 pygame.init()
 
 default_width = 1920
@@ -36,7 +36,7 @@ def history(screen, username, tyle, thongtin):
             self.thongtin = thongtin
             self.index = index - starter_point
             self.match = index
-            self.font = pygame.font.Font('Font/LT.otf',int(70*tyle))
+            self.font = pygame.font.Font('Font/GEO_AI__.TTF',int(70*tyle))
         def draw (self,Surface,tyle):
             Table = pygame.Rect(400*tyle,(180*(self.index+1)+100)*tyle,1120*tyle,150*tyle)
 
@@ -55,7 +55,7 @@ def history(screen, username, tyle, thongtin):
                 ava = pygame.image.load('Image/Gameplay/set'+ Character[0] + '/car'+ Character[1]+'.png')
             else:
                 ava = pygame.image.load('Image/Gameplay/car'+ Character[0]+'.png')
-            ava = pygame.transform.scale(ava, (tyle*100,tyle*100))
+            ava = pygame.transform.scale(ava, (tyle*250,tyle*100))
             
             Text1_surface = self.font.render(Text1,True,pygame.Color('black'))
             Text2_surface = self.font.render(Text2,True,pygame.Color('black'))
@@ -63,7 +63,7 @@ def history(screen, username, tyle, thongtin):
 
             Text1_rect = Text1_surface.get_rect(topleft = Table.topleft)
             Text2_rect = Text2_surface.get_rect(midtop = Table.midtop)
-            Text3_rect = Text3_surface.get_rect(topright = Table.topright)
+            Text3_rect = ava.get_rect(topright = Table.topright)
 
             Surface.blit(Text1_surface,Text1_rect) 
             Surface.blit(Text2_surface,Text2_rect) 
@@ -85,7 +85,7 @@ def history(screen, username, tyle, thongtin):
 
     L_arrow_rect = L_arrow.get_rect(midleft =(0*tyle,int(default_height/2*tyle)))
     R_arrow_rect = R_arrow.get_rect(midright =(1920*tyle,int(default_height/2*tyle)))
-    Back_button_rect = Back_button.get_rect (bottomright = ((1920-40)* tyle,(1080-20)*tyle))
+    Back_button_rect = Back_button.get_rect (bottomright = ((1920-45)* tyle,(1080-25)*tyle))
 
     start_point = 1
 
@@ -169,3 +169,4 @@ def history(screen, username, tyle, thongtin):
             match_status[i].draw(DISPLAYSURF,tyle)
 
         pygame.display.update()
+# history(pygame.display.set_mode((1024,534)), "TungDo", 1024/1920, ioexcel.laythongtinhienthi("TungDo"))

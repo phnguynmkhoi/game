@@ -2,7 +2,7 @@ import pygame
 import sys
 import function,user_account,newdraw,ioexcel
 from pygame import mixer
-import try_nam
+
 pygame.init()
 
 username = user_account.LoginRegister()

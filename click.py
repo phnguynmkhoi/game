@@ -1,5 +1,5 @@
 import pygame,sys
-import function, ioexcel,try_nam,maingameplay,newdraw
+import function, ioexcel,try_nam
 import main_minigame1 as mn1
 import main_minigame2 as mn2
 from pygame import mixer
