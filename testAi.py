@@ -28,7 +28,6 @@ def responseChat(review_list):
   encoded_labels_input = np.array(encoded_labels_input)
   
   reviews_processed = []
-  unlabeled_processed = []
 
   for review in reviews_input:
     review_cool_one = ''.join([char for char in review if char not in digits])
@@ -41,9 +40,10 @@ def responseChat(review_list):
   tokenizer = Tokenizer()
   tokenizer.fit_on_texts(word_reviews)
   sequences_input = tokenizer.texts_to_sequences(word_reviews)
-  data_input = pad_sequences(sequences_input, maxlen=MAX_SEQUENCE_LENGTH)
+  data_input = pad_sequences(sequences_input, maxlen=300)
   labels_input = encoded_labels_input
 
+  print(data_input)
   cnn_model = keras.models.load_model(".\AI_final.h5")
   prediction = cnn_model.predict(data_input)
 
