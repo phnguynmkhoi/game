@@ -198,7 +198,6 @@ def store(screen, username):
         function.choose_track(screen, username,0)
     
     giohang = ioexcel.laymabua()
-    print(ioexcel.laymabua())
     tongtien = ioexcel.layTongtien(username)
     if giohang == None:
         giohang = ''
@@ -481,13 +480,11 @@ def tongket(rank, manvcuoc, tongtien, tiencuoc):
     checkwin = 0
     checkdoan = 0
     #if manvcuoc == rank[0][0]:
-    print(rank)
     if rank == 1:
         tiengiaodong += tiencuoc
         checkwin = 1
     else:
         tiengiaodong -= tiencuoc
-    print(tiengiaodong)
     luotdau = (checkwin, tiengiaodong, manvcuoc)
     tongtien += tiengiaodong
     thongtin = tuple(str(rank)) + (checkwin, checkdoan, tongtien, tiengiaodong)
@@ -569,6 +566,7 @@ def bet(screen, username,selection_track,set_char, char_name, rename, cost, mode
             #maingameplay.gameplaymain(screen, username,selection_track, set_char,char_name, tiencuoc, WIDTH/1920, chedo)
             tongtien = ioexcel.layTongtien(username)
             print(set_char)
+            print(set_char%10)
             rank = try_nam.play(screen,selection_track,int(set_char/10),set_char%10,chedo,username,char_name)
             print(rank)
             thongtin = tongket(rank,set_char,tongtien,tiencuoc)
