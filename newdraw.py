@@ -140,7 +140,7 @@ def store(screen, username, cart):
             screen.blit(SALER_IMG[i],saler_loc)
             screen.blit(msg,(ITEM_LOC[0][0]+Width_1Cell*2, ITEM_LOC[0][1] + Height_1Cell*0.3))
             #screen.blit(MSG_ITEMS[i],(ITEM_LOC[0][0]+505, ITEM_LOC[0][1] + Height_1Cell*0.8-100))
-            screen.blit(message,(ITEM_LOC[0][0]+Width_1Cell*2, ITEM_LOC[0][1] + Height_1Cell*0.5))
+            screen.blit(message,(ITEM_LOC[0][0]+Width_1Cell*11/5, ITEM_LOC[0][1] + Height_1Cell*0.5))
             pygame.time.wait(200)
         else:
             screen.blit(ITEM_IMG[i], ITEM_LOC[i])
@@ -968,13 +968,17 @@ def choose_bet(screen, set_char, char_name, rename, tiencuoc, mode):
     pygame.transform.scale(bet5, (WIDTH*0.15, HEIGHT*0.1)),
     pygame.transform.scale(bet6, (WIDTH*0.15, HEIGHT*0.1))]
     
-    start     = pygame.image.load('Image/assets/SetMenu/START.png') # start luc dau
+    start     = pygame.image.load('Image/assets/Mode/play1.png') # start luc dau
     start     = pygame.transform.scale(start, (WIDTH*0.18, HEIGHT*0.15))
-    start1 = pygame.image.load('Image/assets/Mode/start-hover.png') # start luc sau
-    start1    = pygame.transform.scale(start, (WIDTH*0.18, HEIGHT*0.15))
+    start1    = pygame.image.load('Image/assets/Mode/play2.png') # start luc sau
+    start1    = pygame.transform.scale(start1, (WIDTH*0.18, HEIGHT*0.15))
     
-    START_OBJECT = (5*WIDTH*0.13 + 100,HEIGHT*0.71,WIDTH*0.18, HEIGHT*0.15)
-    screen.blit(start, (START_OBJECT[0], START_OBJECT[1]))
+    START_OBJECT = pygame.Rect(5*WIDTH*0.13 + 100,HEIGHT*0.71,WIDTH*0.18, HEIGHT*0.15)
+    mouse = pygame.mouse.get_pos()
+    if START_OBJECT.collidepoint(mouse):
+        screen.blit(start1, (START_OBJECT[0], START_OBJECT[1]))
+    else:
+        screen.blit(start, (START_OBJECT[0], START_OBJECT[1]))
     
     BET_LOCATION = [
     (WIDTH*0.55,HEIGHT*0.15),
@@ -1053,8 +1057,13 @@ def choose_bet(screen, set_char, char_name, rename, tiencuoc, mode):
             
     Back = pygame.image.load('Image/assets/SetMenu/back.png')
     Back = pygame.transform.scale(Back, ( WIDTH*0.12, HEIGHT*0.07))
+    Back1 = pygame.image.load('Image/assets/Mode/back-hover.png')
+    Back1 = pygame.transform.scale(Back1, ( WIDTH*0.12, HEIGHT*0.07))
     
     BACK_LOCATION = (WIDTH*0.08, HEIGHT*0.85)
     BACK_BUTTON = pygame.Rect(WIDTH*0.08,HEIGHT*0.85, WIDTH*0.12, HEIGHT*0.07)
-    
-    screen.blit(Back, BACK_LOCATION)
+    mouse = pygame.mouse.get_pos()
+    if BACK_BUTTON.collidepoint(mouse):
+        screen.blit(Back1, BACK_LOCATION)
+    else:
+        screen.blit(Back, BACK_LOCATION)
