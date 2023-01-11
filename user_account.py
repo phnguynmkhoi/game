@@ -4,7 +4,7 @@ from PIL import ImageTk,Image
 username = str()
 def xuli():
     window = Tk()
-    window.title('LOGIN N4')
+    window.title('LOGIN')
     window.geometry('800x500')
     window.configure(bg="#e0ebeb")
     img1=Image.open("Image\\login\\sidebg2.png").resize((500,500),Image.ANTIALIAS)

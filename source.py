@@ -15,8 +15,8 @@ def main():
     global username
     if username !='':
         #Tao cua so game
-        WIDTH = 1024
-        HEIGHT = 534
+        WIDTH = 1280
+        HEIGHT = 720
         RESOLUTION = (WIDTH,HEIGHT)
         ioexcel.laythongtin(username)   
         screen = pygame.display.set_mode(RESOLUTION)

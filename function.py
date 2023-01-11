@@ -17,13 +17,13 @@ def main_menu(screen,username,selection_main_mennu = 0):
         def __init__(self, pos_x, pos_y):
 
             car0=pygame.image.load('img/background-menus/f1/0-f1.png')
-            car0= pygame.transform.scale(car0, (700*tile, 300*tile))
+            car0= pygame.transform.scale(car0, (1024*tile, 218*tile))
             car1=pygame.image.load('img/background-menus/f1/1-f1.png')
-            car1= pygame.transform.scale(car1, (700*tile, 300*tile))
+            car1= pygame.transform.scale(car1, (1024*tile, 218*tile))
             car2=pygame.image.load('img/background-menus/f1/2-f1.png')
-            car2= pygame.transform.scale(car2, (700*tile, 300*tile))
+            car2= pygame.transform.scale(car2, (1024*tile, 218*tile))
             car3=pygame.image.load('img/background-menus/f1/3-f1.png')
-            car3= pygame.transform.scale(car3, (700*tile, 300*tile))
+            car3= pygame.transform.scale(car3, (1024*tile, 218*tile))
             
             super().__init__()
             self.attack_animation = False
@@ -52,7 +52,7 @@ def main_menu(screen,username,selection_main_mennu = 0):
             self.image = self.sprites[int(self.current_sprite)]
 
     moving_sprites = pygame.sprite.Group()
-    player = Player(200*tile,750*tile)
+    player = Player(200*tile,840*tile)
     moving_sprites.add(player)
 
     class BackgrounD: 

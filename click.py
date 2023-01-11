@@ -499,8 +499,8 @@ def bet(screen, username,selection_track,set_char, char_name, rename, cost, mode
     
     BACK_BUTTON = pygame.Rect(WIDTH*0.08,HEIGHT*0.85, WIDTH*0.12, HEIGHT*0.07)
     if BACK_BUTTON.collidepoint(mouse):
-        function.choose_set(screen, username,selection_track, set_char, char_name)
-    
+        #function.choose_set(screen, username,selection_track, set_char, char_name)
+        function.choose_set(screen, username,selection_track, set_char/10, set_char%10)
     # CHAR OBJECT BUTTON
     CHA_OBJECT = pygame.Rect(WIDTH*0.13,  HEIGHT*0.15,WIDTH*0.3,  HEIGHT*0.55)
     
