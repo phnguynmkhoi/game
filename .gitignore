@@ -18,3 +18,16 @@ __pycache__/newdraw.cpython-39.pyc
 __pycache__/testAi.cpython-39.pyc
 __pycache__/try_nam.cpython-39.pyc
 __pycache__/user_account.cpython-39.pyc
+*.pyc
+__pycache__/click.cpython-39.pyc
+__pycache__/function.cpython-39.pyc
+__pycache__/ioexcel.cpython-39.pyc
+__pycache__/lichsuchoi.cpython-39.pyc
+__pycache__/maingameplay.cpython-39.pyc
+__pycache__/newdraw.cpython-39.pyc
+__pycache__/testAi.cpython-39.pyc
+__pycache__/try_nam.cpython-39.pyc
+__pycache__/user_account.cpython-39.pyc
+minigame1/__pycache__/main.cpython-39.pyc
+minigame2/__pycache__/main.cpython-39.pyc
+data/userhistory.xlsx

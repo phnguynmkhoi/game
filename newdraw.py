@@ -879,6 +879,13 @@ def options(screen, username):
         screen.blit(button_light, (WIDTH*0.7, Top+1*(Height_1Cell+Range)))
         screen.blit(OFF, (WIDTH*0.7, Top+1*(Height_1Cell+Range)))
 
+def credits(screen):
+    # Set the background
+    background = pygame.image.load('assets/background-menus-main.png')
+    background = pygame.transform.scale(background, screen.get_size())
+    screen.blit(background, (0,0));
+
+
 def choose_bet(screen, set_char, char_name, rename, tiencuoc, mode):
     WIDTH, HEIGHT = screen.get_size()
     background = pygame.image.load('Image/bet/choose_bet.png').convert()
