@@ -52,7 +52,7 @@ def main_menu(screen,username,selection_main_mennu = 0):
             self.image = self.sprites[int(self.current_sprite)]
 
     moving_sprites = pygame.sprite.Group()
-    player = Player(200*tile,750*tile)
+    player = Player(200*tile,840*tile)
     moving_sprites.add(player)
 
     class BackgrounD: 

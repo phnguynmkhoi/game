@@ -639,24 +639,7 @@ def main_menu(screen, selection,LeaF,Background,moving_sprite,player):
     Bot = HEIGHT*0.9
     Width_1cell = WIDTH*0.28
     Height_1cell = (Bot-Top)/6
-    """
-    # Thong so Button
-    font_color = (255,255,255)
-    color_click = (170,170,170)
-    color_noclk = (100,100,100)
-    font_size = int(HEIGHT*0.06)
-    buttonfont = pygame.font.Font('Fonts/retganon.ttf', font_size)
-    copyright_font = pygame.font.SysFont(None, 25)
-    copyright = copyright_font.render('© Copyright by N2-Team 21CTT3B HCMUS' , True , font_color)
-    screen.blit(copyright, (WIDTH-340,HEIGHT-25))
-    # MENU TEXT
-    text = [
-    buttonfont.render('Play Game' , True , font_color),
-    buttonfont.render('History' , True , font_color),
-    buttonfont.render('Options' , True , font_color),
-    buttonfont.render('Help' , True , font_color),
-    buttonfont.render('Quit Game' , True , font_color)]
-    """
+
     Logo_game = pygame.image.load('banner/logo_banner.png')
     Logo_game = pygame.transform.scale(Logo_game, (WIDTH*0.45,HEIGHT*0.45))
     screen.blit(Logo_game, (WIDTH*0.1,HEIGHT*0.14))
@@ -911,7 +894,7 @@ def choose_bet(screen, set_char, char_name, rename, tiencuoc, mode):
     maintext_box  = pygame.image.load('Image/assets/set_0.png')
     maintext_box  = pygame.transform.scale(maintext_box, (WIDTH*0.3, HEIGHT*0.05))
 
-    set = 'set' + str(set_char//10)
+    set = 'set' + str(int(set_char//10))
     char0 = pygame.image.load('Image/Gameplay/'+ set + '/car0.png')
     char1 = pygame.image.load('Image/Gameplay/'+ set + '/car1.png')
     char2 = pygame.image.load('Image/Gameplay/'+ set + '/car2.png')
