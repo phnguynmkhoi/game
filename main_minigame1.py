@@ -6,12 +6,13 @@ import ioexcel
 #intialize pygame
 pygame.init()
 
-def minigame1(username):
+def minigame1(screen,username):
     #Adjust to resize screen
     global maxW,maxH,score,enemyEdge,laserState,playerX,eX,diLaserX,playerY,eY,diLaserY,dis,disX,disY,laserX,laserY,coinState,coinX,coinY,restart,difficulty
     global alive,playerX,playerY,scoreText,totalScore
-    maxW,maxH=900,500   
-    screen= pygame.display.set_mode((maxW,maxH))
+    #maxW,maxH=900,500   
+    maxW,maxH = screen.get_size()
+    #screen= pygame.display.set_mode((maxW,maxH))
 
     #Background
     background= pygame.image.load("minigame1/img/bg.jpg")
@@ -78,8 +79,6 @@ def minigame1(username):
     restart=0
     restartText= fontI.render('Press Enter to restart',True, (120,255,255))
 
-  
-    
     #Continue
 
     def draw(State,x,y):
@@ -245,12 +244,21 @@ def minigame1(username):
             if curTime - timeCnt <=1000:
                 draw(explode,playerX-48,playerY-48)
             elif curTime- timeCnt >=1500:
-                draw(gameover,270,70)
+                if maxW > 1600:
+                    draw(gameover,maxW*2/5-10,maxH/3)
+                elif maxW == 1600:
+                    draw(gameover,maxW*2/5-10,maxH/3)
+                elif maxW == 1280:
+                    draw(gameover,maxW*2/5-20,maxH/4)
+                elif maxW == 960:
+                    draw(gameover,maxW*2/5-30,maxH/7)
             if curTime-timeCnt >=2000:
                 restart=1
-                draw(restartText,(maxW-restartText.get_width())/2,(maxH-restartText.get_height())/1.4)
+                #draw(restartText,(maxW-restartText.get_width())/2,(maxH-restartText.get_height())/1.4)
+                draw(restartText,maxW*2/5,maxH*2/3)
                 surf=fontI.render("Press Esc to exit",True,(120,255,255))
-                draw(surf,(maxW-surf.get_width())/2,(maxH-surf.get_height())/1.25)
+                #draw(surf,(maxW-surf.get_width())/2,(maxH-surf.get_height())/1.25)
+                draw(surf,maxW*2.1/5,maxH*2/3+restartText.get_height()*5/4)
             changeX,changeY=0,0
             
         if 0<playerX+changeX<maxW-laserEdge:

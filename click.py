@@ -75,13 +75,13 @@ def options(screen, username):
     mouse = pygame.mouse.get_pos()
     if BUT_OBJ[0].collidepoint(mouse):
         click_sound.play()
-        screen = pygame.display.set_mode((1152, 648))
+        screen = pygame.display.set_mode((960,540))
     if BUT_OBJ[1].collidepoint(mouse):
         click_sound.play()
-        screen = pygame.display.set_mode((1344, 756))
+        screen = pygame.display.set_mode((1280,720))
     if BUT_OBJ[2].collidepoint(mouse):
         click_sound.play()
-        screen = pygame.display.set_mode((1536, 864))
+        screen = pygame.display.set_mode((1600,900))
     if BUT_OBJ[3].collidepoint(mouse):
         click_sound.play()
         screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -150,7 +150,7 @@ def minigame1(screen, username):
         function.choose_minigame(screen, username, 0)
     if MNG_OBJECT[1].collidepoint(mouse):
         click_sound.play()
-        mn1.minigame1(username)
+        mn1.minigame1(screen,username)
 
 def minigame2(screen, username):
     WIDTH, HEIGHT = screen.get_size()
@@ -171,7 +171,7 @@ def minigame2(screen, username):
         function.choose_minigame(screen, username, 0)
     if MNG_OBJECT[1].collidepoint(mouse):
         click_sound.play()
-        mn2.minigame2(username)
+        mn2.minigame2(screen,username)
         
 def store(screen, username):
     global giohang
@@ -271,11 +271,11 @@ def choose_minigame(screen, username, selection_mini):
     if MENU_OBJECT[1].collidepoint(mouse):
         click_sound.play()
         if selection_mini == 0:
-            mn1.minigame1(username)
+            mn1.minigame1(screen,username)
         """  newdraw.minigame1(screen,username)
             minigame1(screen,username) """
         if selection_mini == 1:
-            mn2.minigame2(username)
+            mn2.minigame2(screen,username)
         """  newdraw.minigame1(screen,username)
             minigame2(screen,username) """
     if MENU_OBJECT[0].collidepoint(mouse): 

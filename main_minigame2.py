@@ -5,10 +5,11 @@ import ioexcel
 
 #intialize pygame
 pygame.init()
-def minigame2(username):
+def minigame2(screen,username):
     global bgX,end
-    maxW,maxH=900,500   
-    screen= pygame.display.set_mode((maxW,maxH))
+    #maxW,maxH=900,500 
+    maxW,maxH = screen.get_size()  
+    #screen= pygame.display.set_mode((maxW,maxH))
     pygame.display.set_caption("Training Lee")
     pygame.display.set_icon(pygame.image.load('minigame2/img/fist.png'))
 
