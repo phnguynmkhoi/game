@@ -91,8 +91,10 @@ def minigame2(screen,username):
             self.health=3
             self.width=80
             self.height=125
-            self.x=400
-            self.y=320
+            #self.x=300
+            #self.y=320
+            self.x = maxW/2
+            self.y = (maxH-self.height)*4/5
             self.rangeImg=0
             self.idleSprite=[]
             self.curIdleSprite=0
