@@ -8,7 +8,7 @@ pygame.init()
 username = user_account.LoginRegister()
 
 icon = pygame.image.load('banner/formula-1.png')
-pygame.display.set_caption('CRAZIEST RACE')
+pygame.display.set_caption('BET & WIN')
 pygame.display.set_icon(icon)
 
 def main():

@@ -21,7 +21,7 @@ def minigame1(screen,username):
     pygame.mixer.music.set_volume(0.05)
 
     #Title and background and Font
-    pygame.display.set_caption("Hello World")
+    pygame.display.set_caption("BET & WIN")
     icon= pygame.image.load('minigame1/img/logo.png')
     pygame.display.set_icon(icon)
     gameover= pygame.image.load('minigame1/img/gameover.png')

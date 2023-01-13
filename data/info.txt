@@ -22,3 +22,4 @@ taikhoanmoi;123456
 taotaikhoan;123456
 accmoii;123456
 pain79;pain79
+newacc;123456

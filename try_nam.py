@@ -34,7 +34,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     #set screen
     WIDTH,HEIGHT = screen.get_size()
     #set caption and icon and image and font
-    pygame.display.set_caption("Game cua nha cai den tu Chau Au")
+    pygame.display.set_caption("BET & WIN")
     icon = pygame.image.load('img/mics/car.png')
     pygame.display.set_icon(icon)
     arrow = pygame.image.load('img/mics/arrow.png')
