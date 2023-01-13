@@ -84,7 +84,5 @@ def responseChat(review_list):
         return 1
       else :
         return -1
-    else:
-      return 0
 
 # responseChat([["a",0]])
