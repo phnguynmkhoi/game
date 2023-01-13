@@ -34,9 +34,9 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     #set screen
     WIDTH,HEIGHT = screen.get_size()
     #set caption and icon and image and font
-    pygame.display.set_caption("Game cua nha cai den tu Chau Au")
-    icon = pygame.image.load('img/mics/car.png')
-    pygame.display.set_icon(icon)
+    # pygame.display.set_caption("Game cua nha cai den tu Chau Au")
+    # icon = pygame.image.load('img/mics/car.png')
+    # pygame.display.set_icon(icon)
     arrow = pygame.image.load('img/mics/arrow.png')
     arrow = pygame.transform.smoothscale(arrow,(screen.get_width()/20,screen.get_height()/10))
     font = pygame.font.Font('./font/Audiowide-Regular.ttf',int(screen.get_width()/6.667))
