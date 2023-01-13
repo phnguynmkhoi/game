@@ -45,14 +45,24 @@ def store(screen, username, cart):
     Width_1Cell = WIDTH*0.15
     Height_1Cell = WIDTH*0.225
     Range = WIDTH*0.015
-    Left = WIDTH*0.18
-    Top  = HEIGHT*0.15
+    Left = WIDTH*0.025
+    Top  = HEIGHT*0.05
     
     bg = pygame.image.load('Image/Store/garage1.png')
     bg = pygame.transform.scale(bg, (WIDTH, HEIGHT))
+    screen.blit(bg, (0, 0))
     
     back = pygame.image.load('Image/assets/SetMenu/Back.png')
-    back = pygame.transform.scale(back, (WIDTH*0.15, HEIGHT*0.1))
+    back = pygame.transform.scale(back,(WIDTH*0.15, HEIGHT*0.1))
+    back1 = pygame.image.load('Image/assets/Mode/back-hover.png')
+    back1= pygame.transform.scale(back1,(WIDTH*0.15, HEIGHT*0.1))
+
+    BACK_OBJ = pygame.Rect(Left,Top, WIDTH*0.15, HEIGHT*0.1)
+    mouse = pygame.mouse.get_pos()
+    if BACK_OBJ.collidepoint(mouse):
+        screen.blit(back1, (Left,Top))
+    else:
+        screen.blit(back, (Left,Top))
 
     item1 = pygame.image.load('Image/store/items/1.png')
     item2 = pygame.image.load('Image/store/items/2.png')
@@ -129,8 +139,6 @@ def store(screen, username, cart):
     msg = pygame.image.load('Image/Store/chat_box.png')
     msg = pygame.transform.scale(msg, (Width_1Cell*5/4, Height_1Cell))
 
-    screen.blit(bg, (0, 0))
-    screen.blit(back, (20,20))
     mouse = pygame.mouse.get_pos()
     
     for i in range(0, len(ITEM_OBJ)):
@@ -149,14 +157,14 @@ def store(screen, username, cart):
     #giỏ hàng
     if cart != None:
         for i in range(0, int(len(cart)/2)):
-            if Top>=(HEIGHT-WIDTH*0.08):
+            if Top*2/3>=(HEIGHT-WIDTH*0.09):
                 Top = HEIGHT*0.5
                 Left += WIDTH*0.08
             cart_item = pygame.image.load('Image/Store/eff/' + cart[2*i+1] + '.png')
             cart_item = pygame.transform.scale(cart_item, (HEIGHT/10, HEIGHT/10))
             if cart[2*i+1] != 0:
-                screen.blit(cart_item, (Left,Top))
-                Top += WIDTH*0.08
+                screen.blit(cart_item, (Left,Top*2/3))
+                Top += WIDTH*0.09
 
 def choose_minigame (screen,username,selection_mini):
     WIDTH, HEIGHT = screen.get_size()
@@ -283,6 +291,7 @@ def choose_track(screen,username,selection_track):
     track_3_img = pygame.image.load('img/background-levels/background-galaxy-0.png')
     track_4_img = pygame.image.load('img/background-levels/background-painting-0.png')
     track_5_img = pygame.image.load('img/background-levels/background-sea-0.png')
+
     track_1_img_c = pygame.image.load('img/background-levels/background-city-0-c.png')
     track_2_img_c = pygame.image.load('img/background-levels/background-desert-0-c.png')
     track_3_img_c = pygame.image.load('img/background-levels/background-galaxy-0-c.png')
@@ -347,10 +356,19 @@ def choose_track(screen,username,selection_track):
     Help = pygame.image.load('Image/assets/SetMenu/help.png')
     Next = pygame.image.load('Image/assets/SetMenu/next.png')
 
+    Back1 = pygame.image.load('Image/assets/Mode/back-hover.png')
+    Help1 = pygame.image.load('Image/assets/Mode/help-hover.png')
+    Next1 = pygame.image.load('Image/assets/Mode/next-hover.png')
+
     MENU_IMG = [
     pygame.transform.scale(Back, (Width_1cell, Height_1cell)),
     pygame.transform.scale(Next, (1.2*Width_1cell, 1.8*Height_1cell)),
     pygame.transform.scale(Help, (Width_1cell, Height_1cell))]
+
+    MENU_CLICK = [
+    pygame.transform.scale(Back1, (Width_1cell, Height_1cell)),
+    pygame.transform.scale(Next1, (1.2*Width_1cell, 1.8*Height_1cell)),
+    pygame.transform.scale(Help1, (Width_1cell, Height_1cell))]
     
     # MENU LOCATION
     MENU_LOCATION = [
@@ -366,7 +384,7 @@ def choose_track(screen,username,selection_track):
     
     for i in range(0, len(MENU_OBJECT)):
         if MENU_OBJECT[i].collidepoint(mouse):
-            screen.blit(MENU_IMG[i], MENU_LOCATION[i])
+            screen.blit(MENU_CLICK[i], MENU_LOCATION[i])
         else:
             screen.blit(MENU_IMG[i], MENU_LOCATION[i])
 
@@ -432,7 +450,7 @@ def choose_set(screen, username, selection_set,selection_char,selection_track):
     
     # MOUSE LOCATION
     mouse = pygame.mouse.get_pos()
-    # SET LIST===========================================================================
+    # SET LIST
     for i in range(0, len(SET_OBJECT)):
         if  selection_set == i:
             screen.blit(set_img[i], SET_LOCATION[i])
@@ -441,7 +459,6 @@ def choose_set(screen, username, selection_set,selection_char,selection_track):
         else:
             screen.blit(set_img[i], SET_LOCATION[i])
         Top += Height_1cell + Range_2cell
-    # ====================================================================================
     
     # MENU-BOARD LOCATION
     Width_1cell = WIDTH*0.15
@@ -455,11 +472,20 @@ def choose_set(screen, username, selection_set,selection_char,selection_track):
     Help = pygame.image.load('Image/assets/SetMenu/help.png')
     Next = pygame.image.load('Image/assets/SetMenu/next.png')
 
+    Back1 = pygame.image.load('Image/assets/Mode/back-hover.png')
+    Help1 = pygame.image.load('Image/assets/Mode/help-hover.png')
+    Next1 = pygame.image.load('Image/assets/Mode/next-hover.png')
+
     MENU_IMG = [
     pygame.transform.scale(Back, (Width_1cell, Height_1cell)),
     pygame.transform.scale(Next, (1.2*Width_1cell, 1.8*Height_1cell)),
     pygame.transform.scale(Help, (Width_1cell, Height_1cell))]
     
+    MENU_CLICK = [
+    pygame.transform.scale(Back1, (Width_1cell, Height_1cell)),
+    pygame.transform.scale(Next1, (1.2*Width_1cell, 1.8*Height_1cell)),
+    pygame.transform.scale(Help1, (Width_1cell, Height_1cell))]
+
     # MENU LOCATION
     MENU_LOCATION = [
     (Left,Top),
@@ -474,7 +500,7 @@ def choose_set(screen, username, selection_set,selection_char,selection_track):
     
     for i in range(0, len(MENU_OBJECT)):
         if MENU_OBJECT[i].collidepoint(mouse):
-            screen.blit(MENU_IMG[i], MENU_LOCATION[i])
+            screen.blit(MENU_CLICK[i], MENU_LOCATION[i])
         else:
             screen.blit(MENU_IMG[i], MENU_LOCATION[i])
 
@@ -648,27 +674,31 @@ def main_menu(screen, selection,LeaF,Background,moving_sprite,player):
     menu2 = pygame.image.load('img/background-menus/buttons/2.png') 
     menu3 = pygame.image.load('img/background-menus/buttons/3.png')
     menu4 = pygame.image.load('img/background-menus/buttons/4.png')
-    menu5 = pygame.image.load('img/background-menus/buttons/6.png')
-    
+    menu5 = pygame.image.load('img/background-menus/buttons/5.png')
+    menu6 = pygame.image.load('img/background-menus/buttons/6.png')
+
     menu01 = pygame.image.load('img/background-menus/buttons/01.png')
     menu02 = pygame.image.load('img/background-menus/buttons/02.png') 
     menu03 = pygame.image.load('img/background-menus/buttons/03.png')
     menu04 = pygame.image.load('img/background-menus/buttons/04.png')
-    menu05 = pygame.image.load('img/background-menus/buttons/06.png')
-    
+    menu05 = pygame.image.load('img/background-menus/buttons/05.png')
+    menu06 = pygame.image.load('img/background-menus/buttons/06.png')
     MENU_IMG = [
     pygame.transform.scale(menu1, (Width_1cell, Height_1cell)),
     pygame.transform.scale(menu2, (Width_1cell, Height_1cell)),
     pygame.transform.scale(menu3, (Width_1cell, Height_1cell)),
     pygame.transform.scale(menu4, (Width_1cell, Height_1cell)),
-    pygame.transform.scale(menu5, (Width_1cell, Height_1cell)),]
+    pygame.transform.scale(menu5, (Width_1cell, Height_1cell)),
+    pygame.transform.scale(menu6, (Width_1cell, Height_1cell)),
+    ]
     
     MENU_Click = [
     pygame.transform.scale(menu01, (Width_1cell, Height_1cell)),
     pygame.transform.scale(menu02, (Width_1cell, Height_1cell)),
     pygame.transform.scale(menu03, (Width_1cell, Height_1cell)),
     pygame.transform.scale(menu04, (Width_1cell, Height_1cell)),
-    pygame.transform.scale(menu05, (Width_1cell, Height_1cell)),]
+    pygame.transform.scale(menu05, (Width_1cell, Height_1cell)),
+    pygame.transform.scale(menu06, (Width_1cell, Height_1cell)),]
     
     # MENU OBJECT
     MENU_OBJECT = [
@@ -676,7 +706,9 @@ def main_menu(screen, selection,LeaF,Background,moving_sprite,player):
     pygame.Rect(Left, Top+1*Height_1cell, Width_1cell, Height_1cell),
     pygame.Rect(Left, Top+2*Height_1cell, Width_1cell, Height_1cell),
     pygame.Rect(Left, Top+3*Height_1cell, Width_1cell, Height_1cell),
-    pygame.Rect(Left, Top+4*Height_1cell, Width_1cell, Height_1cell)]
+    pygame.Rect(Left, Top+4*Height_1cell, Width_1cell, Height_1cell),
+    pygame.Rect(Left, Top+5*Height_1cell, Width_1cell, Height_1cell),
+    ]
     
     # MENU LOCATION
     MENU_LOC = [
@@ -684,7 +716,8 @@ def main_menu(screen, selection,LeaF,Background,moving_sprite,player):
     (Left,Top+1*Height_1cell),
     (Left,Top+2*Height_1cell),
     (Left,Top+3*Height_1cell),
-    (Left,Top+4*Height_1cell)]
+    (Left,Top+4*Height_1cell),
+    (Left,Top+5*Height_1cell)]
     
     # MENU===============================================================================
     for i in range(0, len(MENU_OBJECT)):

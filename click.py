@@ -35,7 +35,8 @@ def main_menu(screen, username, selection):
     pygame.Rect(Left, Top+1*Height_1cell, Width_1cell, Height_1cell),
     pygame.Rect(Left, Top+2*Height_1cell, Width_1cell, Height_1cell),
     pygame.Rect(Left, Top+3*Height_1cell, Width_1cell, Height_1cell),
-    pygame.Rect(Left, Top+4*Height_1cell, Width_1cell, Height_1cell)]
+    pygame.Rect(Left, Top+4*Height_1cell, Width_1cell, Height_1cell),
+    pygame.Rect(Left, Top+5*Height_1cell, Width_1cell, Height_1cell)]
     
     if MENU_OBJECT[0].collidepoint(mouse):
         click_sound.play()
@@ -51,6 +52,9 @@ def main_menu(screen, username, selection):
         cart = ioexcel.laymabua()
         function.help(screen, username, 0, 0)
     if MENU_OBJECT[4].collidepoint(mouse):
+        click_sound.play()
+        function.credit(screen,username)
+    if MENU_OBJECT[5].collidepoint(mouse):
         click_sound.play()
         ioexcel.writeExcel()
         pygame.quit()
@@ -99,6 +103,17 @@ def options(screen, username):
     if SOUND_ON.collidepoint(mouse):
         click_sound.play()
         mixer.music.set_volume(0.2)
+
+def credit(screen,username):
+    WIDTH, HEIGHT = screen.get_size()
+    Left = WIDTH*0.1
+    Top = HEIGHT*0.8
+    BACK_OBJECT = pygame.Rect(Left,Top,WIDTH*0.15,HEIGHT*0.1)
+    mouse = pygame.mouse.get_pos()
+    if BACK_OBJECT.collidepoint(mouse):
+        click_sound.play()
+        function.main_menu(screen,username,selection_main_mennu=0)
+
 
 def help(screen, username, selection_help, goback):
     mouse = pygame.mouse.get_pos()
@@ -181,10 +196,10 @@ def store(screen, username):
     Width_1Cell = WIDTH*0.15
     Height_1Cell = WIDTH*0.225
     Range = WIDTH*0.015
-    Left = WIDTH*0.18
-    Top  = HEIGHT*0.15
+    Left = WIDTH*0.025
+    Top  = HEIGHT*0.05
     
-    BACK_OBJ = pygame.Rect(20,20, WIDTH*0.18, HEIGHT*0.1)
+    BACK_OBJ = pygame.Rect(Left,Top, WIDTH*0.18, HEIGHT*0.1)
     
     ITEM_OBJ = [
     pygame.Rect(CENTER - 2*Width_1Cell , HEIGHT*0.05,                    Width_1Cell, Height_1Cell*2/5),

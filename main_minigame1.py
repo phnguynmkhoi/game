@@ -245,11 +245,11 @@ def minigame1(screen,username):
                 draw(explode,playerX-48,playerY-48)
             elif curTime- timeCnt >=1500:
                 if maxW > 1600:
-                    draw(gameover,maxW*2/5-10,maxH/3)
+                    draw(gameover,maxW*2/5-15,maxH/3)
                 elif maxW == 1600:
-                    draw(gameover,maxW*2/5-10,maxH/3)
+                    draw(gameover,maxW*2/5-20,maxH/3)
                 elif maxW == 1280:
-                    draw(gameover,maxW*2/5-20,maxH/4)
+                    draw(gameover,maxW*2/5-25,maxH/4)
                 elif maxW == 960:
                     draw(gameover,maxW*2/5-30,maxH/7)
             if curTime-timeCnt >=2000:

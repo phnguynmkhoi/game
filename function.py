@@ -1,5 +1,5 @@
 import pygame,sys,ioexcel,random
-import click, newdraw,maingameplay,lichsuchoi
+import click, newdraw,maingameplay,lichsuchoi,credits
 from pygame.constants import MOUSEBUTTONDOWN
 
 pygame.init()
@@ -52,7 +52,12 @@ def main_menu(screen,username,selection_main_mennu = 0):
             self.image = self.sprites[int(self.current_sprite)]
 
     moving_sprites = pygame.sprite.Group()
-    player = Player(200*tile,840*tile)
+    if WIDTH > 1600:
+        player = Player(200*tile,930*tile)
+    elif WIDTH == 1600:
+        player = Player(200*tile,860*tile)
+    else:
+        player = Player(200*tile,820*tile)
     moving_sprites.add(player)
 
     class BackgrounD: 
@@ -127,7 +132,7 @@ def main_menu(screen,username,selection_main_mennu = 0):
                         selection_main_menu -= 1
                     print(selection_main_menu)        
                 if event.key == pygame.K_DOWN:
-                    if selection_main_menu < 5:
+                    if selection_main_menu < 6:
                         selection_main_menu += 1
                     print(selection_main_menu)
             if event.type == pygame.KEYDOWN:
@@ -143,11 +148,25 @@ def main_menu(screen,username,selection_main_mennu = 0):
                     if selection_main_menu == 4:
                         print('Help')
                     if selection_main_menu == 5:
+                        print('Credits')
+                    if selection_main_menu == 6:
                         pygame.quit()
 
         newdraw.main_menu(screen, selection_main_mennu,Leaf,Background,moving_sprites,player)
         pygame.display.update()
         clock.tick(144)
+
+def credit(screen,username):
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            ioexcel.writeExcel()
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            click.credit(screen,username)
+    credits.credit(screen,username)
+    pygame.display.update()
+    clock.tick(100)
 
 def choose_minigame(screen, username, selection_mini):
     global mode

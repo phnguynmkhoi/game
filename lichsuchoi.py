@@ -36,7 +36,7 @@ def history(screen, username, tyle, thongtin):
             self.thongtin = thongtin
             self.index = index - starter_point
             self.match = index
-            self.font = pygame.font.Font('Font/GEO_AI__.TTF',int(70*tyle))
+            self.font = pygame.font.Font('Font/LT.otf',int(70*tyle))
         def draw (self,Surface,tyle):
             Table = pygame.Rect(400*tyle,(180*(self.index+1)+100)*tyle,1120*tyle,150*tyle)
 
@@ -54,7 +54,7 @@ def history(screen, username, tyle, thongtin):
             if len(Character)==2:
                 ava = pygame.image.load('Image/Gameplay/set'+ Character[0] + '/car'+ Character[1]+'.png')
             else:
-                ava = pygame.image.load('Image/Gameplay/car'+ Character[0]+'.png')
+                ava = pygame.image.load('Image/Gameplay/set0/car'+Character[0]+'.png')
             ava = pygame.transform.scale(ava, (tyle*250,tyle*100))
             
             Text1_surface = self.font.render(Text1,True,pygame.Color('black'))
@@ -70,7 +70,7 @@ def history(screen, username, tyle, thongtin):
             Surface.blit(ava, Text3_rect)
 
     DISPLAYSURF = screen
-    BG =  pygame.image.load('Image/assets/Options/bg1.png').convert_alpha()
+    BG =  pygame.image.load('Image/assets/Options/his_bg.png').convert_alpha()
     BG = pygame.transform.scale(BG,(default_width*tyle,default_height*tyle))
     frame = pygame.image.load('Image/assets/Options/bg3.png')
     frame = pygame.transform.scale(frame, (1920*tyle,1080*tyle))
