@@ -43,14 +43,8 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     fontResponse = pygame.font.Font('./font/Arial.ttf',int(screen.get_width()/15))
     chatbox=pygame.image.load('img/decorations/chat.png')
     chatbox=pygame.transform.scale(chatbox,(280,110))
-<<<<<<< HEAD
     chatbox.set_alpha(200)
     chatObject= pygame.Rect(0,20,250,130)
-=======
-    chatbox.set_alpha(230)
-    chatObject= pygame.Rect(0,20,250,130)
-    chatColor=(255, 102, 0)
->>>>>>> parent of e32d18a (add chat 2.0)
     #Mystery Box
     mysbox=[] 
     for i in range(4):
@@ -87,11 +81,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
     chatList = ["VN vô địch","Cầm sổ đỏ rồi","đừng thua nữa bán xe rồi","MU vô hang","Arg vô địch","non quá","xin cái tuổi","ez game","nhảy cầu thôi","tạm biệt mọi người","cược nhầm xe rồi","đau lưng quá","nhà mình còn gì đâu"]
     botList = ["Khoi","Nam Android","Huy","Tung","Uong Nam"]
     vowel=["á","à","ả","ã","ạ","ă","ắ","ằ","ẳ","ẵ","ặ","â","ấ","ầ","ẩ","ẫ","ậ","é","è","ẻ","ẽ","ẹ","ê","ế","ề","ể","ễ","ệ","ó","ò","ỏ","õ","ọ","ô","ố","ồ","ổ","ỗ","ộ","ơ","ớ","ờ","ở","ỡ","ợ","í","ì","ỉ","ĩ","ị","ú","ù","ủ","ũ","ụ","ư","ứ","ừ","ử","ữ","ự","ý","ỳ","ỷ","ỹ","ỵ","đ"]
-<<<<<<< HEAD
     #print(fontChat.render(chatList[2],True,(255,255,255)).get_size())
-=======
-    print(fontChat.render(chatList[2],True,(255,255,255)).get_size())
->>>>>>> parent of e32d18a (add chat 2.0)
 
     #Sound
     pickedSound= pygame.mixer.Sound('Music/ding2.wav')
@@ -106,12 +96,6 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
             self.inputText=""
             self.onDisplay=True
             self.activeInput=True
-<<<<<<< HEAD
-=======
-            self.cursor="|"
-            self.checkCursor=0
-            self.box=pygame.Rect(screen.get_width()/60+35,screen.get_height()/32+5*screen.get_height()/30,200,int(screen.get_width()/66+7))
->>>>>>> parent of e32d18a (add chat 2.0)
         def randomChatScript(self):
             randomChat = chatList[random.randint(0,12)]
             randomName = botList[random.randint(0,4)]
@@ -943,7 +927,7 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
         #check if the car have finish the race
         for i in range (5):
             if car[i].x<=bg[mapSelected][car[i].curRound].end+100 and rank<5:
-                car[i].run
+                car[i].run()
             elif car[i].curRound<3: 
                 bg[mapSelected][car[i].curRound].car.remove(i)
                 if car[i].curRound==0:
@@ -964,8 +948,4 @@ def play(screen,mapSelected,transSelected,pickedCar,mode,username,playerName):
         pygame.display.update()
     return finished[pickedCar]
     
-<<<<<<< HEAD
 # play(pygame.display.set_mode((1024,500)),0,0,0,0,0,"NotTun")
-=======
-# play(pygame.display.set_mode((1024,500)),0,0,0,0,0,"NotTun")
->>>>>>> parent of e32d18a (add chat 2.0)
