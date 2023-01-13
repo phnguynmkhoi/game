@@ -21,9 +21,9 @@ def minigame1(screen,username):
     pygame.mixer.music.set_volume(0.05)
 
     #Title and background and Font
-    pygame.display.set_caption("Hello World")
-    icon= pygame.image.load('minigame1/img/logo.png')
-    pygame.display.set_icon(icon)
+    # pygame.display.set_caption("Hello World")
+    # icon= pygame.image.load('minigame1/img/logo.png')
+    # pygame.display.set_icon(icon)
     gameover= pygame.image.load('minigame1/img/gameover.png')
     font = pygame.font.Font('freesansbold.ttf',32)
     fontI= pygame.font.Font('minigame1/font/Pixel Coleco.otf',24)
