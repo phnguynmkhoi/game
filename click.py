@@ -136,7 +136,7 @@ def help(screen, username, selection_help, goback):
             click_sound.play()
             function.help(screen, username, selection_help-1, goback)
     if HELP_OBJECT[1].collidepoint(mouse):
-        if selection_help <= 10:
+        if selection_help <= 11:
             click_sound.play()
             function.help(screen, username, selection_help+1, goback)
     if HELP_OBJECT[2].collidepoint(mouse):
