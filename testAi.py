@@ -1,8 +1,6 @@
 from tensorflow import keras
 import numpy as np
 import pandas as pd
-# from tensorflow.keras.preprocessing.sequence import pad_sequences
-# from keras.preprocessing.text import Tokenizer
 import pandas as pd
 import numpy as np
 from string import digits
@@ -12,7 +10,6 @@ MAX_VOCAB_SIZE = 10000 # HOW MANY UNIQUE WORDS TO USE
 MAX_SEQUENCE_LENGTH = 300 # MAX NUMBER OF WORDS IN A COMMENT TO USE
 
 def responseChat(review_list):
-  # review_list = [["Game chán vãi",0],["Game hay",0],["Không ổn cho lắm",0],["Chán vãi ò",0]]
   if len(review_list)==1:
     return 0
   else:
@@ -52,29 +49,23 @@ def responseChat(review_list):
     #Xuat predic
     happiness=0
     reviewtemp=reviews_input
-    neg=["chán", "Chán", "Xui", "xui", "dở", "Dở", "tệ", "Tệ", "hèn", "Hèn", "ngu","bug", "Ngu", "Xấu","xấu","chan","Chan","lỗi","loi","Lỗi","câm","Câm","Tạ","tạ","đần","khó","Khó","chó","Chó"]
+    neg=["chán", "Chán", "Xui", "xui", "dở", "Dở", "tệ", "Tệ", "hèn", "Hèn", "ngu","bug", "Ngu", "Xấu","xấu","chan","cứt","cut","Chan","lỗi","loi","Lỗi","câm","Câm","Tạ","tạ","đần","khó","Khó","chó","Chó"]
     pos=["Hên", "hên","tuyệt", "vời", "haha", "đã", "Đã","ngon","Ngon","may","May","dễ","de","tuyet","voi"]
     for i in range (1,len(review_list)):
       b=reviewtemp[i].split(" ")
       temp1=""
       for j in b:
         if j in neg:
-          # print(j)
-          # print(0)
           temp1=j
           happiness+=-1
           break
         elif j in pos:
-          # print(j)
-          # print(2)
           temp1=j
           happiness+=1
           break
       if temp1 in (neg+pos):
         continue
       else:
-        # print(reviews_input[i])
-        # print(np.argmax(prediction[i]))
         happiness += np.argmax(prediction[i])-1
     if len(review_list) > 1:
       happiness=happiness/(len(review_list)-1)
@@ -84,5 +75,3 @@ def responseChat(review_list):
         return 1
       else :
         return -1
-
-# responseChat([["a",0]])
