@@ -25,7 +25,7 @@ def minigame1(screen,username):
     icon= pygame.image.load('minigame1/img/logo.png')
     pygame.display.set_icon(icon)
     gameover= pygame.image.load('minigame1/img/gameover.png')
-    font = pygame.font.Font('freesansbold.ttf',32)
+    font = pygame.font.Font('minigame1/font/Pixel Coleco.otf',32)
     fontI= pygame.font.Font('minigame1/font/Pixel Coleco.otf',24)
 
     #Animation
