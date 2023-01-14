@@ -217,10 +217,10 @@ def store(screen, username):
     if giohang == None:
         giohang = ''
     if len(giohang) < 9*2:
-        if ITEM_OBJ[0].collidepoint(mouse) and tongtien>= 300: # Ten lua
+        if ITEM_OBJ[0].collidepoint(mouse) and tongtien>= 500: # Ten lua
             click_sound.play()
             giohang += ';1'
-            ioexcel.tong_tien(username, -300)
+            ioexcel.tong_tien(username, -500)
         if ITEM_OBJ[1].collidepoint(mouse) and tongtien>= 100: # Mien khong
             click_sound.play()
             giohang += ';2'
